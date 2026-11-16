@@ -75,12 +75,29 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Flutter một package; Android, iOS và web scaffolds tạo mới.
 - Riverpod cho state/DI; go_router với `/` (launch) và `/home` (màn hình chính).
 - Loading nền đen với logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
-  khoảng 3 giây rồi thay route bằng màn hình chính có logo và tên Pixel RPG.
+  khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
+- Màn hình chính dùng atlas ảnh khung tím than, viền bậc pixel, HUD hồ sơ/tài nguyên,
+  panel nhiệm vụ, lời chào và thanh chức năng. Cảnh nền đen, nhân vật là khối
+  vàng tạm. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
+  tài nguyên và minimap neo phải; hội thoại, ba nút hành động và thanh sáu mục
+  một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
+  chỉ thay vị trí neo và mở rộng nền đen; không wrap, kéo rộng panel hay cuộn.
+  Kích thước chuẩn tương ứng chiều ngắn 390 dp; thiết bị nhỏ hơn dùng một hệ số
+  chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
+  lớn UI. Vùng an toàn được áp dụng khi đặt các cụm. Nhãn nằm trong slot cố định;
+  hộp thông tin vẫn dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
+  Khung dùng sprite 9-slice: góc giữ hình, cạnh và nền co giãn; sáu skin dùng
+  chung atlas trong `assets/ui/`. Chữ/icon là widget riêng. Chỉ mục điều hướng
+  đang chọn có tấm nền vàng, các mục còn lại nằm trên khay chung.
+  Nút thông tin giải thích phạm vi bản dựng; các mục gameplay ghi rõ chưa mở,
+  chỉ số chưa có dùng dấu `—`.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
-- Widget test kiểm tra khởi động, thời gian loading, chuyển route và bố cục nhỏ.
+- Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
+  chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
+  Kiểm tra pixel xác minh góc sprite không méo và cạnh không hở khi đổi cỡ khung.
 - Các thư mục sprites, tilesets, maps, audio, fonts vẫn trống.
 - CI format/analyze/test, hướng dẫn agent, skills và Dart format hook.
 
@@ -92,8 +109,8 @@ lib/
     router/app_router.dart
     theme/app_theme.dart
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
-  features/home/presentation/home_screen.dart
-assets/{branding,sprites,tilesets,maps,audio,fonts}/
+  features/home/presentation/ # screen, HUD, panels, navigation, pixel frame
+assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
 ```
 
@@ -105,8 +122,10 @@ application, domain, infrastructure khi có code thực tế cần sở hữu.
 [Concept khung UI pixel RPG tái sử dụng](docs/art/reusable-ui-concept.md)
 phân tích ảnh mẫu do người dùng cung cấp, tách các khung/panel/nút thành
 component và cung cấp prompt để generate từng phần về sau. Đây là tài liệu
-định hướng hình ảnh, chưa triển khai UI hay tạo asset; không bao gồm nhân vật,
-quái hoặc tranh khung cảnh. Palette và kích thước trong tài liệu là đề xuất.
+định hướng hình ảnh; màn hình chính đã dùng bộ bitmap sáu skin ghép 9-slice
+qua `PixelFrame`, với metadata và prompt trong
+[assets/ui/README.md](assets/ui/README.md). Nhân vật dùng khối vàng tạm trên nền đen; chưa có sprite, quái hoặc tranh khung cảnh. Các component chưa dùng vẫn
+là đề xuất cho các lần triển khai sau.
 
 ## Skills kế thừa
 

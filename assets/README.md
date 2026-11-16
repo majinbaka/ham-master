@@ -1,5 +1,8 @@
 # Game assets
 
+- `ui/frame-atlas.png`: six nine-slice UI frame skins, 1536 × 1024 RGBA.
+  Built-in ImageGen artwork; measured regions, slice caps and generation prompt
+  are documented in [`ui/README.md`](ui/README.md). Text/icons remain Flutter widgets.
 - `sprites/`: characters, enemies, effects.
 - `tilesets/`: terrain and environment tiles.
 - `maps/`: authored map data.
@@ -15,6 +18,6 @@
   The symbol alone is resized onto black for Android launcher and web/PWA icons.
   Flutter renders PRESENTS, loading text and the animated progress separately.
 
-Other folders are empty. Register actual files/directories in `pubspec.yaml` when
-adding assets. Keep source dimensions and use `FilterQuality.none` for pixel
+The sprites, tilesets, maps, audio and fonts folders are empty. Register actual
+files/directories in `pubspec.yaml` when adding assets. Keep source dimensions and use `FilterQuality.none` for pixel
 textures; choose the logical resolution and tile size with the first game slice.

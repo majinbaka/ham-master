@@ -4,8 +4,30 @@
 
 Chuyển cách xử lý thị giác của ảnh mẫu thành một bộ khung có thể generate
 riêng từng phần và ghép lại cho game sau này. Đây là **tài liệu art direction
-và prompt**, chưa phải UI được lập trình hay bộ asset đã sản xuất.
-Tài liệu thuộc `docs/art/`; không thay đổi theme hay màn hình hiện tại.
+và prompt** cho các component tái sử dụng.
+
+Màn hình chính tại `lib/features/home/presentation/` đã áp dụng palette, viền
+bậc pixel và cách ghép sprite 9-slice bằng Flutter: HUD, nhiệm vụ trống, bản đồ trống,
+lời chào, ba nút hành động và thanh chức năng. Sau loading 3 giây, app chuyển
+sang màn hình này. Cảnh dùng nền đen, nhân vật là khối vàng tạm theo yêu cầu;
+chưa triển khai gameplay. Khung dùng atlas bitmap sáu skin: cream, cool, gold,
+cyan, paper và selected; chữ/icon là lớp riêng. `PixelFrame` ghép bốn góc,
+bốn cạnh và nền từ atlas; góc giữ hình khi đổi kích thước widget.
+Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
+[assets/ui/README.md](../../assets/ui/README.md). Đây là bộ khung chung đầu tiên;
+chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bên dưới
+vẫn là định hướng cho những component chi tiết chưa tạo.
+
+Layout runtime giữ kích thước và tỉ lệ từng cụm theo ảnh mẫu: hồ sơ/nhiệm vụ
+neo trái, tài nguyên/minimap neo phải, hội thoại/nút hành động/thanh dưới neo
+ở giữa. Nhiệm vụ luôn xếp dọc; minimap luôn hiện; sáu mục điều hướng luôn trên
+một hàng. Khi xoay ngang, các cụm dịch sang cạnh hoặc giữ trục giữa, không
+kéo giãn hay thu nhỏ theo chiều cao. Nền đen nhận phần không gian dư.
+`HomeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
+được chặn ở 390/940 và chỉ giảm theo chiều ngắn thiết bị nhỏ hơn 390 dp.
+Khoảng cách giữa các cụm được thu gọn trên cửa sổ thấp, hẹp; kích thước khung
+không đổi. Nhãn fit trong slot cố định, giữ toàn bộ nội dung cho semantics;
+hộp thông tin dùng text scaling bình thường.
 
 Ảnh tham chiếu: [Pixel Detective Office — Mira’s New Clue](../../Pixel%20Detective%20Office_%20Mira%E2%80%99s%20New%20Clue.png).
 Ảnh do người dùng cung cấp; đường dẫn cần giữ cùng repo để xem lại tham chiếu.
@@ -131,9 +153,10 @@ Không bắt buộc xuất mỗi lớp thành một file nếu không có nhu c�
 | Track/fill F04 | Hai lớp riêng, ngoài trong suốt | Clip độ dài fill theo dữ liệu; không kéo giãn cả track. |
 | Selected overlay/glow | Ngoài trong suốt, không có chữ/icon | Chồng đúng kích thước lên frame tương ứng. |
 
-Với panel chữ nhật, có thể chuẩn bị **9-slice**: bốn góc giữ nguyên, bốn cạnh
-lặp/kéo phần thẳng, phần giữa mở rộng. Đây là hướng bàn giao sau khi tạo asset,
-không khẳng định ảnh generate đã có sẵn metadata hay đủ chuẩn để dùng ngay.
+Panel chữ nhật hiện dùng **9-slice**: bốn góc giữ nguyên, bốn cạnh kéo phần
+thẳng, phần giữa mở rộng. Atlas đã được đo vùng nguồn và kiểm tra góc/đường
+nối ở hai kích thước. Metadata nằm trong `PixelFrameSkin` và tài liệu asset;
+ảnh generate không được mặc định là đúng lưới ô theo prompt.
 Tab nhô, hoa văn góc và đuôi bong bóng phải ở ngoài vùng được kéo giãn.
 F03 dạng capsule có thể dùng ba phần trái–giữa–phải; F02/F07/F09 giữ tỷ lệ.
 
@@ -249,8 +272,8 @@ Các công thức dưới đây mô tả quan hệ giữa khung, không xác nh�
 | Tương tác | F11 hoặc F10 + các F14; không cần vòng dưới chân hoặc hình bàn tay. |
 | Điều hướng | F15 + F16 theo mục đang chọn + F07 nếu cần thông báo. |
 
-Khi dựng mobile, cho panel và nhãn co giãn theo nội dung; không sao chép toàn bộ
-mật độ của screenshot vào điện thoại nhỏ. Khoảng chạm thuộc layout runtime,
+Ở màn hình chính hiện tại, panel giữ tỉ lệ và kích thước thiết kế; nhãn fit vào
+slot nội dung. Không đổi số hàng hoặc kéo giãn panel theo hướng màn hình. Khoảng chạm thuộc layout runtime,
 có thể rộng hơn artwork. Chữ tiếng Việt dài/ngắn được bố trí riêng, không kéo
 giãn bitmap chữ hoặc ép toàn bộ UI thành một ảnh nền cố định.
 
@@ -270,7 +293,9 @@ giãn bitmap chữ hoặc ép toàn bộ UI thành một ảnh nền cố địn
 
 Tên file gợi ý: `ui_<component>_<variant>_<state>.png`, ví dụ
 `ui_action_button_dark_default.png`, `ui_quest_body_gold_default.png`,
-`ui_dialogue_body_light_default.png`. Hiện chưa tạo các file hay thư mục asset này.
+`ui_dialogue_body_light_default.png`. Các file riêng này chưa được tạo; runtime
+hiện dùng `assets/ui/frame-atlas.png` với sáu vùng nguồn, dùng chung cho các
+component đã triển khai.
 
 Checklist duyệt từng output:
 

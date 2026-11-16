@@ -9,10 +9,18 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
 The app contains a three-second neon NDAS loading screen at `/`, a main screen
-shell at `/home`, Riverpod scope, go_router, theme and platform shells. NDAS
-branding is in `assets/branding/` with Android/web icons; other asset folders
-remain empty. Separate implemented behavior
-from future ideas. There is no gameplay, game engine, save system, backend,
+at `/home` with nine-slice sprite frames, HUD, empty quests, a black scene, a yellow
+character placeholder, welcome panel and unavailable navigation entries.
+An information dialog explains this UI-only scope. UI groups keep fixed sizes
+when rotating: profile/stacked quests anchor left, resources/map anchor right,
+and dialogue/actions/single-row navigation anchor bottom-center. Only the black
+scene expands; the home layout does not scroll, wrap or hide the minimap.
+One shared device scale accommodates smaller screens; desktop does not enlarge UI. Riverpod scope, go_router, theme
+and platform shells remain in place. NDAS
+branding is in `assets/branding/` with Android/web icons. Six frame skins share
+`assets/ui/frame-atlas.png`; corners keep their shape while edges/centers stretch.
+Text/icons remain separate widgets; only the selected navigation item has a plate.
+Other asset folders remain empty. Separate implemented behavior from future ideas. There is no gameplay, game engine, save system, backend,
 Widgetbook, Patrol or localization. Do not reuse FlashKids product history as
 facts about this repository. Cite current files when answering.
 

@@ -70,6 +70,8 @@ void main() {
     expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.byType(LaunchScreen), findsNothing);
     expect(find.text('Pixel RPG'), findsOneWidget);
+    expect(find.byKey(const ValueKey('character-placeholder')), findsOneWidget);
+    expect(find.text('Chưa có nhiệm vụ'), findsOneWidget);
   });
 
   testWidgets('leaving loading early cancels completion', (tester) async {
