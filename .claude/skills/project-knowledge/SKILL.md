@@ -8,8 +8,10 @@ description: Answer questions about the current PixelRPG foundation, architectur
 Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
-The initial scaffold contains a launch screen, Riverpod scope, go_router,
-theme, platform shells and empty asset folders. Separate implemented behavior
+The app contains a three-second neon NDAS loading screen at `/`, a main screen
+shell at `/home`, Riverpod scope, go_router, theme and platform shells. NDAS
+branding is in `assets/branding/` with Android/web icons; other asset folders
+remain empty. Separate implemented behavior
 from future ideas. There is no gameplay, game engine, save system, backend,
 Widgetbook, Patrol or localization. Do not reuse FlashKids product history as
 facts about this repository. Cite current files when answering.

@@ -73,9 +73,13 @@ Android application ID: `com.jinshu.pixel_rpg`.
 ## Những gì đã có
 
 - Flutter một package; Android, iOS và web scaffolds tạo mới.
-- Riverpod cho state/DI, go_router với route `/`, theme tối thiểu.
-- Một màn hình chỉ hiển thị tên game; widget test kiểm tra app khởi động.
-- Thư mục assets trống: sprites, tilesets, maps, audio, fonts.
+- Riverpod cho state/DI; go_router với `/` (launch) và `/home` (màn hình chính).
+- Loading nền đen với logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
+  khoảng 3 giây rồi thay route bằng màn hình chính có logo và tên Pixel RPG.
+  Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
+- Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
+- Widget test kiểm tra khởi động, thời gian loading, chuyển route và bố cục nhỏ.
+- Các thư mục sprites, tilesets, maps, audio, fonts vẫn trống.
 - CI format/analyze/test, hướng dẫn agent, skills và Dart format hook.
 
 ```text
@@ -85,8 +89,9 @@ lib/
     pixel_rpg_app.dart
     router/app_router.dart
     theme/app_theme.dart
-  features/launch/presentation/launch_screen.dart
-assets/{sprites,tilesets,maps,audio,fonts}/
+  features/launch/presentation/{launch_screen,neon_progress_bar}.dart
+  features/home/presentation/home_screen.dart
+assets/{branding,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
 ```
 

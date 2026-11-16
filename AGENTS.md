@@ -1,8 +1,8 @@
 # PixelRPG agent guidance
 
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
-structure and development skills of FlashKids. The only runtime behavior is a
-launch screen. Do not implement gameplay unless requested.
+structure and development skills of FlashKids. Runtime behavior is a three-second
+NDAS loading screen followed by a main screen shell. Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
 
@@ -46,10 +46,12 @@ launch screen. Do not implement gameplay unless requested.
 
 - `lib/main.dart`: bootstrap and `ProviderScope`.
 - `lib/app/`: app composition, router and theme.
-- `lib/features/launch/presentation/`: placeholder launch screen.
-- `assets/`: empty sprite, tileset, map, audio and font folders.
+- `lib/features/launch/presentation/`: three-second neon loading screen.
+- `lib/features/home/presentation/`: main screen shell with logo and game title.
+- `assets/`: NDAS branding; empty sprite, tileset, map, audio and font folders.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
-- `android/`, `ios/`, `web/`: fresh Flutter platform scaffolds.
+- `android/`, `web/`: platform scaffolds with NDAS launcher/web icons.
+- `ios/`: unchanged platform scaffold.
 - `packages/game_core/`: planned pure Dart offline game package; not created yet.
 - `.claude/skills/`: source of project skills adapted from FlashKids.
 - `.agents/skills/`: relative symlinks to the same skills for Codex.
