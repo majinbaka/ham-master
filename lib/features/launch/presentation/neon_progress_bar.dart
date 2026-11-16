@@ -23,7 +23,7 @@ class _NeonBarPainter extends CustomPainter {
   final double progress;
 
   Path _bevel(Rect rect) {
-    const corner = 7.0;
+    final corner = (rect.height / 2).clamp(0.0, 7.0);
     return Path()
       ..moveTo(rect.left + corner, rect.top)
       ..lineTo(rect.right - corner, rect.top)

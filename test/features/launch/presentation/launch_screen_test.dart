@@ -7,6 +7,45 @@ import 'package:pixel_rpg/features/launch/presentation/launch_screen.dart';
 import 'package:pixel_rpg/features/launch/presentation/neon_progress_bar.dart';
 
 void main() {
+  for (final size in [
+    const Size(390, 844),
+    const Size(320, 568),
+    const Size(844, 390),
+    const Size(1440, 900),
+  ]) {
+    testWidgets('centers logo and loading inside the middle cell at $size', (
+      tester,
+    ) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        MaterialApp(home: LaunchScreen(onComplete: () {})),
+      );
+      final logo = tester.getRect(find.byType(Image));
+      final bar = tester.getRect(find.byType(NeonProgressBar));
+      final label = tester.getRect(find.text('Loading...'));
+      final group = logo.expandToInclude(bar).expandToInclude(label);
+      final cell = Rect.fromLTWH(
+        size.width / 3,
+        size.height / 3,
+        size.width / 3,
+        size.height / 3,
+      );
+      expect(logo.center.dx, closeTo(size.width / 2, 0.01));
+      expect(bar.center.dx, closeTo(logo.center.dx, 0.01));
+      expect(label.center.dx, closeTo(logo.center.dx, 0.01));
+      expect(group.center.dy, closeTo(size.height / 2, 0.01));
+      expect(group.left, greaterThanOrEqualTo(cell.left - 0.01));
+      expect(group.right, lessThanOrEqualTo(cell.right + 0.01));
+      expect(group.top, greaterThanOrEqualTo(cell.top - 0.01));
+      expect(group.bottom, lessThanOrEqualTo(cell.bottom + 0.01));
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+    });
+  }
+
   testWidgets('fills over three seconds then replaces launch with home', (
     tester,
   ) async {

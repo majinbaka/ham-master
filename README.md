@@ -76,6 +76,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Riverpod cho state/DI; go_router với `/` (launch) và `/home` (màn hình chính).
 - Loading nền đen với logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính có logo và tên Pixel RPG.
+  Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
+  vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route và bố cục nhỏ.
