@@ -100,6 +100,14 @@ test/widget_test.dart
 Thêm feature dưới `lib/features/<feature>/`; chỉ tạo các lớp presentation,
 application, domain, infrastructure khi có code thực tế cần sở hữu.
 
+## Tài liệu concept artwork
+
+[Concept khung UI pixel RPG tái sử dụng](docs/art/reusable-ui-concept.md)
+phân tích ảnh mẫu do người dùng cung cấp, tách các khung/panel/nút thành
+component và cung cấp prompt để generate từng phần về sau. Đây là tài liệu
+định hướng hình ảnh, chưa triển khai UI hay tạo asset; không bao gồm nhân vật,
+quái hoặc tranh khung cảnh. Palette và kích thước trong tài liệu là đề xuất.
+
 ## Skills kế thừa
 
 17 skills từ FlashKids được chuyển và điều chỉnh cho repo game. Nguồn ở
