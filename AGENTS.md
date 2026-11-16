@@ -49,8 +49,8 @@ and a yellow character placeholder. Do not implement gameplay unless requested.
 - `lib/app/`: app composition, router and theme.
 - `lib/features/launch/presentation/`: three-second neon loading screen.
 - `lib/features/home/presentation/`: pixel home UI, fixed-proportion edge/center-anchored
-  HUD/panels/navigation and reusable nine-slice sprite frames.
-- `assets/`: NDAS branding and `ui/` frame atlas; empty character sprite, tileset,
+  HUD/panels/navigation, reusable nine-slice sprite frames and pixel icons.
+- `assets/`: NDAS branding and `ui/` frame and icon atlases; empty character sprite, tileset,
   map, audio and font folders.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
 - `android/`, `web/`: platform scaffolds with NDAS launcher/web icons.

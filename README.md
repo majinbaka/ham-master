@@ -90,7 +90,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
   lớn UI. Vùng an toàn được áp dụng khi đặt các cụm. Nhãn nằm trong slot cố định;
   hộp thông tin vẫn dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
   Khung dùng sprite 9-slice: góc giữ hình, cạnh và nền co giãn; sáu skin dùng
-  chung atlas trong `assets/ui/`. Chữ/icon là widget riêng. Chỉ mục điều hướng
+  chung atlas trong `assets/ui/`. Chữ là widget riêng; 18 icon dùng atlas pixel art
+  nền trong suốt, cùng palette với khung. Chỉ mục điều hướng
   đang chọn có tấm nền vàng, các mục còn lại nằm trên khay chung.
   Nút thông tin giải thích phạm vi bản dựng; các mục gameplay ghi rõ chưa mở,
   chỉ số chưa có dùng dấu `—`.

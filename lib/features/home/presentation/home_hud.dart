@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'pixel_frame.dart';
+import 'pixel_icon.dart';
 
 /// Fixed 470 × 118 design units; anchored independently of resource counters.
 class HomeProfile extends StatelessWidget {
@@ -80,45 +81,28 @@ class HomeResources extends StatelessWidget {
       const Row(
         children: [
           Expanded(
-            child: _Counter(
-              icon: Icons.toll,
-              label: 'Vàng',
-              color: PixelUiColors.gold,
-            ),
+            child: _Counter(icon: PixelIconKind.coin, label: 'Vàng'),
           ),
           SizedBox(width: 12),
           Expanded(
-            child: _Counter(
-              icon: Icons.diamond_outlined,
-              label: 'Ngọc',
-              color: PixelUiColors.cyan,
-            ),
+            child: _Counter(icon: PixelIconKind.gem, label: 'Ngọc'),
           ),
         ],
       ),
       const SizedBox(height: 8),
       const SizedBox(
         width: 250,
-        child: _Counter(
-          icon: Icons.bolt,
-          label: 'Năng lượng',
-          color: PixelUiColors.gold,
-        ),
+        child: _Counter(icon: PixelIconKind.energy, label: 'Năng lượng'),
       ),
     ],
   );
 }
 
 class _Counter extends StatelessWidget {
-  const _Counter({
-    required this.icon,
-    required this.label,
-    required this.color,
-  });
+  const _Counter({required this.icon, required this.label});
 
-  final IconData icon;
+  final PixelIconKind icon;
   final String label;
-  final Color color;
 
   @override
   Widget build(BuildContext context) => Semantics(
@@ -131,7 +115,7 @@ class _Counter extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
         child: Row(
           children: [
-            Icon(icon, color: color, size: 32),
+            PixelIcon(icon, size: 32),
             const SizedBox(width: 12),
             const Expanded(child: PixelLabel('—', fontSize: 28)),
           ],

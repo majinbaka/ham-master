@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'pixel_frame.dart';
+import 'pixel_icon.dart';
 
 class HomeDialogue extends StatelessWidget {
   const HomeDialogue({super.key});
@@ -68,9 +69,9 @@ class HomeActions extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       for (final item in const [
-        (Icons.chat_bubble_outline, 'Nói chuyện'),
-        (Icons.search, 'Quan sát'),
-        (Icons.travel_explore, 'Tìm kiếm'),
+        (PixelIconKind.talk, 'Nói chuyện'),
+        (PixelIconKind.observe, 'Quan sát'),
+        (PixelIconKind.search, 'Tìm kiếm'),
       ])
         SizedBox(
           width: 260,
@@ -84,7 +85,7 @@ class HomeActions extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(item.$1, size: 42, color: PixelUiColors.cool),
+                  PixelIcon(item.$1, size: 42),
                   const SizedBox(height: 6),
                   SizedBox(
                     height: 30,

@@ -2,7 +2,10 @@
 
 - `ui/frame-atlas.png`: six nine-slice UI frame skins, 1536 × 1024 RGBA.
   Built-in ImageGen artwork; measured regions, slice caps and generation prompt
-  are documented in [`ui/README.md`](ui/README.md). Text/icons remain Flutter widgets.
+  are documented in [`ui/README.md`](ui/README.md). Text remains a Flutter widget; icons use the separate atlas below.
+- `ui/icon-atlas.png`: 18 transparent pixel RPG UI icons, 1536 × 1024 RGBA.
+  Generated with built-in ImageGen; regions, order and prompt are documented
+  in [`ui/README.md`](ui/README.md). Render with `FilterQuality.none`.
 - `sprites/`: characters, enemies, effects.
 - `tilesets/`: terrain and environment tiles.
 - `maps/`: authored map data.

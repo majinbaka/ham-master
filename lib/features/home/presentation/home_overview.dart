@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'pixel_frame.dart';
+import 'pixel_icon.dart';
 
 /// Quest panels always stay stacked at the left edge, as in the reference.
 class HomeQuests extends StatelessWidget {
@@ -18,7 +19,7 @@ class HomeQuests extends StatelessWidget {
           title: 'Nhiệm vụ chính',
           message: 'Chưa có nhiệm vụ',
           accent: PixelUiColors.gold,
-          icon: Icons.auto_stories_outlined,
+          icon: PixelIconKind.quest,
         ),
       ),
       SizedBox(height: 16),
@@ -29,7 +30,7 @@ class HomeQuests extends StatelessWidget {
           title: 'Nhiệm vụ phụ',
           message: 'Chưa có nhiệm vụ phụ',
           accent: PixelUiColors.cyan,
-          icon: Icons.bookmark_border,
+          icon: PixelIconKind.bookmark,
         ),
       ),
     ],
@@ -52,13 +53,7 @@ class HomeMinimap extends StatelessWidget {
             label: 'Bản đồ chưa mở',
             child: const ColoredBox(
               color: Colors.black,
-              child: Center(
-                child: Icon(
-                  Icons.lock_outline,
-                  color: PixelUiColors.cool,
-                  size: 36,
-                ),
-              ),
+              child: Center(child: PixelIcon(PixelIconKind.lock, size: 36)),
             ),
           ),
         ),
@@ -78,7 +73,7 @@ class _QuestPanel extends StatelessWidget {
   final String title;
   final String message;
   final Color accent;
-  final IconData icon;
+  final PixelIconKind icon;
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -112,7 +107,7 @@ class _QuestPanel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           child: Row(
             children: [
-              Icon(icon, size: 32, color: accent),
+              PixelIcon(icon, size: 32),
               const SizedBox(width: 10),
               Expanded(
                 child: PixelLabel(
@@ -137,9 +132,9 @@ class HomeUtilities extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     children: [
       for (final icon in const [
-        Icons.mail_outline,
-        Icons.assignment_outlined,
-        Icons.info_outline,
+        PixelIconKind.mail,
+        PixelIconKind.tasks,
+        PixelIconKind.info,
       ])
         Expanded(
           child: ExcludeSemantics(
@@ -148,7 +143,7 @@ class HomeUtilities extends StatelessWidget {
               child: PixelFrame(
                 skin: PixelFrameSkin.cool,
                 padding: const EdgeInsets.all(8),
-                child: Icon(icon, size: 42, color: PixelUiColors.cream),
+                child: PixelIcon(icon, size: 42),
               ),
             ),
           ),

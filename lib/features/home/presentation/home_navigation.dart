@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'pixel_frame.dart';
+import 'pixel_icon.dart';
 
 /// Six fixed slots in one row, independent of the viewport's aspect ratio.
 class HomeNavigation extends StatelessWidget {
   const HomeNavigation({super.key});
 
   static const _items = [
-    (Icons.home_outlined, 'Trang chủ'),
-    (Icons.explore_outlined, 'Khám phá'),
-    (Icons.pets_outlined, 'Quái thú'),
-    (Icons.shield_outlined, 'Chiến đấu'),
-    (Icons.backpack_outlined, 'Túi đồ'),
-    (Icons.menu_book_outlined, 'Cốt truyện'),
+    (PixelIconKind.home, 'Trang chủ'),
+    (PixelIconKind.compass, 'Khám phá'),
+    (PixelIconKind.beasts, 'Quái thú'),
+    (PixelIconKind.battle, 'Chiến đấu'),
+    (PixelIconKind.backpack, 'Túi đồ'),
+    (PixelIconKind.story, 'Cốt truyện'),
   ];
 
   @override
@@ -34,13 +35,7 @@ class HomeNavigation extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      _items[i].$1,
-                      size: 58,
-                      color: i == 0
-                          ? PixelUiColors.outline
-                          : PixelUiColors.cool,
-                    ),
+                    PixelIcon(_items[i].$1, size: 58),
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 32,

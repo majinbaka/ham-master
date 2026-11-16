@@ -11,7 +11,8 @@ bậc pixel và cách ghép sprite 9-slice bằng Flutter: HUD, nhiệm vụ tr�
 lời chào, ba nút hành động và thanh chức năng. Sau loading 3 giây, app chuyển
 sang màn hình này. Cảnh dùng nền đen, nhân vật là khối vàng tạm theo yêu cầu;
 chưa triển khai gameplay. Khung dùng atlas bitmap sáu skin: cream, cool, gold,
-cyan, paper và selected; chữ/icon là lớp riêng. `PixelFrame` ghép bốn góc,
+cyan, paper và selected; chữ/icon là lớp riêng. Icon hiện dùng atlas pixel art
+18 hình nền trong suốt trong `assets/ui/icon-atlas.png`, độc lập với atlas khung. `PixelFrame` ghép bốn góc,
 bốn cạnh và nền từ atlas; góc giữ hình khi đổi kích thước widget.
 Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
 [assets/ui/README.md](../../assets/ui/README.md). Đây là bộ khung chung đầu tiên;

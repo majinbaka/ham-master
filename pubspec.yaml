@@ -22,3 +22,4 @@ flutter:
   assets:
     - assets/branding/ndas-logo.png
     - assets/ui/frame-atlas.png
+    - assets/ui/icon-atlas.png
