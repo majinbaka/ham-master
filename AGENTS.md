@@ -4,6 +4,44 @@ Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. The only runtime behavior is a
 launch screen. Do not implement gameplay unless requested.
 
+## Agreed product scope and offline package boundary
+
+- Android and web are supported product targets. Design mobile-first with touch
+  controls and layouts usable on phone-sized screens. Web supports complete
+  implemented game flows. iOS remains scaffold-only and outside the agreed scope.
+- Build a genuinely playable offline game before extracting a separate API.
+  Implement real game operations and state transitions in a pure Dart package
+  at `packages/game_core/`, not hard-coded JSON responses or a mock API.
+  This is a planned package; create it when the first requested flow needs it.
+- `game_core` owns authoritative game models, rules, use cases, validation and
+  state transitions. It must not depend on Flutter, Riverpod, rendering engines,
+  transport, platform-only I/O or app internals. Client features own presentation
+  and orchestration, not duplicate implementations of core game rules.
+- Expose an explicit asynchronous service boundary with immutable commands,
+  results and errors that can be serialized later. Keep core internals private;
+  never share mutable game state with UI or controllers. Do not add HTTP or a
+  separate contracts package before concrete integration needs it.
+- Feature application code depends on client-facing ports. Infrastructure
+  adapters call `game_core`; `lib/app/` injects them. Widgets and controllers
+  must not call core implementations directly. Later an HTTP adapter can replace
+  the local adapter behind the same ports.
+- The core defines storage ports as needed; platform adapters implement local
+  saves for Android and web. Offline progress must survive app restart when
+  progression is introduced. Keep storage technology and serialization details
+  outside core rules. JSON may encode content or saves, but is not a substitute
+  for actual game behavior. No storage system is implemented yet.
+- Make tests controllable through injected clock, randomness and storage when
+  needed. Test real state transitions, validation, failures and save/restore
+  with deterministic inputs. Verify implemented flows offline on Android and
+  web. Test fixtures and reset/seed helpers must not become production cheats.
+- Future extraction moves authoritative processing behind an API; reuse the
+  Dart core if the backend supports it, otherwise preserve behavior with the
+  same scenarios and contracts. Keep offline support as the agreed game mode;
+  online sync, conflict resolution and anti-cheat are separate future decisions.
+  Backend language, hosting, authentication and endpoints remain undecided.
+- This scope update defines ownership only. Do not implement speculative
+  gameplay, persistence, endpoints or empty packages.
+
 ## Repository map
 
 - `lib/main.dart`: bootstrap and `ProviderScope`.
@@ -12,6 +50,7 @@ launch screen. Do not implement gameplay unless requested.
 - `assets/`: empty sprite, tileset, map, audio and font folders.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
 - `android/`, `ios/`, `web/`: fresh Flutter platform scaffolds.
+- `packages/game_core/`: planned pure Dart offline game package; not created yet.
 - `.claude/skills/`: source of project skills adapted from FlashKids.
 - `.agents/skills/`: relative symlinks to the same skills for Codex.
 - `.claude/commands/`: `/dod` and `/defer`.
