@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
+import 'home_spacing.dart';
 import 'pixel_frame.dart';
+import 'pixel_frame_skin.dart' show PixelFrameArtwork;
 import 'pixel_icon.dart';
 
 /// Six fixed slots in one row, independent of the viewport's aspect ratio.
@@ -20,7 +22,7 @@ class HomeNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) => PixelFrame(
     skin: PixelFrameSkin.cool,
-    padding: const EdgeInsets.all(12),
+    padding: const EdgeInsets.all(HomeSpacing.small),
     child: Row(
       children: [
         for (var i = 0; i < _items.length; i++)
@@ -32,32 +34,35 @@ class HomeNavigation extends StatelessWidget {
               excludeSemantics: true,
               child: _NavigationSlot(
                 selected: i == 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PixelIcon(_items[i].$1, size: 58),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: 32,
-                      child: PixelLabel(
-                        _items[i].$2,
-                        fontSize: 25,
-                        color: i == 0
-                            ? PixelUiColors.outline
-                            : PixelUiColors.paper,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PixelIcon(_items[i].$1, size: 50),
+                      const SizedBox(height: HomeSpacing.small),
+                      SizedBox(
+                        height: 30,
+                        child: PixelLabel(
+                          _items[i].$2,
+                          fontSize: 25,
+                          color: i == 0
+                              ? PixelUiColors.outline
+                              : PixelUiColors.paper,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 22,
-                      child: i == 0
-                          ? null
-                          : const PixelLabel(
-                              'Chưa mở',
-                              fontSize: 16,
-                              color: PixelUiColors.cool,
-                            ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 20,
+                        child: i == 0
+                            ? null
+                            : const PixelLabel(
+                                'Chưa mở',
+                                fontSize: 16,
+                                color: PixelUiColors.cool,
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -75,11 +80,14 @@ class _NavigationSlot extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => selected
-      ? PixelFrame(
-          skin: PixelFrameSkin.selected,
-          padding: const EdgeInsets.all(6),
-          child: child,
-        )
-      : Padding(padding: const EdgeInsets.all(10), child: child);
+  Widget build(BuildContext context) => Stack(
+    fit: StackFit.expand,
+    children: [
+      if (selected)
+        const Positioned.fill(
+          child: PixelFrameArtwork(skin: PixelFrameSkin.selected),
+        ),
+      Padding(padding: const EdgeInsets.all(HomeSpacing.small), child: child),
+    ],
+  );
 }

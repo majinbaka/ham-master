@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
+import 'package:pixel_rpg/features/home/presentation/home_layout.dart';
+import 'package:pixel_rpg/features/home/presentation/home_spacing.dart';
+import 'package:pixel_rpg/features/home/presentation/home_footer.dart';
+import 'package:pixel_rpg/features/home/presentation/home_overview.dart';
+import 'package:pixel_rpg/features/home/presentation/pixel_frame.dart';
+import 'package:pixel_rpg/features/home/presentation/pixel_icon.dart';
 
 void main() {
   testWidgets('keeps reference groups visible and navigation on one row', (
@@ -21,6 +27,55 @@ void main() {
     final story = tester.getCenter(find.text('Cốt truyện'));
     expect(story.dy, closeTo(home.dy, 0.1));
     expect(story.dx, greaterThan(home.dx));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('centers button content and uses equal action gaps', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      MaterialApp(theme: appTheme, home: const HomeScreen()),
+    );
+    final frames = find.descendant(
+      of: find.byType(HomeActions),
+      matching: find.byType(PixelFrame),
+    );
+    final rects = <Rect>[];
+    for (final frame in frames.evaluate()) {
+      final finder = find.byWidget(frame.widget);
+      final rect = tester.getRect(finder);
+      rects.add(rect);
+      final content = find.descendant(
+        of: finder,
+        matching: find.byType(Column),
+      );
+      final icon = find.descendant(
+        of: finder,
+        matching: find.byType(PixelIcon),
+      );
+      expect(tester.getCenter(content).dx, closeTo(rect.center.dx, 0.01));
+      expect(tester.getCenter(content).dy, closeTo(rect.center.dy, 0.01));
+      expect(tester.getCenter(icon).dx, closeTo(rect.center.dx, 0.01));
+    }
+    final gap = HomeSpacing.gap * HomeLayout(const Size(390, 844)).scale;
+    expect(rects[1].left - rects[0].right, closeTo(gap, 0.01));
+    expect(rects[2].left - rects[1].right, closeTo(gap, 0.01));
+    final utilities = find.descendant(
+      of: find.byType(HomeUtilities),
+      matching: find.byType(PixelFrame),
+    );
+    for (final frame in utilities.evaluate()) {
+      final finder = find.byWidget(frame.widget);
+      final icon = find.descendant(
+        of: finder,
+        matching: find.byType(PixelIcon),
+      );
+      expect(tester.getCenter(icon), tester.getCenter(finder));
+    }
     expect(tester.takeException(), isNull);
   });
 
@@ -176,8 +231,10 @@ void main() {
         find.byKey(const ValueKey('home-profile')),
       );
       final nav = tester.getRect(find.byKey(const ValueKey('home-navigation')));
-      expect(profile.left, padding.left);
-      expect(profile.top, padding.top);
+      final layout = HomeLayout(size, deviceShortSide: size.shortestSide);
+      final edge = HomeSpacing.edge * layout.scale;
+      expect(profile.left, closeTo(padding.left + edge, 0.01));
+      expect(profile.top, closeTo(padding.top + edge, 0.01));
       expect(nav.bottom, lessThanOrEqualTo(size.height - padding.bottom));
       if (portrait != null) expect(profile.size, portrait.size);
       portrait = profile;

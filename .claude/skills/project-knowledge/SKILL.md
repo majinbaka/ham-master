@@ -20,6 +20,9 @@ and platform shells remain in place. NDAS
 branding is in `assets/branding/` with Android/web icons. Six frame skins share
 `assets/ui/frame-atlas.png`; corners keep their shape while edges/centers stretch.
 Text/icons remain separate widgets; only the selected navigation item has a plate.
+HomeSpacing defines a roughly 4 dp grid at a 390 dp short side, with 8 dp outer
+gutters/group gaps and compact footer gaps on short windows. Button content is
+centered, with identical content padding for selected/unselected navigation slots.
 Other asset folders remain empty. Separate implemented behavior from future ideas. There is no gameplay, game engine, save system, backend,
 Widgetbook, Patrol or localization. Do not reuse FlashKids product history as
 facts about this repository. Cite current files when answering.

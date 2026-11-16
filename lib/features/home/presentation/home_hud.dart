@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
+import 'home_spacing.dart';
 import 'pixel_frame.dart';
 import 'pixel_icon.dart';
 
-/// Fixed 470 × 118 design units; anchored independently of resource counters.
+/// Fixed 440 × 120 design units; anchored independently of resource counters.
 class HomeProfile extends StatelessWidget {
   const HomeProfile({super.key});
 
   @override
   Widget build(BuildContext context) => PixelFrame(
     skin: PixelFrameSkin.cool,
-    padding: const EdgeInsets.all(12),
+    padding: const EdgeInsets.all(HomeSpacing.small),
     child: Row(
       children: [
         const PixelFrame(
           skin: PixelFrameSkin.cool,
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(HomeSpacing.small),
           child: SizedBox(
             width: 58,
             height: 66,
             child: ColoredBox(color: PixelUiColors.gold),
           ),
         ),
-        const SizedBox(width: 14),
+        const SizedBox(width: HomeSpacing.small),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +38,7 @@ class HomeProfile extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: HomeSpacing.small),
               Row(
                 children: [
                   const SizedBox(
@@ -45,7 +46,7 @@ class HomeProfile extends StatelessWidget {
                     height: 24,
                     child: PixelLabel('EXP', fontSize: 24),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: HomeSpacing.small),
                   Expanded(
                     child: Semantics(
                       label: 'Kinh nghiệm chưa có',
@@ -83,13 +84,13 @@ class HomeResources extends StatelessWidget {
           Expanded(
             child: _Counter(icon: PixelIconKind.coin, label: 'Vàng'),
           ),
-          SizedBox(width: 12),
+          SizedBox(width: HomeSpacing.small),
           Expanded(
             child: _Counter(icon: PixelIconKind.gem, label: 'Ngọc'),
           ),
         ],
       ),
-      const SizedBox(height: 8),
+      const SizedBox(height: HomeSpacing.gap),
       const SizedBox(
         width: 250,
         child: _Counter(icon: PixelIconKind.energy, label: 'Năng lượng'),
@@ -112,12 +113,13 @@ class _Counter extends StatelessWidget {
       height: 50,
       child: PixelFrame(
         skin: PixelFrameSkin.cool,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             PixelIcon(icon, size: 32),
-            const SizedBox(width: 12),
-            const Expanded(child: PixelLabel('—', fontSize: 28)),
+            const SizedBox(width: HomeSpacing.small),
+            const PixelLabel('—', fontSize: 28),
           ],
         ),
       ),

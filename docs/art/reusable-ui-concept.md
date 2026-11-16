@@ -311,3 +311,20 @@ Checklist duyệt từng output:
 
 Kết quả mong muốn là **bộ khung rời, không chứa nội dung**, đủ để dựng nhiều
 màn hình cùng phong cách mà không phụ thuộc câu chuyện hoặc nhân vật trong ảnh.
+
+## 9. Quy ước spacing runtime mobile
+
+`HomeSpacing` là nguồn chung cho khoảng cách UI home. Lưới cơ sở 10 đơn vị
+artwork tương đương khoảng 4 dp ở chiều ngắn 390 dp; dùng 1 bước cho khoảng
+icon–nhãn và padding nội dung, 2 bước (khoảng 8 dp) cho lề vùng an toàn,
+khoảng giữa panel và giữa nút hành động. Không cần bám khoảng cách ảnh gốc.
+Viền sprite được tính riêng, không dùng độ dày viền làm khoảng cách layout.
+Các cụm trên được đặt tiếp nhau theo cạnh panel và gap, tránh tọa độ rời rạc.
+
+Footer dùng cùng khoảng 2 bước giữa hội thoại, hành động và điều hướng;
+cửa sổ thấp, hẹp không đủ chỗ đặt footer cạnh HUD dùng 1 bước. Các panel vẫn
+cùng kích thước khi xoay. Nội dung nút căn giữa cả cụm icon–nhãn–trạng thái,
+các ô điều hướng có padding và hàng nội dung giống nhau dù đang chọn hay chưa.
+Nút tiện ích căn giữa icon cả hai trục; counter và tab nhiệm vụ căn giữa cụm
+icon–chữ. Artwork có thể nhỏ hơn vùng chạm; nút thông tin hoạt động vẫn có
+vùng chạm ít nhất 48 dp. Không biến các placeholder thành chức năng gameplay.

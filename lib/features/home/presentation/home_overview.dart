@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
+import 'home_spacing.dart';
 import 'pixel_frame.dart';
 import 'pixel_icon.dart';
 
@@ -13,8 +14,8 @@ class HomeQuests extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       SizedBox(
-        width: 450,
-        height: 170,
+        width: 440,
+        height: 160,
         child: _QuestPanel(
           title: 'Nhiệm vụ chính',
           message: 'Chưa có nhiệm vụ',
@@ -22,10 +23,10 @@ class HomeQuests extends StatelessWidget {
           icon: PixelIconKind.quest,
         ),
       ),
-      SizedBox(height: 16),
+      SizedBox(height: HomeSpacing.gap),
       SizedBox(
         width: 414,
-        height: 118,
+        height: 100,
         child: _QuestPanel(
           title: 'Nhiệm vụ phụ',
           message: 'Chưa có nhiệm vụ phụ',
@@ -42,12 +43,12 @@ class HomeMinimap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => PixelFrame(
-    padding: const EdgeInsets.all(10),
+    padding: const EdgeInsets.all(HomeSpacing.small),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 38, child: PixelLabel('BẢN ĐỒ', fontSize: 27)),
-        const SizedBox(height: 8),
+        const SizedBox(height: HomeSpacing.small),
         Expanded(
           child: Semantics(
             label: 'Bản đồ chưa mở',
@@ -84,7 +85,7 @@ class _QuestPanel extends StatelessWidget {
           skin: accent == PixelUiColors.gold
               ? PixelFrameSkin.gold
               : PixelFrameSkin.cyan,
-          padding: const EdgeInsets.fromLTRB(18, 28, 18, 14),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: PixelLabel(
@@ -104,20 +105,23 @@ class _QuestPanel extends StatelessWidget {
           skin: accent == PixelUiColors.gold
               ? PixelFrameSkin.gold
               : PixelFrameSkin.cyan,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          child: Row(
-            children: [
-              PixelIcon(icon, size: 32),
-              const SizedBox(width: 10),
-              Expanded(
-                child: PixelLabel(
-                  title,
-                  color: accent,
-                  fontSize: 27,
-                  alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PixelIcon(icon, size: 32),
+                const SizedBox(width: HomeSpacing.small),
+                Flexible(
+                  child: PixelLabel(
+                    title,
+                    color: accent,
+                    fontSize: 27,
+                    alignment: Alignment.center,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -130,6 +134,7 @@ class HomeUtilities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
+    spacing: HomeSpacing.small,
     children: [
       for (final icon in const [
         PixelIconKind.mail,
@@ -138,13 +143,10 @@ class HomeUtilities extends StatelessWidget {
       ])
         Expanded(
           child: ExcludeSemantics(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: PixelFrame(
-                skin: PixelFrameSkin.cool,
-                padding: const EdgeInsets.all(8),
-                child: PixelIcon(icon, size: 42),
-              ),
+            child: PixelFrame(
+              skin: PixelFrameSkin.cool,
+              padding: const EdgeInsets.all(HomeSpacing.small),
+              child: Center(child: PixelIcon(icon, size: 40)),
             ),
           ),
         ),

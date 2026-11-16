@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
+import 'home_spacing.dart';
 import 'pixel_frame.dart';
 import 'pixel_icon.dart';
 
@@ -11,10 +12,10 @@ class HomeDialogue extends StatelessWidget {
   Widget build(BuildContext context) => Stack(
     children: [
       Positioned.fill(
-        top: 32,
+        top: 30,
         child: PixelFrame(
           skin: PixelFrameSkin.paper,
-          padding: const EdgeInsets.fromLTRB(28, 28, 28, 16),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
           child: const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -28,7 +29,7 @@ class HomeDialogue extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                 ),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: HomeSpacing.small),
               SizedBox(
                 height: 32,
                 child: PixelLabel(
@@ -43,12 +44,12 @@ class HomeDialogue extends StatelessWidget {
         ),
       ),
       const Positioned(
-        left: 32,
+        left: 30,
         top: 0,
         width: 260,
         height: 54,
         child: PixelFrame(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: PixelLabel(
             'Pixel RPG',
             fontSize: 28,
@@ -66,40 +67,44 @@ class HomeActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    spacing: HomeSpacing.gap,
     children: [
       for (final item in const [
         (PixelIconKind.talk, 'Nói chuyện'),
         (PixelIconKind.observe, 'Quan sát'),
         (PixelIconKind.search, 'Tìm kiếm'),
       ])
-        SizedBox(
-          width: 260,
-          height: 124,
-          child: Semantics(
-            enabled: false,
-            label: '${item.$2}, chưa mở',
-            excludeSemantics: true,
-            child: PixelFrame(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PixelIcon(item.$1, size: 42),
-                  const SizedBox(height: 6),
-                  SizedBox(
-                    height: 30,
-                    child: PixelLabel(item.$2, fontSize: 27),
+        Expanded(
+          child: SizedBox(
+            height: 120,
+            child: Semantics(
+              enabled: false,
+              label: '${item.$2}, chưa mở',
+              excludeSemantics: true,
+              child: PixelFrame(
+                padding: const EdgeInsets.all(HomeSpacing.small),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PixelIcon(item.$1, size: 40),
+                      const SizedBox(height: HomeSpacing.small),
+                      SizedBox(
+                        height: 26,
+                        child: PixelLabel(item.$2, fontSize: 27),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                        child: PixelLabel(
+                          'Chưa mở',
+                          fontSize: 15,
+                          color: PixelUiColors.cool,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 16,
-                    child: PixelLabel(
-                      'Chưa mở',
-                      fontSize: 15,
-                      color: PixelUiColors.cool,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

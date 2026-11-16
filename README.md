@@ -89,6 +89,10 @@ Android application ID: `com.jinshu.pixel_rpg`.
   chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
   lớn UI. Vùng an toàn được áp dụng khi đặt các cụm. Nhãn nằm trong slot cố định;
   hộp thông tin vẫn dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
+  Khoảng cách dùng lưới chung `HomeSpacing` khoảng 4 dp/bước: lề an toàn và
+  khoảng giữa cụm khoảng 8 dp, footer cửa sổ thấp dùng khoảng 4 dp. Nội dung
+  icon–chữ căn giữa trong nút, padding các ô điều hướng đồng nhất. Xem
+  [quy ước spacing](docs/art/reusable-ui-concept.md#9-quy-ước-spacing-runtime-mobile).
   Khung dùng sprite 9-slice: góc giữ hình, cạnh và nền co giãn; sáu skin dùng
   chung atlas trong `assets/ui/`. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt, cùng palette với khung. Chỉ mục điều hướng
