@@ -132,6 +132,10 @@ qua `PixelFrame`, với metadata và prompt trong
 [assets/ui/README.md](assets/ui/README.md). Nhân vật dùng khối vàng tạm trên nền đen; chưa có sprite, quái hoặc tranh khung cảnh. Các component chưa dùng vẫn
 là đề xuất cho các lần triển khai sau.
 
+[Khung layout Nhiệm vụ](docs/art/quest-layout.md) có ảnh dọc 853 × 1280,
+ghép từ atlas hiện tại để tham chiếu bố cục tab, danh sách chương và
+panel chi tiết. Đây là ảnh thiết kế, chưa phải màn hình trong app.
+
 ## Skills kế thừa
 
 17 skills từ FlashKids được chuyển và điều chỉnh cho repo game. Nguồn ở
