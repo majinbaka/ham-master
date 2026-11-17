@@ -67,7 +67,7 @@ void main() {
       await tester.tap(find.byTooltip('Thông tin màn hình'));
       await tester.pumpAndSettle();
       expect(find.byType(AlertDialog), findsOneWidget);
-      expect(find.textContaining('khối vàng trên nền đen'), findsOneWidget);
+      expect(find.textContaining('hình minh họa tĩnh'), findsOneWidget);
       await tester.tap(find.text('Đã hiểu'));
       await tester.pumpAndSettle();
       expect(find.byType(AlertDialog), findsNothing);

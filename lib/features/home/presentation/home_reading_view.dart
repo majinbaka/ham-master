@@ -5,7 +5,8 @@ import '../../../app/presentation/menu_button.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
 import '../../../app/presentation/scaled_artwork.dart';
 import '../../../app/presentation/game_chrome_layout.dart';
-import '../../../app/theme/pixel_ui_colors.dart';
+import '../../../app/presentation/traveler_portrait.dart';
+import '../../../app/presentation/village_backdrop.dart';
 import 'home_footer.dart';
 import 'home_overview.dart';
 
@@ -34,15 +35,16 @@ class HomeReadingView extends StatelessWidget {
         const HomeMinimap(),
         const SizedBox(
           height: 96,
-          child: Center(
-            child: SizedBox(
-              width: 30,
-              height: 54,
-              child: ColoredBox(
-                key: ValueKey('character-placeholder'),
-                color: PixelUiColors.gold,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(child: VillageBackdrop()),
+              SizedBox(
+                width: 30,
+                height: 54,
+                child: TravelerPortrait(key: ValueKey('character-placeholder')),
               ),
-            ),
+            ],
           ),
         ),
         const HomeDialogue(),

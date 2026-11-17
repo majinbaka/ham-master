@@ -2,8 +2,8 @@
 
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. Runtime behavior is a three-second
-NDAS loading screen followed by a pixel-styled home UI with a black scene
-and a yellow character placeholder. The home quest panel opens a read-only
+NDAS loading screen followed by a pixel-styled home UI with a static twilight village scene
+and a code-drawn pixel traveler portrait. The home quest panel opens a read-only
 quest layout with sample content. Connected story, shop, profile and settings
 menus are presentation-only previews. Do not implement gameplay unless requested.
 
@@ -57,7 +57,7 @@ menus are presentation-only previews. Do not implement gameplay unless requested
 - `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.
 - `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
   spacing, navigation, menu shell, panels, buttons, grids, preview and progress.
-- `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork; empty character sprite, tileset,
+- `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork; static village illustration in `scenes/`; empty character sprite, tileset,
   map and audio folders; bundled Roboto fonts and license in `assets/fonts/`.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
 - `android/`, `web/`: platform scaffolds with NDAS launcher/web icons.

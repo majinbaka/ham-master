@@ -82,11 +82,11 @@ Android application ID: `com.jinshu.pixel_rpg`.
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
 - Màn hình chính dùng khung tím than chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
-  panel nhiệm vụ, lời chào và thanh chức năng. Cảnh nền đen, nhân vật là khối
-  vàng tạm. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
+  panel nhiệm vụ, lời chào và thanh chức năng. Cảnh làng pixel hoàng hôn, nhân vật minh họa đội mũ
+  vàng. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
   tài nguyên và minimap neo phải; hội thoại, ba nút hành động và thanh sáu mục
   một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
-  chỉ thay vị trí neo và mở rộng nền đen ở cỡ chữ thường. Nội dung chữ
+  chỉ thay vị trí neo và mở rộng tranh nền ở cỡ chữ thường. Nội dung chữ
   xuống dòng theo chỗ trống.
   Kích thước chuẩn tương ứng chiều ngắn 390 dp; thiết bị nhỏ hơn dùng một hệ số
   chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
@@ -169,7 +169,7 @@ phân tích ảnh mẫu do người dùng cung cấp, tách các khung/panel/nú
 component và cung cấp prompt để generate từng phần về sau. Đây là tài liệu
 định hướng hình ảnh; màn hình chính dùng khung code với sáu skin màu chung
 qua `PixelFrame`, với metadata và prompt trong
-[assets/ui/README.md](assets/ui/README.md). Nhân vật dùng khối vàng tạm trên nền đen; chưa có sprite, quái hoặc tranh khung cảnh. Các component chưa dùng vẫn
+[assets/ui/README.md](assets/ui/README.md). Nhân vật minh họa được vẽ bằng code; tranh làng pixel tĩnh nằm trong `assets/scenes/`. Chưa có sprite chuyển động hoặc quái. Các component chưa dùng vẫn
 là đề xuất cho các lần triển khai sau.
 
 [Khung layout Nhiệm vụ](docs/art/quest-layout.md) có ảnh dọc 853 × 1280,

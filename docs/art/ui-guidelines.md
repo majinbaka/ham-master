@@ -23,7 +23,7 @@ Icon vẫn dùng atlas pixel trong suốt, nearest-neighbor và giữ đúng t�
 chiếu vẫn đúng 2/8 dp như các panel bố trí trực tiếp ở logical pixel.
 Không nhân viền/góc theo cỡ icon. Chữ nội dung Home/menu vẫn dùng dp.
 
-Palette giữ nguyên: cảnh đen, mặt khung tím than, chữ kem, điểm nhấn vàng/cyan.
+Palette giữ nguyên: cảnh làng hoàng hôn tím, mặt khung tím than, chữ kem, điểm nhấn vàng/cyan.
 Giấy kem dành cho nội dung đọc. Chỉ dùng `PixelUiColors`, `GameSurfaceStyle`
 và theme chung; không tự chọn radius/BorderSide hoặc tạo viền trang trí riêng
 ở feature. Icon không thêm nền hay viền riêng bên trong nút.
@@ -57,7 +57,7 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 
 - Áp dụng `SafeArea`. Profile neo trái, tài nguyên neo phải, navigation neo
   giữa đáy theo cùng `GameChromeLayout` ở cả Home và menu. Desktop không
-  phóng lớn HUD. Home vẫn là HUD phủ cảnh đen với nhân vật vàng tạm. Panel Home chừa
+  phóng lớn HUD. Home dùng HUD phủ tranh làng pixel tĩnh với nhà lữ hành đội mũ vàng. Panel Home chừa
   chiều cao cho chữ dp; hội thoại thu bề rộng trên điện thoại nhỏ để không
   đè panel bên khi xoay ngang. Khi hệ số chữ vượt 1.15, Home dùng cửa sổ
   nội dung cuộn của shell chung, giữ HUD/navigation tại cùng neo.
@@ -150,3 +150,12 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
    kích thước và projection; kiểm tra shape của nút/quay lại/dialog.
 6. Chạy format/analyze/test theo `AGENTS.md`. Thay đổi quy tắc dùng chung
    phải sửa component, regression test và tài liệu này trong cùng thay đổi.
+
+## Đợt làm đẹp RPG dễ thương
+
+Theo yêu cầu làm lại toàn bộ UI, Home dùng tranh làng hoàng hôn tạo bằng
+ImageGen; đây là cảnh minh họa, không phải bản đồ tương tác. Menu dùng cùng
+tranh nhưng phủ tím than 86% để chữ rõ. Nhân vật là portrait pixel vẽ bằng code,
+không có animation hoặc trạng thái gameplay. Giữ nguyên khung 2/8 dp, màu sẵn
+và neo HUD/navigation. Chạy `flutter test tool/preview_ui_test.dart` để cập nhật
+ảnh; thêm `--dart-define=EXTENDED=true` để rà đủ kích thước/chữ lớn.

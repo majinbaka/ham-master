@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../app/presentation/player_hud.dart';
+import '../../../app/presentation/village_backdrop.dart';
+import '../../../app/presentation/traveler_portrait.dart';
 import '../../../app/presentation/scaled_artwork.dart';
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'home_footer.dart';
@@ -37,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                 );
                 return Stack(
                   children: [
+                    const Positioned.fill(child: VillageBackdrop()),
                     _place(
                       'home-profile',
                       layout.profile,
@@ -67,13 +70,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Positioned.fromRect(
                       rect: layout.character,
-                      child: Semantics(
-                        label: 'Nhân vật tạm: khối màu vàng',
-                        image: true,
-                        child: const ColoredBox(
-                          key: ValueKey('character-placeholder'),
-                          color: PixelUiColors.gold,
-                        ),
+                      child: const TravelerPortrait(
+                        key: ValueKey('character-placeholder'),
                       ),
                     ),
                     _placeContent(
@@ -149,7 +147,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Chào mừng đến với Pixel RPG'),
         content: const SingleChildScrollView(
           child: Text(
-            'Đây là bản dựng giao diện màn hình chính. Nhân vật được thay tạm bằng khối vàng trên nền đen.\n\n'
+            'Đây là bản dựng giao diện màn hình chính. Cảnh làng và nhà lữ hành là hình minh họa tĩnh.\n\n'
             'Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt với dữ liệu mẫu, không lưu thay đổi. '
             'Bản đồ, tài nguyên và các chức năng gameplay chưa được mở.',
           ),

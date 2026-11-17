@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/pixel_ui_colors.dart';
 import '../theme/game_typography.dart';
 import 'game_chrome_layout.dart';
+import 'village_backdrop.dart';
 import 'game_spacing.dart';
 import 'pixel/pixel_frame.dart';
 import 'pixel_navigation.dart';
@@ -41,6 +42,7 @@ class MenuShell extends StatelessWidget {
           final gap = GameSpacing.gap * layout.scale;
           return Stack(
             children: [
+              const Positioned.fill(child: VillageBackdrop(dimmed: true)),
               Positioned.fromRect(
                 rect: layout.profile,
                 child: ScaledArtwork(

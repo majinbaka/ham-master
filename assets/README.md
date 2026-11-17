@@ -24,3 +24,11 @@
 The sprites, tilesets, maps, audio and fonts folders are empty. Register actual
 files/directories in `pubspec.yaml` when adding assets. Keep source dimensions and use `FilterQuality.none` for pixel
 textures; choose the logical resolution and tile size with the first game slice.
+
+- `scenes/twilight-village.png`: 1024 × 1536 static background generated with
+  built-in ImageGen for the cozy RPG UI refresh. No baked text or interactive
+  map data. Render with nearest-neighbor filtering and `BoxFit.cover`. Menus
+  use a dark plum overlay so the illustration does not compete with text.
+  Prompt: cute twilight woodland village, plum-roof cream cottages, golden
+  lanterns, cyan stream, lavender clearing, chunky crisp pixels; existing
+  plum/cream/gold/cyan palette; no characters, text, UI or logos.

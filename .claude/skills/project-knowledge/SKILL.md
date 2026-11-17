@@ -9,8 +9,8 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
 The app contains a three-second neon NDAS loading screen at `/`, a main screen
-at `/home` with shared code frames, HUD, empty quests, a black scene, a yellow
-character placeholder, welcome panel and navigation to sample menus.
+at `/home` with shared code frames, HUD, empty quests, a static twilight village, a code-drawn
+pixel traveler portrait, welcome panel and navigation to sample menus.
 The main quest panel opens the read-only `/home/quests` preview, which reuses
 shared code frames and the icon atlas for tabs, chapters, sample objectives and rewards.
 Story, shop, profile and settings previews live at `/home/story`, `/home/shop`,
@@ -33,7 +33,7 @@ the menu shell. HUD counters use the same unavailable placeholders as Home. Four
 design images and the atlas composition script are documented in `docs/art/menu-layouts.md`.
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
 when rotating: profile/stacked quests anchor left, resources/map anchor right,
-and dialogue/actions/single-row navigation anchor bottom-center. Only the black
+and dialogue/actions/single-row navigation anchor bottom-center. Only the village
 scene expands at normal text scale. Content copy wraps at logical sizes;
 large text uses the shared scrolling shell. One device scale accommodates
 smaller artwork; desktop does not enlarge it. Riverpod scope, go_router, theme
