@@ -31,6 +31,10 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     const screen = String.fromEnvironment('SCREEN');
     const extended = bool.fromEnvironment('EXTENDED');
+    const output = String.fromEnvironment(
+      'OUTPUT',
+      defaultValue: 'docs/art/runtime-preview',
+    );
     for (final size in [
       const Size(390, 844),
       if (extended) ...[
@@ -67,6 +71,11 @@ void main() {
           );
           await tester.pump(const Duration(milliseconds: 1500));
           await tester.runAsync(() async {
+            // PixelIcon paints an atlas directly rather than using Image widgets.
+            await precacheImage(
+              const AssetImage('assets/ui/icon-atlas.png'),
+              key.currentContext!,
+            );
             for (final element in find.byType(Image).evaluate()) {
               await precacheImage((element.widget as Image).image, element);
             }
@@ -83,9 +92,8 @@ void main() {
             final bytes = await image.toByteData(
               format: ui.ImageByteFormat.png,
             );
-            final file = File(
-              'docs/art/runtime-preview/${entry.key}$suffix.png',
-            );
+            final file = File('$output/${entry.key}$suffix.png');
+            await file.parent.create(recursive: true);
             await file.writeAsBytes(bytes!.buffer.asUint8List());
             image.dispose();
           });

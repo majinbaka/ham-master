@@ -23,6 +23,9 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(home: LaunchScreen(onComplete: () {})),
       );
+      final presents = tester.getRect(find.text('PRESENTS'));
+      // The brand caption stays on one visual line, even in the small cell.
+      expect(presents.width, greaterThan(presents.height * 2));
       final logo = tester.getRect(find.byType(Image));
       final bar = tester.getRect(find.byType(NeonProgressBar));
       final label = tester.getRect(find.text('Loading...'));

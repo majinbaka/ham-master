@@ -71,7 +71,8 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
   tạo vùng cuộn lồng cho từng panel. Không kéo panel chạm vào navigation.
 - `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
   (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
-- Chương Cốt truyện/Nhiệm vụ dùng `MenuGrid` mặc định: ô tối thiểu
+- Chương hiện tại của Cốt truyện/Nhiệm vụ luôn hiện; các chương khóa nằm
+  trong mục mở rộng với `MenuGrid` mặc định: ô tối thiểu
   `140 × hệ số chữ` dp (đo tại 13 dp), tối đa hai cột. Tránh một cột năm
   nút cao đẩy chi tiết ra quá xa. Hàng có nhãn khác số dòng vẫn căn đều.
 - Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ dùng ô tối thiểu
@@ -89,7 +90,7 @@ body/heading/value/panelTitle, không tự đặt font riêng. `PixelLabel` ch�
 cho HUD compact (giống nhau trên mọi màn), không dùng cho nhiệm vụ/hội thoại Home.
 Nội dung Home và menu đều 17 dp; tiêu đề panel đều 16 dp semibold.
 Tiêu đề panel xuống tối đa hai dòng và tăng chiều cao theo text scale, không
-co chữ bằng `FittedBox`. Launch giữ bố cục NDAS nhưng dùng cùng font.
+co chữ bằng `FittedBox`. Launch giữ bố cục NDAS/neon ba giây trên nền đen với quầng tím than nhẹ, dùng cùng font.
 Icon nội dung nổi bật dùng 48 dp, icon trong nút/phần thưởng/chỉ số dùng 36 dp;
 HUD giữ kích thước theo hệ tọa độ artwork. Material icon chỉ dùng cho ký hiệu
 hệ thống (quay lại, trạng thái chọn/hoàn thành), không thay atlas trang trí.
@@ -128,6 +129,7 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 
 | Màn | Tham chiếu |
 | --- | --- |
+| Khởi động NDAS | [launch.png](runtime-preview/launch.png) |
 | Home — mẫu chuẩn | [home.png](runtime-preview/home.png) |
 | Cốt truyện | [story.png](runtime-preview/story.png) |
 | Nhiệm vụ | [quests.png](runtime-preview/quests.png) |
@@ -183,3 +185,13 @@ Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trư
 Cài đặt mở nhóm Âm thanh để tránh trộn mọi điều khiển vào một trang dài.
 Âm lượng có tên bên trái, phần trăm vàng bên phải và track 8 dp. Công tắc
 dùng cả hàng nhãn làm vùng chạm; chữ được xuống dòng theo text scale.
+
+Portrait trong HUD dùng cùng nhà lữ hành với Home/Hồ sơ; kích thước slot HUD
+và placeholder tài nguyên vẫn giữ nguyên, không lấy chỉ số hồ sơ mẫu làm state.
+
+Thông báo đầu vùng cuộn rút gọn thành “Dữ liệu mẫu · Không lưu thay đổi” để
+nhường chỗ đọc khi chữ lớn. Caption thương hiệu và loading giữ một dòng,
+fit trong cụm NDAS; nội dung đọc của các menu vẫn tăng theo text scale.
+
+Ảnh tổng hợp tám màn: [overview.jpg](runtime-preview/overview.jpg).
+Kết quả kiểm tra đợt này: [cozy-ui-review.md](cozy-ui-review.md).

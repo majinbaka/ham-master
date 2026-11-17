@@ -76,7 +76,7 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Riverpod cho state/DI; go_router với `/` (launch), `/home` (màn hình chính)
   và `/home/quests` (bản xem trước Nhiệm vụ); các màn mẫu `/home/story`,
   `/home/shop`, `/home/profile`, `/home/settings` và `/home/story/episode`.
-- Loading nền đen với logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
+- Loading nền đen với quầng tím than nhẹ, logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.

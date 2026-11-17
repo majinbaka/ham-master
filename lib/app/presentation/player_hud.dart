@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/pixel_ui_colors.dart';
+import 'traveler_portrait.dart';
 import 'game_spacing.dart';
 import 'pixel/pixel_frame.dart';
 import 'pixel/pixel_icon.dart';
@@ -22,7 +22,9 @@ class PlayerHud extends StatelessWidget {
           child: SizedBox(
             width: 58,
             height: 66,
-            child: ColoredBox(color: PixelUiColors.gold),
+            child: Center(
+              child: SizedBox(width: 40, height: 66, child: TravelerPortrait()),
+            ),
           ),
         ),
         const SizedBox(width: GameSpacing.small),

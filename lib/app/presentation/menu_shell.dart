@@ -109,7 +109,7 @@ class MenuShell extends StatelessWidget {
                                 spacing: 8,
                                 children: [
                                   Text(
-                                    'BẢN XEM TRƯỚC · Dữ liệu mẫu · Không lưu thay đổi',
+                                    'Dữ liệu mẫu · Không lưu thay đổi',
                                     textAlign: TextAlign.center,
                                     style: GameTypography.caption.copyWith(
                                       color: PixelUiColors.cool,
