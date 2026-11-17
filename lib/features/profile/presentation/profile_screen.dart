@@ -4,6 +4,7 @@ import '../../../app/theme/game_typography.dart';
 
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
+import '../../../app/presentation/traveler_portrait.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -27,17 +28,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
       spacing: 8,
       children: [
         MenuPanel(
-          title: 'Nhà lữ hành · ID mẫu: 1004527',
+          title: 'Thẻ nhà lữ hành',
+          light: true,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 8,
             children: [
-              const PixelIcon(PixelIconKind.beasts, size: 48),
+              const SizedBox(width: 48, height: 80, child: TravelerPortrait()),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   spacing: 8,
                   children: [
+                    const Text('Nhà lữ hành', style: GameTypography.value),
+                    const Text('ID mẫu: 1004527'),
                     const Text('Cấp 12 · EXP 2.340 / 3.600 (65%)'),
                     const PixelProgress(value: .65, label: 'Kinh nghiệm mẫu'),
                     const Text('Nhà sưu tầm trên hành trình mới!'),
@@ -95,9 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             'Sổ sưu tầm mẫu',
             'Huy hiệu hành trình',
           ][_tab],
-          child: Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          child: MenuGrid(
             children: [
               for (final (name, icon)
                   in (_tab == 2
@@ -114,6 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 MenuButton(
                   label: name,
                   icon: icon,
+                  showLabel: true,
                   onPressed: () => showSampleDetail(
                     context,
                     name,

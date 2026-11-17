@@ -176,3 +176,6 @@ tiến độ 1/3, checkbox lớn và phần thưởng kèm tên/số lượng tr
 Cửa hàng dùng giấy kem cho lời chào, thẻ vật phẩm hiện icon + tên + giá mẫu +
 nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ lọc đi thẳng vào hàng
 đang chọn; các gói khác dùng cùng lưới thẻ có tên. Không có mua/thanh toán.
+
+Hồ sơ dùng thẻ giấy kem với portrait nhà lữ hành cùng Home, tên/ID mẫu và EXP.
+Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trước khi chạm.
