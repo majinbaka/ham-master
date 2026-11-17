@@ -172,3 +172,7 @@ xem trước. Nút về danh sách chương nằm sau lời thoại, giữ đư�
 
 Nhiệm vụ ưu tiên chương hiện tại, các chương khóa thu gọn. Mục tiêu mẫu có
 tiến độ 1/3, checkbox lớn và phần thưởng kèm tên/số lượng trong lưới hai cột.
+
+Cửa hàng dùng giấy kem cho lời chào, thẻ vật phẩm hiện icon + tên + giá mẫu +
+nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ lọc đi thẳng vào hàng
+đang chọn; các gói khác dùng cùng lưới thẻ có tên. Không có mua/thanh toán.

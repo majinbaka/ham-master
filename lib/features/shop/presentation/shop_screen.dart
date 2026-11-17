@@ -35,9 +35,14 @@ class _ShopScreenState extends State<ShopScreen> {
       spacing: 8,
       children: [
         const MenuPanel(
-          title: 'Chào nhà lữ hành!',
-          child: Text(
-            'Ghé xem vật phẩm cho chuyến đi sắp tới. Danh mục này chỉ dùng để thử giao diện.',
+          title: 'Tiệm nhỏ bên đường',
+          light: true,
+          child: Row(
+            spacing: 8,
+            children: [
+              PixelIcon(PixelIconKind.coin, size: 48),
+              Expanded(child: Text('Chọn chút hành trang cho chuyến đi mới.')),
+            ],
           ),
         ),
         Wrap(
@@ -52,33 +57,34 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
           ],
         ),
-        MenuPanel(
-          title: 'Gói khởi hành',
-          child: Row(
-            children: [
-              const PixelIcon(PixelIconKind.backpack, size: 48),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  spacing: 8,
-                  children: [
-                    const Text('300 ngọc · 30.000 vàng · 10 vật phẩm'),
-                    MenuButton(
-                      label: 'Xem gói mẫu',
-                      selected: true,
-                      onPressed: () => showSampleDetail(
-                        context,
-                        'Gói khởi hành',
-                        'Gói minh họa gồm tài nguyên và vật phẩm khởi hành.',
+        if (_category == 0)
+          MenuPanel(
+            title: 'Gói khởi hành',
+            child: Row(
+              children: [
+                const PixelIcon(PixelIconKind.backpack, size: 48),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: 8,
+                    children: [
+                      const Text('300 ngọc · 30.000 vàng · 10 vật phẩm'),
+                      MenuButton(
+                        label: 'Xem gói mẫu',
+                        selected: true,
+                        onPressed: () => showSampleDetail(
+                          context,
+                          'Gói khởi hành',
+                          'Gói minh họa gồm tài nguyên và vật phẩm khởi hành.',
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
         MenuPanel(
           title: 'Vật phẩm · ${_tabs[_category]}',
           child: MenuGrid(
@@ -88,6 +94,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   MenuButton(
                     label: '$name\n$price\nXem chi tiết',
                     icon: icon,
+                    showLabel: true,
                     onPressed: () => showSampleDetail(
                       context,
                       name,
@@ -99,9 +106,7 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
         MenuPanel(
           title: 'Gói đặc biệt',
-          child: Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          child: MenuGrid(
             children: [
               for (final name in [
                 'Gói sưu tầm',
@@ -111,6 +116,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 MenuButton(
                   label: name,
                   icon: PixelIconKind.backpack,
+                  showLabel: true,
                   onPressed: () => showSampleDetail(
                     context,
                     name,
