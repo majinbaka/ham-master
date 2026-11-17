@@ -29,4 +29,5 @@ trên màn hình hẹp.
 tranh, trạng thái nhiệm vụ và dữ liệu thưởng sẽ là các lớp riêng.
 PNG này dùng để duyệt bố cục. Màn `/home/quests` dựng khung và nội dung mẫu
 bằng widget và atlas rời. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
-Nhiệm vụ chính. Hai cột cuộn cùng nhau phía trên thanh điều hướng.
+Nhiệm vụ chính. Hai cột cuộn cùng nhau phía trên shell điều hướng dùng chung với
+[các menu mẫu khác](menu-layouts.md); thanh dưới nối sáu màn hình.

@@ -11,9 +11,10 @@ import 'home_overview.dart';
 
 /// Fixed-proportion game HUD over a scene that expands with the viewport.
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({this.onOpenQuests, super.key});
+  const HomeScreen({this.onOpenQuests, this.onNavigate, super.key});
 
   final VoidCallback? onOpenQuests;
+  final ValueChanged<String>? onNavigate;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -84,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                 'home-navigation',
                 layout.navigation,
                 layout.scale,
-                const HomeNavigation(),
+                HomeNavigation(onNavigate: onNavigate),
               ),
               // Keep the real control's hit target at least 48 logical pixels,
               // independently of the fixed-size artwork underneath it.
@@ -131,7 +132,7 @@ class HomeScreen extends StatelessWidget {
         content: const SingleChildScrollView(
           child: Text(
             'Đây là bản dựng giao diện màn hình chính. Nhân vật được thay tạm bằng khối vàng trên nền đen.\n\n'
-            'Có thể xem bố cục và dữ liệu mẫu trong mục Nhiệm vụ. '
+            'Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt với dữ liệu mẫu, không lưu thay đổi. '
             'Bản đồ, tài nguyên và các chức năng gameplay chưa được mở.',
           ),
         ),

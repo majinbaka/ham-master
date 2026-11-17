@@ -74,7 +74,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
 
 - Flutter một package; Android, iOS và web scaffolds tạo mới.
 - Riverpod cho state/DI; go_router với `/` (launch), `/home` (màn hình chính)
-  và `/home/quests` (bản xem trước Nhiệm vụ).
+  và `/home/quests` (bản xem trước Nhiệm vụ); các màn mẫu `/home/story`,
+  `/home/shop`, `/home/profile`, `/home/settings` và `/home/story/episode`.
 - Loading nền đen với logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
@@ -98,12 +99,17 @@ Android application ID: `com.jinshu.pixel_rpg`.
   chung atlas trong `assets/ui/`. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt, cùng palette với khung. Chỉ mục điều hướng
   đang chọn có tấm nền vàng, các mục còn lại nằm trên khay chung.
-  Nút thông tin giải thích phạm vi bản dựng; các mục gameplay ghi rõ chưa mở,
-  chỉ số chưa có dùng dấu `—`.
+  Nút thông tin giải thích phạm vi bản dựng; thanh dưới chuyển tới các màn
+  mẫu Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ, Cài đặt. Chỉ số Trang chủ
+  chưa có dùng dấu `—`.
 - Chọn **Xem nhiệm vụ** trong khung Nhiệm vụ chính để mở màn hình mẫu.
   Bốn tab nằm trên hai cột chương và chi tiết; nội dung cuộn bên trên
   thanh điều hướng. Nút quay lại và mục Trang chủ đều về màn hình chính.
   Chương, mục tiêu, tài nguyên và phần thưởng là dữ liệu minh họa cố định.
+- Cốt truyện mở hội thoại xem thử; Cửa hàng lọc danh mục và xem chi tiết;
+  Hồ sơ đổi tab sưu tầm/huy hiệu; Cài đặt đổi nhóm và thao tác thử slider,
+  switch, lựa chọn. Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
+  tiến trình hoặc lưu cấu hình. Nội dung cuộn trên thanh điều hướng cố định.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
   chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
@@ -121,6 +127,8 @@ lib/
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
   features/home/presentation/ # screen, HUD, panels, navigation, pixel frame
   features/quests/presentation/ # read-only quest preview
+  features/{story,shop,profile,settings}/presentation/ # interactive UI previews
+  app/presentation/ # shared menu shell and controls
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
 ```
@@ -141,6 +149,10 @@ là đề xuất cho các lần triển khai sau.
 [Khung layout Nhiệm vụ](docs/art/quest-layout.md) có ảnh dọc 853 × 1280,
 ghép từ atlas hiện tại để tham chiếu bố cục tab, danh sách chương và
 panel chi tiết. App dựng các vùng này bằng widget và atlas rời.
+
+[Bốn layout menu](docs/art/menu-layouts.md) có ảnh khung 1024 × 1536 cho
+Cốt truyện, Cửa hàng, Hồ sơ và Cài đặt, cùng cách tái tạo từ atlas hiện có
+và mô tả các luồng xem thử trong app.
 
 ## Skills kế thừa
 

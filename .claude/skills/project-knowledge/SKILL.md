@@ -10,9 +10,17 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
 The app contains a three-second neon NDAS loading screen at `/`, a main screen
 at `/home` with nine-slice sprite frames, HUD, empty quests, a black scene, a yellow
-character placeholder, welcome panel and unavailable navigation entries.
+character placeholder, welcome panel and navigation to sample menus.
 The main quest panel opens the read-only `/home/quests` preview, which reuses
 the frame and icon atlases for tabs, chapters, sample objectives and rewards.
+Story, shop, profile and settings previews live at `/home/story`, `/home/shop`,
+`/home/profile` and `/home/settings`. Story opens `/home/story/episode` without
+advancing progress; shop filters sample items and shows details; profile switches
+collection/badge tabs; settings controls change ephemeral local widget selections.
+No purchase, game progress, audio/device configuration or persistence occurs.
+The menus reuse `lib/app/presentation/` shell/controls and atlas assets, with
+scrolling content above fixed navigation. Four blank 2:3 design images and the
+atlas composition script are documented in `docs/art/menu-layouts.md`.
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
 when rotating: profile/stacked quests anchor left, resources/map anchor right,
 and dialogue/actions/single-row navigation anchor bottom-center. Only the black

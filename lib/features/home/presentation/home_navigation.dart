@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
+import '../../../app/presentation/menu_shell.dart';
 import 'home_spacing.dart';
 import 'pixel_frame.dart';
 import 'pixel_frame_skin.dart' show PixelFrameArtwork;
@@ -8,15 +9,11 @@ import 'pixel_icon.dart';
 
 /// Six fixed slots in one row, independent of the viewport's aspect ratio.
 class HomeNavigation extends StatelessWidget {
-  const HomeNavigation({super.key});
+  const HomeNavigation({this.onNavigate, super.key});
 
-  static const _items = [
-    (PixelIconKind.home, 'Trang chủ'),
-    (PixelIconKind.compass, 'Khám phá'),
-    (PixelIconKind.beasts, 'Quái thú'),
-    (PixelIconKind.battle, 'Chiến đấu'),
-    (PixelIconKind.backpack, 'Túi đồ'),
-    (PixelIconKind.story, 'Cốt truyện'),
+  final ValueChanged<String>? onNavigate;
+  static final _items = [
+    for (final (route, label, icon) in menuDestinations) (icon, label, route),
   ];
 
   @override
@@ -29,39 +26,46 @@ class HomeNavigation extends StatelessWidget {
           Expanded(
             child: Semantics(
               selected: i == 0,
-              enabled: i == 0,
-              label: '${_items[i].$2}${i == 0 ? '' : ', chưa mở'}',
-              excludeSemantics: true,
-              child: _NavigationSlot(
-                selected: i == 0,
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PixelIcon(_items[i].$1, size: 50),
-                      const SizedBox(height: HomeSpacing.small),
-                      SizedBox(
-                        height: 30,
-                        child: PixelLabel(
-                          _items[i].$2,
-                          fontSize: 25,
-                          color: i == 0
-                              ? PixelUiColors.outline
-                              : PixelUiColors.paper,
+              enabled: i == 0 || onNavigate != null,
+              label:
+                  '${_items[i].$2}${i == 0 || onNavigate != null ? '' : ', chưa mở'}',
+              excludeSemantics: false,
+              child: TextButton(
+                style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                onPressed: onNavigate == null
+                    ? null
+                    : () => onNavigate!(_items[i].$3),
+                child: _NavigationSlot(
+                  selected: i == 0,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PixelIcon(_items[i].$1, size: 50),
+                        const SizedBox(height: HomeSpacing.small),
+                        SizedBox(
+                          height: 30,
+                          child: PixelLabel(
+                            _items[i].$2,
+                            fontSize: 25,
+                            color: i == 0
+                                ? PixelUiColors.outline
+                                : PixelUiColors.paper,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                        child: i == 0
-                            ? null
-                            : const PixelLabel(
-                                'Chưa mở',
-                                fontSize: 16,
-                                color: PixelUiColors.cool,
-                              ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                          child: i == 0 || onNavigate != null
+                              ? null
+                              : const PixelLabel(
+                                  'Chưa mở',
+                                  fontSize: 16,
+                                  color: PixelUiColors.cool,
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
