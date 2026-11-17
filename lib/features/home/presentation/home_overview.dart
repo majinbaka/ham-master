@@ -1,58 +1,39 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/pixel_ui_colors.dart';
+import '../../../app/presentation/menu_panel.dart';
 import '../../../app/presentation/game_spacing.dart';
 import '../../../app/presentation/pixel/pixel_frame.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
 
-/// Quest panels always stay stacked at the left edge, as in the reference.
+/// Home and menus render copy at logical sizes, independently of artwork.
 class HomeQuests extends StatelessWidget {
   const HomeQuests({this.onOpen, super.key});
-
   final VoidCallback? onOpen;
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    spacing: 8,
     children: [
-      SizedBox(
-        width: 440,
-        height: 160,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            _QuestPanel(
+      Tooltip(
+        message: 'Mở Nhiệm vụ',
+        child: Semantics(
+          button: onOpen != null,
+          label: onOpen == null ? null : 'Mở Nhiệm vụ',
+          child: GestureDetector(
+            onTap: onOpen,
+            behavior: HitTestBehavior.opaque,
+            child: MenuPanel(
               title: 'Nhiệm vụ chính',
-              message: onOpen == null ? 'Chưa có nhiệm vụ' : 'Xem nhiệm vụ',
-              accent: PixelUiColors.gold,
-              icon: PixelIconKind.quest,
+              child: Text(onOpen == null ? 'Chưa có nhiệm vụ' : 'Xem nhiệm vụ'),
             ),
-            if (onOpen != null)
-              Positioned.fill(
-                child: Tooltip(
-                  message: 'Mở Nhiệm vụ',
-                  child: Semantics(
-                    label: 'Mở Nhiệm vụ',
-                    child: TextButton(
-                      onPressed: onOpen,
-                      child: const SizedBox.expand(),
-                    ),
-                  ),
-                ),
-              ),
-          ],
+          ),
         ),
       ),
-      const SizedBox(height: GameSpacing.gap),
-      const SizedBox(
-        width: 414,
-        height: 100,
-        child: _QuestPanel(
-          title: 'Nhiệm vụ phụ',
-          message: 'Chưa có nhiệm vụ phụ',
-          accent: PixelUiColors.cyan,
-          icon: PixelIconKind.bookmark,
-        ),
+      const MenuPanel(
+        title: 'Nhiệm vụ phụ',
+        child: Text('Chưa có nhiệm vụ phụ'),
       ),
     ],
   );
@@ -62,90 +43,18 @@ class HomeMinimap extends StatelessWidget {
   const HomeMinimap({super.key});
 
   @override
-  Widget build(BuildContext context) => PixelFrame(
-    padding: const EdgeInsets.all(GameSpacing.small),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(height: 38, child: PixelLabel('BẢN ĐỒ', fontSize: 36)),
-        const SizedBox(height: GameSpacing.small),
-        Expanded(
-          child: Semantics(
-            label: 'Bản đồ chưa mở',
-            child: const ColoredBox(
-              color: Colors.black,
-              child: Center(child: PixelIcon(PixelIconKind.lock, size: 36)),
-            ),
-          ),
+  Widget build(BuildContext context) => MenuPanel(
+    title: 'BẢN ĐỒ',
+    child: SizedBox(
+      height: 48,
+      child: ColoredBox(
+        color: Colors.black,
+        child: Semantics(
+          label: 'Bản đồ chưa mở',
+          child: Center(child: PixelIcon(PixelIconKind.lock, size: 24)),
         ),
-      ],
+      ),
     ),
-  );
-}
-
-class _QuestPanel extends StatelessWidget {
-  const _QuestPanel({
-    required this.title,
-    required this.message,
-    required this.accent,
-    required this.icon,
-  });
-
-  final String title;
-  final String message;
-  final Color accent;
-  final PixelIconKind icon;
-
-  @override
-  Widget build(BuildContext context) => Stack(
-    children: [
-      Positioned.fill(
-        top: 26,
-        child: PixelFrame(
-          skin: accent == PixelUiColors.gold
-              ? PixelFrameSkin.gold
-              : PixelFrameSkin.cyan,
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: PixelLabel(
-              message,
-              fontSize: 36,
-              alignment: Alignment.centerLeft,
-            ),
-          ),
-        ),
-      ),
-      Positioned(
-        left: 12,
-        top: 0,
-        width: 300,
-        height: 52,
-        child: PixelFrame(
-          skin: accent == PixelUiColors.gold
-              ? PixelFrameSkin.gold
-              : PixelFrameSkin.cyan,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                PixelIcon(icon, size: 40),
-                const SizedBox(width: GameSpacing.small),
-                Flexible(
-                  child: PixelLabel(
-                    title,
-                    color: accent,
-                    fontSize: 36,
-                    alignment: Alignment.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ],
   );
 }
 

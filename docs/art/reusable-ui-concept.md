@@ -23,7 +23,7 @@ Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
 chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bên dưới
 vẫn là định hướng cho những component chi tiết chưa tạo.
 
-Layout runtime của Trang chủ giữ kích thước và tỉ lệ từng cụm theo ảnh mẫu: hồ sơ/nhiệm vụ
+Ở cỡ chữ thường, Trang chủ giữ vị trí các cụm theo ảnh mẫu: hồ sơ/nhiệm vụ
 neo trái, tài nguyên/minimap neo phải, hội thoại/nút hành động/thanh dưới neo
 ở giữa. Nhiệm vụ luôn xếp dọc; minimap luôn hiện; sáu mục điều hướng luôn trên
 một hàng. Khi xoay ngang, các cụm dịch sang cạnh hoặc giữ trục giữa, không
@@ -31,8 +31,9 @@ kéo giãn hay thu nhỏ theo chiều cao. Nền đen nhận phần không gian 
 `HomeLayout` mở rộng `GameChromeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
 được chặn ở 390/940 và chỉ giảm theo chiều ngắn thiết bị nhỏ hơn 390 dp.
 Khoảng cách giữa các cụm được thu gọn trên cửa sổ thấp, hẹp; kích thước khung
-không đổi. Nhãn fit trong slot cố định, giữ toàn bộ nội dung cho semantics;
-hộp thông tin dùng text scaling bình thường.
+không đổi khi xoay. Chỉ nhãn HUD compact fit trong slot cố định. Nhiệm vụ,
+bản đồ và hội thoại dùng MenuPanel ở dp, cùng cỡ nội dung 17 dp và tiêu đề
+16 dp như menu. Chữ lớn hơn 1.15× dùng shell cuộn chung, giữ HUD/navigation.
 
 Ảnh tham chiếu: [Pixel Detective Office — Mira’s New Clue](../../Pixel%20Detective%20Office_%20Mira%E2%80%99s%20New%20Clue.png).
 Ảnh do người dùng cung cấp; đường dẫn cần giữ cùng repo để xem lại tham chiếu.
@@ -277,8 +278,9 @@ Các công thức dưới đây mô tả quan hệ giữa khung, không xác nh�
 | Tương tác | F11 hoặc F10 + các F14; không cần vòng dưới chân hoặc hình bàn tay. |
 | Điều hướng | F15 + F16 theo mục đang chọn + F07 nếu cần thông báo. |
 
-Ở màn hình chính hiện tại, panel giữ tỉ lệ và kích thước thiết kế; nhãn fit vào
-slot nội dung. Không đổi số hàng hoặc kéo giãn panel theo hướng màn hình. Khoảng chạm thuộc layout runtime,
+Ở màn hình chính, chỉ HUD và control artwork giữ slot thiết kế. Panel nội
+dung dùng chữ dp, xuống dòng và chừa chiều cao tương ứng; không thu nhỏ chữ
+để khớp artwork. Khoảng chạm thuộc layout runtime,
 có thể rộng hơn artwork. Chữ tiếng Việt dài/ngắn được bố trí riêng, không kéo
 giãn bitmap chữ hoặc ép toàn bộ UI thành một ảnh nền cố định.
 

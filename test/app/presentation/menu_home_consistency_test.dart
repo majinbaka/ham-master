@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/presentation/game_chrome_layout.dart';
 import 'package:pixel_rpg/app/presentation/menu_panel.dart';
@@ -14,6 +15,15 @@ import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
 import 'package:pixel_rpg/features/story/presentation/story_screen.dart';
+
+double renderedFontSize(WidgetTester tester, Finder text) {
+  final paragraph = tester.renderObject<RenderParagraph>(
+    find.descendant(of: text, matching: find.byType(RichText)),
+  );
+  final size = paragraph.text.style!.fontSize!;
+  return paragraph.textScaler.scale(size) *
+      paragraph.getTransformTo(null).getMaxScaleOnAxis();
+}
 
 void main() {
   for (final size in [
@@ -52,6 +62,16 @@ void main() {
             tester.element(find.text('Cấp —   Nhà lữ hành')),
           ).style.merge(homeLabel.style);
           expect(homeStyle.fontFamily, GameTypography.family);
+          final homeBodySize = renderedFontSize(
+            tester,
+            find.text('Chào mừng, nhà lữ hành!'),
+          );
+          final homeTitleSize = renderedFontSize(
+            tester,
+            find.text('Nhiệm vụ chính'),
+          );
+          expect(homeBodySize, closeTo(17 * textScale, 0.001));
+          expect(homeTitleSize, closeTo(16 * textScale, 0.001));
           final nav = tester.getRect(find.byType(PixelNavigation));
           final profile = tester.getRect(find.byType(PlayerHud));
           final resources = tester.getRect(find.byType(ResourceHud));
@@ -79,16 +99,41 @@ void main() {
               rectMoreOrLessEquals(nav, epsilon: 0.000001),
               reason: name,
             );
-            final menuText = find
-                .descendant(
-                  of: find.byType(MenuPanel).first,
-                  matching: find.byType(Text),
-                )
-                .first;
+            final menuText = name == 'quests'
+                ? find.text(
+                    'Ghé trại và tìm đường tới cổng làng. (Dữ liệu mẫu)',
+                  )
+                : find
+                      .descendant(
+                        of: find.byType(MenuPanel).first,
+                        matching: find.byType(Text),
+                      )
+                      .first;
             final menuStyle = DefaultTextStyle.of(
               tester.element(menuText),
             ).style.merge(tester.widget<Text>(menuText).style);
             expect(menuStyle.fontFamily, homeStyle.fontFamily, reason: name);
+            expect(
+              renderedFontSize(tester, menuText),
+              closeTo(homeBodySize, 0.001),
+              reason: '$name body',
+            );
+            final panel = tester.widget<MenuPanel>(
+              find.byType(MenuPanel).first,
+            );
+            expect(
+              renderedFontSize(
+                tester,
+                find
+                    .descendant(
+                      of: find.byType(MenuPanel).first,
+                      matching: find.text(panel.title!),
+                    )
+                    .last,
+              ),
+              closeTo(homeTitleSize, 0.001),
+              reason: '$name panel title',
+            );
             final panelFrame = find
                 .descendant(
                   of: find.byType(MenuPanel).first,

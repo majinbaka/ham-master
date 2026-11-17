@@ -74,4 +74,43 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'large Home copy scrolls to dialogue and information without moving navigation',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 568);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: appTheme,
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: TextScaler.linear(2)),
+            child: child!,
+          ),
+          home: const HomeScreen(),
+        ),
+      );
+      final nav = tester.getRect(find.byType(PixelNavigation));
+      await tester.ensureVisible(find.text('Hành trình mới đang chờ bạn.'));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Hành trình mới đang chờ bạn.').hitTestable(),
+        findsOneWidget,
+      );
+      await tester.ensureVisible(find.byTooltip('Thông tin màn hình'));
+      await tester.pumpAndSettle();
+      expect(tester.getRect(find.byType(PixelNavigation)), nav);
+      await tester.tap(find.byTooltip('Thông tin màn hình'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AlertDialog), findsOneWidget);
+      await tester.tap(find.text('Đã hiểu'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AlertDialog), findsNothing);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

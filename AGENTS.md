@@ -50,8 +50,8 @@ menus are presentation-only previews. Do not implement gameplay unless requested
 - `lib/main.dart`: bootstrap and `ProviderScope`.
 - `lib/app/`: app composition, router and theme.
 - `lib/features/launch/presentation/`: three-second neon loading screen.
-- `lib/features/home/presentation/`: home scene and fixed-proportion anchored
-  quest panels, minimap, dialogue and action placeholders.
+- `lib/features/home/presentation/`: home scene with anchored artwork, shared
+  logical-size quest/minimap/dialogue panels and large-text reflow.
 - `lib/app/presentation/pixel/`: shared atlas frames/icons, labels and artwork density.
 - `lib/features/quests/presentation/`: quest layout and fixed sample content.
 - `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.

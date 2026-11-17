@@ -34,8 +34,9 @@ design images and the atlas composition script are documented in `docs/art/menu-
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
 when rotating: profile/stacked quests anchor left, resources/map anchor right,
 and dialogue/actions/single-row navigation anchor bottom-center. Only the black
-scene expands; the home layout does not scroll, wrap or hide the minimap.
-One shared device scale accommodates smaller screens; desktop does not enlarge UI. Riverpod scope, go_router, theme
+scene expands at normal text scale. Content copy wraps at logical sizes;
+large text uses the shared scrolling shell. One device scale accommodates
+smaller artwork; desktop does not enlarge it. Riverpod scope, go_router, theme
 and platform shells remain in place. NDAS
 branding is in `assets/branding/` with Android/web icons. Six frame skins share
 `assets/ui/frame-atlas.png`; corners keep their shape while edges/centers stretch.
@@ -62,3 +63,10 @@ trong suốt, không nền/viền bọc icon; viền kem bo mềm chỉ thuộc 
 Font `GameRoboto` được đóng gói cùng app (regular/medium/bold và giấy phép),
 không phụ thuộc font hệ điều hành hoặc mạng. `GameTypography`/`appTheme` sở hữu
 kiểu chữ và shape nút chung; Home action dùng `MenuButton` như các menu.
+
+Home quest/minimap/dialogue use MenuPanel at logical sizes: body 17 dp,
+panel title 16 dp, matching menus after transforms. ScaledArtwork is limited
+to shared compact HUD and decorative controls; panel titles never fit down.
+HomeReadingView reflows Home in the shared scrolling shell above 1.15 text
+scale so larger copy is readable without moving HUD/navigation anchors.
+Widget tests load bundled GameRoboto and compare rendered font sizes.

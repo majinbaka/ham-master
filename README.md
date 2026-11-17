@@ -86,12 +86,16 @@ Android application ID: `com.jinshu.pixel_rpg`.
   vàng tạm. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
   tài nguyên và minimap neo phải; hội thoại, ba nút hành động và thanh sáu mục
   một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
-  chỉ thay vị trí neo và mở rộng nền đen; không wrap, kéo rộng panel hay cuộn.
+  chỉ thay vị trí neo và mở rộng nền đen ở cỡ chữ thường. Nội dung chữ
+  xuống dòng theo chỗ trống.
   Kích thước chuẩn tương ứng chiều ngắn 390 dp; thiết bị nhỏ hơn dùng một hệ số
   chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
-  lớn UI. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
+  lớn artwork. Chữ nhiệm vụ, bản đồ và hội thoại Home dùng `MenuPanel`
+  với cùng cỡ nội dung 17 dp/tiêu đề panel 16 dp như menu, không bị thu
+  nhỏ theo artwork. Chữ hệ thống lớn hơn 1.15× chuyển Home sang vùng nội
+  dung cuộn chung; HUD và navigation vẫn cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
   để giữ vùng chạm trên điện thoại nhỏ. Vùng an toàn được áp dụng khi đặt các
-  cụm. Nhãn nằm trong slot cố định;
+  cụm. Chỉ nhãn HUD compact nằm trong slot cố định;
   hộp thông tin vẫn dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
   Khoảng cách dùng lưới chung `GameSpacing` khoảng 4 dp/bước: lề an toàn và
   khoảng giữa cụm khoảng 8 dp, footer cửa sổ thấp dùng khoảng 4 dp. Nội dung

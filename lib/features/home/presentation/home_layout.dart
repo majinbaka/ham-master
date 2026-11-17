@@ -15,11 +15,16 @@ class HomeLayout extends GameChromeLayout {
   static const _edge = GameSpacing.edge;
   static const _gap = GameSpacing.gap;
 
-  Rect get quests => _rect(_edge, profile.bottom / scale + _gap, 440, 280);
+  Rect get quests =>
+      _rect(_edge, profile.bottom / scale + _gap, 440, 210 / scale);
   Rect get utilities =>
       _rect(_width - _edge - 280, resources.bottom / scale + _gap, 280, 80);
-  Rect get minimap =>
-      _rect(_width - _edge - 320, utilities.bottom / scale + _gap, 320, 216);
+  Rect get minimap => _rect(
+    _width - _edge - 320,
+    utilities.bottom / scale + _gap,
+    320,
+    112 / scale,
+  );
 
   // Half-grid gaps keep the centered footer clear of side panels on short
   // landscape windows, without changing any component's size on rotation.
@@ -32,17 +37,25 @@ class HomeLayout extends GameChromeLayout {
     840,
     120,
   );
+  double get _dialogueWidth => scale < 390 / 940 ? 700 : 860;
+
+  double get _dialogueHeight => scale < 390 / 940 ? 132 : 120;
+
   Rect get dialogue => _rect(
-    (_width - 860) / 2,
-    actions.top / scale - _footerGap - 160,
-    860,
-    160,
+    (_width - _dialogueWidth) / 2,
+    actions.top / scale - _footerGap - _dialogueHeight / scale,
+    _dialogueWidth,
+    _dialogueHeight / scale,
   );
 
   Rect get character {
-    final top = _width > _height ? 20.0 : minimap.bottom / scale + _gap;
+    final top = _width > _height
+        ? 20.0
+        : (quests.bottom > minimap.bottom ? quests.bottom : minimap.bottom) /
+                  scale +
+              _gap / 2;
     final bottom = dialogue.top / scale;
-    final centerY = top + (bottom - top) * 0.65;
+    final centerY = (top + bottom) / 2;
     return _rect((_width - 72) / 2, centerY - 64, 72, 128);
   }
 

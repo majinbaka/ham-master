@@ -13,7 +13,9 @@ chặn ở `390 / 940`. Góc khung 14 đơn vị vì thế chỉ còn khoảng *
 viền lớn hơn Home hơn hai lần và không đạt concept.
 
 `GameChromeLayout` tính cùng hệ số cho Home và menu, không phụ thuộc hướng
-xoay. `ScaledArtwork` dùng cho các cụm HUD có tỷ lệ cố định. Trong vùng menu,
+xoay. `ScaledArtwork` chỉ dùng cho HUD, tiện ích và nút hành động có tỷ lệ cố định.
+Nội dung nhiệm vụ, bản đồ và hội thoại Home dùng `MenuPanel` ở logical pixel,
+không đi qua phép thu nhỏ artwork. Trong vùng menu,
 `PixelArtScale` chỉ áp dụng hệ số này cho atlas và lề bảo vệ viền; chữ, nội
 dung và vùng chạm vẫn được bố trí ở logical pixel. Không scale cả trang menu
 để che lỗi overflow. Không scale hai lần: artwork bên trong `ScaledArtwork`
@@ -34,7 +36,7 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | Component | Vai trò và quy tắc |
 | --- | --- |
 | `pixel/PixelFrame`, `PixelFrameArtwork` | Atlas 9-slice; chỉ kéo cạnh/tâm, giữ góc theo `PixelArtScale`, nearest-neighbor, giữ alpha. |
-| `pixel/PixelIcon`, `PixelLabel` | Icon giữ ô vuông kể cả khi cha stretch, nhãn trong slot artwork cố định; không bake chữ vào bitmap. Nhãn đầy đủ vẫn có semantics. |
+| `pixel/PixelIcon`, `PixelLabel` | Icon giữ ô vuông kể cả khi cha stretch, nhãn HUD trong slot artwork cố định; không dùng cho nội dung/panel title, không bake chữ vào bitmap. Nhãn đầy đủ vẫn có semantics. |
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo profile, tài nguyên, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud`, `ResourceHud`, `ScaledArtwork` | Chính các cụm HUD của Home; cùng kích thước, tỷ lệ và placeholder `—` trên mọi màn. |
 | `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 18 dp; mục đang chọn có viền vàng và dấu tick. |
@@ -53,7 +55,10 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 
 - Áp dụng `SafeArea`. Profile neo trái, tài nguyên neo phải, navigation neo
   giữa đáy theo cùng `GameChromeLayout` ở cả Home và menu. Desktop không
-  phóng lớn HUD. Home vẫn là HUD phủ cảnh đen với nhân vật vàng tạm.
+  phóng lớn HUD. Home vẫn là HUD phủ cảnh đen với nhân vật vàng tạm. Panel Home chừa
+  chiều cao cho chữ dp; hội thoại thu bề rộng trên điện thoại nhỏ để không
+  đè panel bên khi xoay ngang. Khi hệ số chữ vượt 1.15, Home dùng cửa sổ
+  nội dung cuộn của shell chung, giữ HUD/navigation tại cùng neo.
 - Menu đặt nội dung dưới HUD và trên navigation, khoảng cách lấy từ
   `GameSpacing`: 10 đơn vị ≈ 4 dp, lề/gap 20 đơn vị ≈ 8 dp ở điện thoại 390.
   Vùng nội dung rộng tối đa 760 dp và căn giữa trên màn lớn.
@@ -78,8 +83,11 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 Toàn app dùng font `GameRoboto` đóng gói tại `assets/fonts/` (Roboto regular,
 medium và bold, kèm giấy phép), kể cả offline trên Android/web. `GameTypography`
 và `appTheme` sở hữu cỡ chữ, độ đậm và line height; feature chỉ chọn vai trò
-body/heading/value, không tự đặt font riêng. `PixelLabel` lấy cùng kiểu nhãn,
-chỉ thay cỡ theo slot artwork. Launch giữ bố cục NDAS nhưng dùng cùng font.
+body/heading/value/panelTitle, không tự đặt font riêng. `PixelLabel` chỉ dùng
+cho HUD compact (giống nhau trên mọi màn), không dùng cho nhiệm vụ/hội thoại Home.
+Nội dung Home và menu đều 17 dp; tiêu đề panel đều 16 dp semibold.
+Tiêu đề panel xuống tối đa hai dòng và tăng chiều cao theo text scale, không
+co chữ bằng `FittedBox`. Launch giữ bố cục NDAS nhưng dùng cùng font.
 Icon nội dung nổi bật dùng 48 dp, icon trong nút/phần thưởng/chỉ số dùng 36 dp;
 HUD giữ kích thước theo hệ tọa độ artwork. Material icon chỉ dùng cho ký hiệu
 hệ thống (quay lại, trạng thái chọn/hoàn thành), không thay atlas trang trí.
@@ -91,9 +99,11 @@ Nội dung menu 17 dp, line height 1.35; tiêu đề màn 22 dp đậm; tab tiê
 panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas giữ nền trong
 suốt và không có lớp nền/viền bọc riêng; các nút icon không hiện chữ, vẫn có
 tooltip và semantics.
-Home tăng chữ trong slot artwork và dùng ba nút hành động icon lớn, không có nhãn. Chữ dài trong nội dung và nút xuống dòng, tăng chiều cao và cuộn được.
-Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn ngắn trong slot cố
-định như HUD/tab tiêu đề; không fit cả nội dung đọc.
+Home dùng ba nút hành động icon lớn, không có nhãn; phần chữ nội dung không
+phụ thuộc hệ số artwork. Chữ dài trong nội dung và nút xuống dòng, tăng chiều cao và cuộn được.
+Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn HUD compact trong slot cố định; không fit tiêu đề
+panel hoặc nội dung đọc. Test đo cỡ chữ sau transform, không chỉ so font family.
+Widget test nạp đúng font GameRoboto đóng gói để kiểm tra wrap theo runtime.
 
 Navigation luôn có thứ tự: Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ,
 Cài đặt. Mục đang chọn có semantics, viền vàng và dấu tick; hội thoại thuộc Cốt truyện.

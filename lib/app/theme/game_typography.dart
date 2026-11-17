@@ -12,5 +12,10 @@ abstract final class GameTypography {
   static const heading = TextStyle(fontWeight: FontWeight.bold);
   static const value = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   static const label = TextStyle(fontSize: 17, fontWeight: FontWeight.w600);
+  static const panelTitle = TextStyle(
+    fontSize: 16,
+    height: 1.2,
+    fontWeight: FontWeight.w600,
+  );
   static const caption = TextStyle(fontSize: 14, height: 1.35);
 }
