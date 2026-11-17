@@ -179,3 +179,7 @@ nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ l
 
 Hồ sơ dùng thẻ giấy kem với portrait nhà lữ hành cùng Home, tên/ID mẫu và EXP.
 Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trước khi chạm.
+
+Cài đặt mở nhóm Âm thanh để tránh trộn mọi điều khiển vào một trang dài.
+Âm lượng có tên bên trái, phần trăm vàng bên phải và track 8 dp. Công tắc
+dùng cả hàng nhãn làm vùng chạm; chữ được xuống dòng theo text scale.

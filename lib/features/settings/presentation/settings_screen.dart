@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
+import '../../../app/theme/game_typography.dart';
+import '../../../app/theme/pixel_ui_colors.dart';
 
 /// Local widget selections demonstrate controls; no device or save settings.
 class SettingsScreen extends StatefulWidget {
@@ -13,7 +15,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  var _category = 'Chung';
+  var _category = 'Âm thanh';
   final _volumes = <String, double>{
     'Nhạc nền': 80,
     'Hiệu ứng âm thanh': 80,
@@ -39,10 +41,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         runSpacing: 4,
         children: [
           for (final category in [
-            'Chung',
-            'Điều khiển',
             'Âm thanh',
+            'Điều khiển',
             'Đồ họa',
+            'Chung',
             'Ngôn ngữ',
             'Tài khoản',
             'Thông tin',
@@ -65,15 +67,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (_category == 'Chung' || _category == 'Âm thanh') ...[
         const Text('Âm thanh · Điều chỉnh thử, chưa phát âm thanh'),
         for (final entry in _volumes.entries) ...[
-          Text('${entry.key}: ${entry.value.round()}%'),
-          Slider(
-            semanticFormatterCallback: (value) => '${value.round()} phần trăm',
-            value: entry.value,
-            min: 0,
-            max: 100,
-            divisions: 10,
-            label: '${entry.value.round()}%',
-            onChanged: (value) => setState(() => _volumes[entry.key] = value),
+          Row(
+            spacing: 8,
+            children: [
+              Expanded(child: Text(entry.key)),
+              Text(
+                '${entry.value.round()}%',
+                style: GameTypography.value.copyWith(color: PixelUiColors.gold),
+              ),
+            ],
+          ),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 8,
+              activeTrackColor: PixelUiColors.gold,
+              inactiveTrackColor: PixelUiColors.raised,
+              thumbColor: PixelUiColors.cream,
+            ),
+            child: Slider(
+              semanticFormatterCallback: (value) =>
+                  '${value.round()} phần trăm',
+              value: entry.value,
+              min: 0,
+              max: 100,
+              divisions: 10,
+              label: '${entry.value.round()}%',
+              onChanged: (value) => setState(() => _volumes[entry.key] = value),
+            ),
           ),
         ],
       ],
@@ -131,17 +151,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ],
   );
 
-  Widget _toggle(String label) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(label),
-      Semantics(
-        label: label,
-        child: Switch(
-          value: _toggles[label]!,
-          onChanged: (value) => setState(() => _toggles[label] = value),
-        ),
-      ),
-    ],
+  Widget _toggle(String label) => SwitchListTile(
+    contentPadding: EdgeInsets.zero,
+    title: Text(label),
+    activeThumbColor: PixelUiColors.gold,
+    activeTrackColor: PixelUiColors.raised,
+    value: _toggles[label]!,
+    onChanged: (value) => setState(() => _toggles[label] = value),
   );
 }

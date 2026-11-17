@@ -96,6 +96,9 @@ void main() {
     await tester.tap(toggle);
     await tester.pumpAndSettle();
     expect(tester.widget<Switch>(toggle).value, isFalse);
+    await tester.tap(find.text('Hiện vùng tương tác'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<Switch>(toggle).value, isTrue);
     expect(tester.takeException(), isNull);
   });
 
