@@ -11,7 +11,9 @@ import 'home_overview.dart';
 
 /// Fixed-proportion game HUD over a scene that expands with the viewport.
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({this.onOpenQuests, super.key});
+
+  final VoidCallback? onOpenQuests;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -41,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 'home-quests',
                 layout.quests,
                 layout.scale,
-                const HomeQuests(),
+                HomeQuests(onOpen: onOpenQuests),
               ),
               _place(
                 'home-utilities',
@@ -129,7 +131,8 @@ class HomeScreen extends StatelessWidget {
         content: const SingleChildScrollView(
           child: Text(
             'Đây là bản dựng giao diện màn hình chính. Nhân vật được thay tạm bằng khối vàng trên nền đen.\n\n'
-            'Nhiệm vụ, bản đồ, tài nguyên và các chức năng gameplay chưa được mở.',
+            'Có thể xem bố cục và dữ liệu mẫu trong mục Nhiệm vụ. '
+            'Bản đồ, tài nguyên và các chức năng gameplay chưa được mở.',
           ),
         ),
         actions: [

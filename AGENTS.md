@@ -3,7 +3,8 @@
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. Runtime behavior is a three-second
 NDAS loading screen followed by a pixel-styled home UI with a black scene
-and a yellow character placeholder. Do not implement gameplay unless requested.
+and a yellow character placeholder. The home quest panel opens a read-only
+quest layout with sample content. Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
 
@@ -50,6 +51,7 @@ and a yellow character placeholder. Do not implement gameplay unless requested.
 - `lib/features/launch/presentation/`: three-second neon loading screen.
 - `lib/features/home/presentation/`: pixel home UI, fixed-proportion edge/center-anchored
   HUD/panels/navigation, reusable nine-slice sprite frames and pixel icons.
+- `lib/features/quests/presentation/`: quest layout and fixed sample content.
 - `assets/`: NDAS branding and `ui/` frame and icon atlases; empty character sprite, tileset,
   map, audio and font folders.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.

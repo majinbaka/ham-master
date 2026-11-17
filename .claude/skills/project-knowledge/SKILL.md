@@ -11,6 +11,8 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 The app contains a three-second neon NDAS loading screen at `/`, a main screen
 at `/home` with nine-slice sprite frames, HUD, empty quests, a black scene, a yellow
 character placeholder, welcome panel and unavailable navigation entries.
+The main quest panel opens the read-only `/home/quests` preview, which reuses
+the frame and icon atlases for tabs, chapters, sample objectives and rewards.
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
 when rotating: profile/stacked quests anchor left, resources/map anchor right,
 and dialogue/actions/single-row navigation anchor bottom-center. Only the black

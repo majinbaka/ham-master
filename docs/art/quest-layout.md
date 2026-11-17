@@ -27,4 +27,6 @@ trên màn hình hẹp.
 9-slice: góc 56 px trong nguồn được thu còn 14 px trên canvas (giảm thêm
 đối với ô nhỏ), chỉ kéo phần cạnh và tâm bằng nearest-neighbor. Chữ, icon,
 tranh, trạng thái nhiệm vụ và dữ liệu thưởng sẽ là các lớp riêng.
-PNG này dùng để duyệt bố cục; app vẫn dùng atlas rời khi dựng UI.
+PNG này dùng để duyệt bố cục. Màn `/home/quests` dựng khung và nội dung mẫu
+bằng widget và atlas rời. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
+Nhiệm vụ chính. Hai cột cuộn cùng nhau phía trên thanh điều hướng.

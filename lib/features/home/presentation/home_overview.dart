@@ -7,24 +7,44 @@ import 'pixel_icon.dart';
 
 /// Quest panels always stay stacked at the left edge, as in the reference.
 class HomeQuests extends StatelessWidget {
-  const HomeQuests({super.key});
+  const HomeQuests({this.onOpen, super.key});
+
+  final VoidCallback? onOpen;
 
   @override
-  Widget build(BuildContext context) => const Column(
+  Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       SizedBox(
         width: 440,
         height: 160,
-        child: _QuestPanel(
-          title: 'Nhiệm vụ chính',
-          message: 'Chưa có nhiệm vụ',
-          accent: PixelUiColors.gold,
-          icon: PixelIconKind.quest,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            _QuestPanel(
+              title: 'Nhiệm vụ chính',
+              message: onOpen == null ? 'Chưa có nhiệm vụ' : 'Xem nhiệm vụ',
+              accent: PixelUiColors.gold,
+              icon: PixelIconKind.quest,
+            ),
+            if (onOpen != null)
+              Positioned.fill(
+                child: Tooltip(
+                  message: 'Mở Nhiệm vụ',
+                  child: Semantics(
+                    label: 'Mở Nhiệm vụ',
+                    child: TextButton(
+                      onPressed: onOpen,
+                      child: const SizedBox.expand(),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
-      SizedBox(height: HomeSpacing.gap),
-      SizedBox(
+      const SizedBox(height: HomeSpacing.gap),
+      const SizedBox(
         width: 414,
         height: 100,
         child: _QuestPanel(
