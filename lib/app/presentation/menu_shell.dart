@@ -4,7 +4,6 @@ import '../theme/pixel_ui_colors.dart';
 import '../theme/game_typography.dart';
 import 'game_chrome_layout.dart';
 import 'game_spacing.dart';
-import 'pixel/pixel_art_scale.dart';
 import 'pixel/pixel_frame.dart';
 import 'pixel_navigation.dart';
 import 'player_hud.dart';
@@ -40,103 +39,99 @@ class MenuShell extends StatelessWidget {
             deviceShortSide: MediaQuery.sizeOf(context).shortestSide,
           );
           final gap = GameSpacing.gap * layout.scale;
-          return PixelArtScale(
-            factor: layout.scale,
-            child: Stack(
-              children: [
-                Positioned.fromRect(
-                  rect: layout.profile,
-                  child: ScaledArtwork(
-                    size: const Size(440, 120),
-                    scale: layout.scale,
-                    child: const PlayerHud(),
-                  ),
+          return Stack(
+            children: [
+              Positioned.fromRect(
+                rect: layout.profile,
+                child: ScaledArtwork(
+                  size: const Size(440, 120),
+                  scale: layout.scale,
+                  child: const PlayerHud(),
                 ),
-                Positioned.fromRect(
-                  rect: layout.resources,
-                  child: ScaledArtwork(
-                    size: const Size(420, 120),
-                    scale: layout.scale,
-                    child: const ResourceHud(),
-                  ),
+              ),
+              Positioned.fromRect(
+                rect: layout.resources,
+                child: ScaledArtwork(
+                  size: const Size(420, 120),
+                  scale: layout.scale,
+                  child: const ResourceHud(),
                 ),
-                Positioned(
-                  left: gap,
-                  right: gap,
-                  top: layout.profile.bottom + gap,
-                  bottom: constraints.maxHeight - layout.navigation.top + gap,
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 760),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        spacing: 8,
-                        children: [
-                          Row(
-                            spacing: 8,
-                            children: [
-                              IconButton(
-                                tooltip: backLabel,
-                                onPressed: onBack ?? () => onNavigate('home'),
-                                icon: const Icon(Icons.arrow_back, size: 30),
-                              ),
-                              Expanded(
-                                child: PixelFrame(
-                                  skin: PixelFrameSkin.gold,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 8,
-                                  ),
-                                  child: Text(
-                                    title,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GameTypography.title.copyWith(
-                                      color: PixelUiColors.gold,
-                                    ),
-                                  ),
+              ),
+              Positioned(
+                left: gap,
+                right: gap,
+                top: layout.profile.bottom + gap,
+                bottom: constraints.maxHeight - layout.navigation.top + gap,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 760),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      spacing: 8,
+                      children: [
+                        Row(
+                          spacing: 8,
+                          children: [
+                            IconButton(
+                              tooltip: backLabel,
+                              onPressed: onBack ?? () => onNavigate('home'),
+                              icon: const Icon(Icons.arrow_back, size: 30),
+                            ),
+                            Expanded(
+                              child: PixelFrame(
+                                skin: PixelFrameSkin.gold,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: PixelFrame(
-                              skin: PixelFrameSkin.cool,
-                              padding: const EdgeInsets.all(8),
-                              child: SingleChildScrollView(
-                                key: const ValueKey('menu-content'),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  spacing: 8,
-                                  children: [
-                                    Text(
-                                      'BẢN XEM TRƯỚC · Dữ liệu mẫu · Không lưu thay đổi',
-                                      textAlign: TextAlign.center,
-                                      style: GameTypography.caption.copyWith(
-                                        color: PixelUiColors.cool,
-                                      ),
-                                    ),
-                                    child,
-                                  ],
+                                child: Text(
+                                  title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GameTypography.title.copyWith(
+                                    color: PixelUiColors.gold,
+                                  ),
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                        Expanded(
+                          child: PixelFrame(
+                            skin: PixelFrameSkin.cool,
+                            padding: const EdgeInsets.all(8),
+                            child: SingleChildScrollView(
+                              key: const ValueKey('menu-content'),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                spacing: 8,
+                                children: [
+                                  Text(
+                                    'BẢN XEM TRƯỚC · Dữ liệu mẫu · Không lưu thay đổi',
+                                    textAlign: TextAlign.center,
+                                    style: GameTypography.caption.copyWith(
+                                      color: PixelUiColors.cool,
+                                    ),
+                                  ),
+                                  child,
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Positioned.fromRect(
-                  rect: layout.navigation,
-                  child: PixelNavigation(
-                    selected: selected,
-                    onNavigate: onNavigate,
-                  ),
+              ),
+              Positioned.fromRect(
+                rect: layout.navigation,
+                child: PixelNavigation(
+                  selected: selected,
+                  onNavigate: onNavigate,
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),

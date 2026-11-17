@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../theme/pixel_ui_colors.dart';
-import '../theme/app_theme.dart';
+import '../theme/game_surface_style.dart';
+import 'artwork_projection.dart';
 import 'pixel/pixel_icon.dart';
 
 /// Shared soft control. Icon buttons keep their name in tooltips and semantics.
@@ -19,7 +20,7 @@ class MenuButton extends StatelessWidget {
   final bool selected;
   final PixelIconKind? icon;
 
-  /// Use only inside fixed artwork projected by ScaledArtwork.
+  /// Scales the icon only; border geometry compensates for the outer projection.
   final double artworkScale;
 
   @override
@@ -38,7 +39,10 @@ class MenuButton extends StatelessWidget {
               ? PixelUiColors.raised
               : PixelUiColors.surface,
           padding: EdgeInsets.all(icon == null ? 8 : 6),
-          shape: gameControlShape(selected: selected, scale: artworkScale),
+          shape: GameSurfaceStyle.shape(
+            color: selected ? PixelUiColors.gold : PixelUiColors.cream,
+            projection: ArtworkProjection.of(context),
+          ),
           textStyle: Theme.of(context).textTheme.labelLarge,
         ),
         onPressed: onPressed,

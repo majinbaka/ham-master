@@ -52,12 +52,12 @@ menus are presentation-only previews. Do not implement gameplay unless requested
 - `lib/features/launch/presentation/`: three-second neon loading screen.
 - `lib/features/home/presentation/`: home scene with anchored artwork, shared
   logical-size quest/minimap/dialogue panels and large-text reflow.
-- `lib/app/presentation/pixel/`: shared atlas frames/icons, labels and artwork density.
+- `lib/app/presentation/pixel/`: shared code frames, atlas icons, labels and EXP tracks.
 - `lib/features/quests/presentation/`: quest layout and fixed sample content.
 - `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.
 - `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
   spacing, navigation, menu shell, panels, buttons, grids, preview and progress.
-- `assets/`: NDAS branding and `ui/` frame and icon atlases; empty character sprite, tileset,
+- `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork; empty character sprite, tileset,
   map and audio folders; bundled Roboto fonts and license in `assets/fonts/`.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
 - `android/`, `web/`: platform scaffolds with NDAS launcher/web icons.

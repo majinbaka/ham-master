@@ -1,6 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
-import 'pixel/pixel_art_scale.dart';
+import 'artwork_projection.dart';
 
 /// Projects home artwork into its slot without scaling interactive menu content.
 class ScaledArtwork extends StatelessWidget {
@@ -19,12 +21,23 @@ class ScaledArtwork extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
     width: size.width * scale,
     height: size.height * scale,
-    child: FittedBox(
-      fit: BoxFit.contain,
-      child: SizedBox.fromSize(
-        size: size,
-        child: PixelArtScale(factor: 1, child: child),
-      ),
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        final projection = math.min(
+          constraints.maxWidth / size.width,
+          constraints.maxHeight / size.height,
+        );
+        return FittedBox(
+          fit: BoxFit.contain,
+          child: SizedBox.fromSize(
+            size: size,
+            child: ArtworkProjection(
+              scale: projection * ArtworkProjection.of(context),
+              child: child,
+            ),
+          ),
+        );
+      },
     ),
   );
 }

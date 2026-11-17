@@ -81,7 +81,7 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
-- Màn hình chính dùng atlas ảnh khung tím than, viền bậc pixel, HUD hồ sơ/tài nguyên,
+- Màn hình chính dùng khung tím than chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
   panel nhiệm vụ, lời chào và thanh chức năng. Cảnh nền đen, nhân vật là khối
   vàng tạm. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
   tài nguyên và minimap neo phải; hội thoại, ba nút hành động và thanh sáu mục
@@ -103,8 +103,9 @@ Android application ID: `com.jinshu.pixel_rpg`.
   bo mềm; tên giữ trong tooltip và
   semantics. Nội dung menu 17 dp, tiêu đề 22 dp; padding các ô điều hướng đồng nhất. Xem
   [quy ước spacing](docs/art/reusable-ui-concept.md#9-quy-ước-spacing-runtime-mobile).
-  Khung dùng sprite 9-slice: góc giữ hình, cạnh và nền co giãn; sáu skin dùng
-  chung atlas trong `assets/ui/`. Chữ là widget riêng; 18 icon dùng atlas pixel art
+  Mọi khung/nút/dialog/EXP dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp).
+  `ArtworkProjection` bù scale HUD để giữ cùng độ dày/độ cong trên màn hình.
+  Sáu skin chỉ đổi màu; atlas khung cũ giữ làm tư liệu, không đóng gói runtime. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt, cùng palette với khung. Chỉ mục điều hướng
   đang chọn có tấm nền vàng, các mục còn lại nằm trên khay chung.
   Nút thông tin giải thích phạm vi bản dựng; thanh dưới chuyển tới các màn
@@ -122,11 +123,12 @@ Android application ID: `com.jinshu.pixel_rpg`.
   và vẫn neo cố định khi cuộn.
   Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
-  Chương/vật phẩm/chỉ số dùng lưới ô đều, thanh EXP dùng track vuông.
+  Chương/vật phẩm/chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
   chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
-  Kiểm tra pixel xác minh góc sprite không méo và cạnh không hở khi đổi cỡ khung.
+  Kiểm tra pixel xác minh viền 2 dp và silhouette góc không đổi khi thay
+  skin, kích thước hoặc projection.
 - Font Roboto được đóng gói trong `assets/fonts/` với giấy phép; mọi màn dùng
   `GameTypography`/`appTheme`, icon atlas và nút common, kể cả khi offline.
 - Các thư mục sprites, tilesets, maps, audio vẫn trống.
@@ -143,7 +145,7 @@ lib/
   features/home/presentation/ # scene, quest panels, minimap, dialogue and actions
   features/quests/presentation/ # read-only quest preview
   features/{story,shop,profile,settings}/presentation/ # interactive UI previews
-  app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ atlas widgets
+  app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ frame and icon widgets
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
 ```
@@ -159,23 +161,23 @@ trạng thái và điều kiện kiểm tra. Menu/hội thoại dùng chung shel
 thích ứng theo chiều rộng và cỡ chữ. Home là mẫu chuẩn: HUD, hệ số artwork,
 viền, vị trí navigation và spacing được dùng lại, không tự dựng một bộ khung
 lớn hơn cho menu. Component dùng chung nằm tại `lib/app/presentation/`,
-primitives của atlas nằm trong `pixel/`; feature chỉ sở hữu nội dung.
+khung và icon common nằm trong `pixel/`; feature chỉ sở hữu nội dung.
 Ảnh concept bên dưới chỉ tham chiếu hình ảnh, không cố định layout điện thoại.
 
 [Concept khung UI pixel RPG tái sử dụng](docs/art/reusable-ui-concept.md)
 phân tích ảnh mẫu do người dùng cung cấp, tách các khung/panel/nút thành
 component và cung cấp prompt để generate từng phần về sau. Đây là tài liệu
-định hướng hình ảnh; màn hình chính đã dùng bộ bitmap sáu skin ghép 9-slice
+định hướng hình ảnh; màn hình chính dùng khung code với sáu skin màu chung
 qua `PixelFrame`, với metadata và prompt trong
 [assets/ui/README.md](assets/ui/README.md). Nhân vật dùng khối vàng tạm trên nền đen; chưa có sprite, quái hoặc tranh khung cảnh. Các component chưa dùng vẫn
 là đề xuất cho các lần triển khai sau.
 
 [Khung layout Nhiệm vụ](docs/art/quest-layout.md) có ảnh dọc 853 × 1280,
-ghép từ atlas hiện tại để tham chiếu bố cục tab, danh sách chương và
-panel chi tiết. App dựng các vùng này bằng widget và atlas rời.
+ghép từ atlas khung gốc để tham chiếu bố cục tab, danh sách chương và
+panel chi tiết. App dựng các vùng này bằng widget và mẫu viền code chung.
 
 [Bốn layout menu](docs/art/menu-layouts.md) có ảnh khung 1024 × 1536 cho
-Cốt truyện, Cửa hàng, Hồ sơ và Cài đặt, cùng cách tái tạo từ atlas hiện có
+Cốt truyện, Cửa hàng, Hồ sơ và Cài đặt, cùng cách tái tạo ảnh từ atlas khung gốc
 và mô tả các luồng xem thử trong app.
 
 ## Skills kế thừa

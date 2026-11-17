@@ -53,7 +53,6 @@ class PlayerHud extends StatelessWidget {
                       value: null,
                       label: 'Kinh nghiệm chưa có',
                       height: 24,
-                      borderWidth: 2,
                     ),
                   ),
                 ],

@@ -9,25 +9,25 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
 The app contains a three-second neon NDAS loading screen at `/`, a main screen
-at `/home` with nine-slice sprite frames, HUD, empty quests, a black scene, a yellow
+at `/home` with shared code frames, HUD, empty quests, a black scene, a yellow
 character placeholder, welcome panel and navigation to sample menus.
 The main quest panel opens the read-only `/home/quests` preview, which reuses
-the frame and icon atlases for tabs, chapters, sample objectives and rewards.
+shared code frames and the icon atlas for tabs, chapters, sample objectives and rewards.
 Story, shop, profile and settings previews live at `/home/story`, `/home/shop`,
 `/home/profile` and `/home/settings`. Story opens `/home/story/episode` without
 advancing progress; shop filters sample items and shows details; profile switches
 collection/badge tabs; settings controls change ephemeral local widget selections.
 No purchase, game progress, audio/device configuration or persistence occurs.
-The menus reuse `lib/app/presentation/` shell/controls and atlas assets, with
+The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
 for the shared runtime concept. Home is the visual reference: menu HUD uses
 PlayerHud/ResourceHud projected at exactly the same scale and anchors;
-GameChromeLayout owns shared chrome geometry. PixelArtScale matches Home's
-final atlas density while menu copy and touch targets use logical pixels.
+GameChromeLayout owns shared chrome geometry. GameSurfaceStyle owns 2 dp
+borders and 8 dp corners; ArtworkProjection compensates for scaled HUDs.
 Only the middle framed content scrolls; headers and navigation stay fixed.
 MenuPanel uses a dark body/floating gold title tab, with paper for reading;
-MenuGrid aligns card rows and PixelProgress reuses the square EXP style.
-Shared widgets live in lib/app/presentation/, atlas primitives in pixel/.
+MenuGrid aligns card rows and PixelProgress uses the common border shape.
+Shared widgets live in lib/app/presentation/, shared frames and icons in pixel/.
 Master/detail columns stack below 600 times text scale. Story episodes reuse
 the menu shell. HUD counters use the same unavailable placeholders as Home. Four blank 2:3
 design images and the atlas composition script are documented in `docs/art/menu-layouts.md`.
@@ -38,8 +38,9 @@ scene expands at normal text scale. Content copy wraps at logical sizes;
 large text uses the shared scrolling shell. One device scale accommodates
 smaller artwork; desktop does not enlarge it. Riverpod scope, go_router, theme
 and platform shells remain in place. NDAS
-branding is in `assets/branding/` with Android/web icons. Six frame skins share
-`assets/ui/frame-atlas.png`; corners keep their shape while edges/centers stretch.
+branding is in `assets/branding/` with Android/web icons. Six frame skins only
+change colors; frames are drawn in code with the common surface geometry.
+The original frame atlas is archived, not bundled at runtime.
 Text/icons remain separate widgets; selected controls use a gold border and check mark.
 GameSpacing defines a roughly 4 dp grid at a 390 dp short side, with 8 dp outer
 gutters/group gaps and compact footer gaps on short windows. Button content is

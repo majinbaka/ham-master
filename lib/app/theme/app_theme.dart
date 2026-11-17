@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pixel_ui_colors.dart';
 import 'game_typography.dart';
+import 'game_surface_style.dart';
 
 final appTheme = ThemeData(
   useMaterial3: true,
@@ -28,7 +29,7 @@ final appTheme = ThemeData(
       foregroundColor: PixelUiColors.paper,
       disabledForegroundColor: PixelUiColors.cool,
       backgroundColor: PixelUiColors.surface,
-      shape: gameControlShape(),
+      shape: GameSurfaceStyle.shape(),
       textStyle: GameTypography.label,
     ),
   ),
@@ -37,25 +38,11 @@ final appTheme = ThemeData(
       minimumSize: const Size(48, 48),
       foregroundColor: PixelUiColors.paper,
       backgroundColor: PixelUiColors.surface,
-      shape: gameControlShape(),
+      shape: GameSurfaceStyle.shape(),
     ),
   ),
-  dialogTheme: const DialogThemeData(
+  dialogTheme: DialogThemeData(
     backgroundColor: PixelUiColors.surface,
-    shape: RoundedRectangleBorder(
-      side: BorderSide(color: PixelUiColors.cool, width: 2),
-    ),
-  ),
-);
-
-/// Controls share one silhouette, including Home's projected artwork.
-RoundedRectangleBorder gameControlShape({
-  bool selected = false,
-  double scale = 1,
-}) => RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(18 * scale),
-  side: BorderSide(
-    color: selected ? PixelUiColors.gold : PixelUiColors.cream,
-    width: 2 * scale,
+    shape: GameSurfaceStyle.shape(color: PixelUiColors.cool),
   ),
 );

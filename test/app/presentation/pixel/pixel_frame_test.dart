@@ -5,68 +5,101 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/presentation/pixel/pixel_frame_skin.dart';
+import 'package:pixel_rpg/app/presentation/scaled_artwork.dart';
 
 void main() {
-  testWidgets('all sprite skins preserve corners when panels grow', (
-    tester,
-  ) async {
-    for (final skin in PixelFrameSkin.values) {
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (final size in [const Size(120, 70), const Size(240, 110)])
-                  RepaintBoundary(
-                    key: ValueKey(size),
-                    child: SizedBox.fromSize(
-                      size: size,
+  testWidgets(
+    'skins and projected HUDs share the same two-pixel border and corners',
+    (tester) async {
+      Uint8List? reference;
+      for (final skin in PixelFrameSkin.values) {
+        for (final scale in [1.0, 390 / 940, 320 / 940]) {
+          final captures = <Uint8List>[];
+          for (final size in [const Size(120, 70), const Size(240, 110)]) {
+            await tester.pumpWidget(
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Center(
+                  child: RepaintBoundary(
+                    key: const ValueKey('frame'),
+                    child: ScaledArtwork(
+                      size: Size(size.width / scale, size.height / scale),
+                      scale: scale,
                       child: PixelFrameArtwork(skin: skin),
                     ),
                   ),
-              ],
-            ),
-          ),
-        ),
-      );
-      await tester.runAsync(
-        () => precacheImage(
-          const AssetImage(PixelFrameSkin.asset),
-          tester.element(find.byType(PixelFrameArtwork).first),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      final small = await _pixels(tester, const Size(120, 70));
-      final large = await _pixels(tester, const Size(240, 110));
-      for (final right in [false, true]) {
-        for (final bottom in [false, true]) {
-          expect(
-            _corner(large, 240, 110, right: right, bottom: bottom),
-            _corner(small, 120, 70, right: right, bottom: bottom),
-            reason: '$skin must preserve all four corner sprites',
-          );
+                ),
+              ),
+            );
+            await tester.pump();
+            final pixels = await _pixels(tester);
+            captures.add(pixels);
+            final width = size.width.toInt();
+            // Top center: exactly two border rows, then the panel fill.
+            for (final y in [0, 1, 2, 3]) {
+              final offset = (y * width + width ~/ 2) * 4;
+              final color = Color.fromARGB(
+                pixels[offset + 3],
+                pixels[offset],
+                pixels[offset + 1],
+                pixels[offset + 2],
+              );
+              expect(
+                color,
+                y < 2 ? skin.border : skin.background,
+                reason: '$skin / scale $scale / row $y',
+              );
+            }
+            // Compare alpha at an 8 x 8 corner across skins, sizes and projections.
+            final corner = Uint8List.fromList([
+              for (var y = 0; y < 8; y++)
+                for (var x = 0; x < 8; x++) pixels[(y * width + x) * 4 + 3],
+            ]);
+            reference ??= corner;
+            for (var i = 0; i < corner.length; i++) {
+              expect(
+                corner[i],
+                closeTo(reference[i], 2),
+                reason: '$skin / $scale corner $i',
+              );
+            }
+            expect(corner.first, 0);
+            expect(corner.last, 255);
+            expect(tester.takeException(), isNull);
+          }
+          // Every corner retains its geometry when the panel grows.
+          for (final right in [false, true]) {
+            for (final bottom in [false, true]) {
+              final a = _corner(
+                captures[0],
+                120,
+                70,
+                right: right,
+                bottom: bottom,
+              );
+              final b = _corner(
+                captures[1],
+                240,
+                110,
+                right: right,
+                bottom: bottom,
+              );
+              for (var i = 0; i < a.length; i++) {
+                // Coverage can differ slightly at the antialiased edge; the
+                // visible silhouette must occupy the exact same pixels.
+                expect(a[i] >= 128, b[i] >= 128);
+              }
+            }
+          }
         }
       }
-      // A missing asset could otherwise pass the equality check as two blanks.
-      expect(small[(35 * 120 + 60) * 4 + 3], greaterThan(250));
-      // No transparent seam may appear where an edge joins its corner/center.
-      for (var x = 12; x < 228; x++) {
-        expect(large[(6 * 240 + x) * 4 + 3], greaterThan(240));
-      }
-      expect(tester.takeException(), isNull);
-    }
-    // Removing listeners while images are cached must also be safe.
-    await tester.pumpWidget(const SizedBox.shrink());
-    expect(tester.takeException(), isNull);
-  });
+    },
+  );
 }
 
-Future<Uint8List> _pixels(WidgetTester tester, Size size) async {
+Future<Uint8List> _pixels(WidgetTester tester) async {
   final boundary = tester.renderObject<RenderRepaintBoundary>(
-    find.byKey(ValueKey(size)),
+    find.byKey(const ValueKey('frame')),
   );
   return (await tester.runAsync(() async {
     final image = await boundary.toImage();
@@ -83,7 +116,7 @@ List<int> _corner(
   required bool right,
   required bool bottom,
 }) => [
-  for (var y = bottom ? height - 14 : 0; y < (bottom ? height : 14); y++)
-    for (var x = right ? width - 14 : 0; x < (right ? width : 14); x++)
-      ...pixels.sublist((y * width + x) * 4, (y * width + x) * 4 + 4),
+  for (var y = bottom ? height - 8 : 0; y < (bottom ? height : 8); y++)
+    for (var x = right ? width - 8 : 0; x < (right ? width : 8); x++)
+      pixels[(y * width + x) * 4 + 3],
 ];

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import '../../theme/pixel_ui_colors.dart';
 import '../../theme/game_typography.dart';
 import 'pixel_frame_skin.dart';
-import 'pixel_art_scale.dart';
+import '../../theme/game_surface_style.dart';
+import '../artwork_projection.dart';
 
 export 'pixel_frame_skin.dart' show PixelFrameSkin;
 
-/// A nine-slice sprite frame with fixed corners and independently sized content.
+/// A shared frame with identical screen-space borders at every artwork scale.
 class PixelFrame extends StatelessWidget {
   const PixelFrame({
     required this.child,
@@ -25,7 +26,11 @@ class PixelFrame extends StatelessWidget {
     children: [
       Positioned.fill(child: PixelFrameArtwork(skin: skin)),
       Padding(
-        padding: padding.add(EdgeInsets.all(4 * PixelArtScale.of(context))),
+        padding: padding.add(
+          EdgeInsets.all(
+            GameSurfaceStyle.borderWidth / ArtworkProjection.of(context),
+          ),
+        ),
         child: child,
       ),
     ],

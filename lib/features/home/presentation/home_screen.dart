@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../app/presentation/player_hud.dart';
-import '../../../app/presentation/pixel/pixel_art_scale.dart';
 import '../../../app/presentation/scaled_artwork.dart';
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'home_footer.dart';
@@ -53,7 +52,6 @@ class HomeScreen extends StatelessWidget {
                     _placeContent(
                       'home-quests',
                       layout.quests,
-                      layout.scale,
                       HomeQuests(onOpen: onOpenQuests),
                     ),
                     _place(
@@ -65,7 +63,6 @@ class HomeScreen extends StatelessWidget {
                     _placeContent(
                       'home-minimap',
                       layout.minimap,
-                      layout.scale,
                       const HomeMinimap(),
                     ),
                     Positioned.fromRect(
@@ -82,7 +79,6 @@ class HomeScreen extends StatelessWidget {
                     _placeContent(
                       'home-dialogue',
                       layout.dialogue,
-                      layout.scale,
                       const HomeDialogue(),
                     ),
                     _place(
@@ -136,16 +132,12 @@ class HomeScreen extends StatelessWidget {
         ),
       );
 
-  Widget _placeContent(String key, Rect rect, double scale, Widget child) =>
+  Widget _placeContent(String key, Rect rect, Widget child) =>
       Positioned.fromRect(
         rect: rect,
         child: Align(
           alignment: Alignment.topCenter,
-          child: SizedBox(
-            key: ValueKey(key),
-            width: rect.width,
-            child: PixelArtScale(factor: scale, child: child),
-          ),
+          child: SizedBox(key: ValueKey(key), width: rect.width, child: child),
         ),
       );
 

@@ -1,8 +1,12 @@
-# UI frame atlas
+# UI artwork archive and icon atlas
 
 The home UI also uses the independent `icon-atlas.png` described below.
 
-`frame-atlas.png` is the production atlas consumed by `PixelFrameArtwork`.
+`frame-atlas.png` is retained as an art reference, not bundled at runtime.
+PixelFrameArtwork now paints the shared GameSurfaceStyle: 2 dp border and
+8 dp corner radius, matching buttons, HUD, dialogs and EXP tracks.
+Skins only change colors; ArtworkProjection compensates for scaled HUDs.
+The geometry and generation prompt below document the archived bitmap.
 Generated with built-in ImageGen for this project; no external art pack.
 UI text uses the separately bundled Roboto family in `assets/fonts/`.
 Style follows the user-supplied reference and `docs/art/reusable-ui-concept.md`.
@@ -26,19 +30,11 @@ Coordinates are top-left origins in the full atlas.
 
 Within each rectangle, slice x at `0, 56, 392, 448` and y at
 `0, 56, 384, 440`. This yields four corners, four edges and one center.
-Render caps at **14 design units** (1/4 source size); stretch only the long
-axis of edges and both axes of the center. For slots smaller than 28 units,
-reduce both caps equally to avoid overlap. HomeLayout applies its shared
-device scale afterward. These primitives live in `lib/app/presentation/pixel/`.
-Menus use `PixelArtScale` at the same device scale so 14 design units become
-about 5.8 dp at a 390 dp short side; do not render menu corners at 14 dp.
-`FilterQuality.none` preserves pixel steps.
-
-Keep the atlas alpha untouched, including lightly translucent edge pixels.
-Flutter caches the image; widgets share it and release their image handles.
-Pixel tests compare all four corners at two sizes for all six skins and
-check that the top edge has no transparent seams. The original generated
-atlas is used directly, without recoloring or resampling it on disk.
+The original concept used 14-design-unit caps and preserved atlas alpha.
+Runtime frames now use code geometry so corners and thickness cannot vary
+between skins. Pixel tests check two border rows and matching silhouettes
+across skins, panel sizes and artwork projections. The original file is kept
+unchanged for art provenance.
 
 ## Generation prompt
 
@@ -54,7 +50,7 @@ Use case: stylized-concept. Asset type: production pixel RPG UI sprite atlas, tr
 Original alpha is preserved; the atlas contains no imported art or baked text. It replaces
 all 18 Material icons in the home HUD, quests, map, utilities, actions and navigation.
 Text, semantics, selection marks and unavailable states remain separate widgets.
-Home actions and navigation use the shared MenuButton shape from appTheme;
+Home actions and navigation use the shared GameSurfaceStyle shape;
 icons never add a separate background or border.
 
 `PixelIconKind` records six columns (x = column × 256) and three measured

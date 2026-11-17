@@ -29,11 +29,11 @@ dựng ảnh tham chiếu, không phải kích thước Flutter cố định. Kh
 chừa vùng an toàn và kiểm tra chỗ cho chữ, nội dung cuộn và vùng chạm
 trên màn hình hẹp.
 
-Ảnh được ghép từ [atlas khung hiện tại](../../assets/ui/README.md) bằng
+Ảnh được ghép từ [atlas khung tham chiếu](../../assets/ui/README.md) bằng
 9-slice: góc 56 px trong nguồn được thu còn 14 px trên canvas (giảm thêm
 đối với ô nhỏ), chỉ kéo phần cạnh và tâm bằng nearest-neighbor. Chữ, icon,
 tranh, trạng thái nhiệm vụ và dữ liệu thưởng sẽ là các lớp riêng.
 PNG này dùng để duyệt bố cục. Màn `/home/quests` dựng khung và nội dung mẫu
-bằng widget và atlas rời. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
+bằng widget và mẫu viền code 2 dp/góc 8 dp chung. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
 Nhiệm vụ chính. Danh sách và chi tiết cuộn cùng nhau phía trên shell điều hướng dùng chung với
 [các menu mẫu khác](menu-layouts.md); thanh dưới nối sáu màn hình.

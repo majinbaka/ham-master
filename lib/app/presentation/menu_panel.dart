@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../theme/pixel_ui_colors.dart';
 import '../theme/game_typography.dart';
+import '../theme/game_surface_style.dart';
 import 'pixel/pixel_frame.dart';
-import 'pixel/pixel_art_scale.dart';
 
-/// Home's floating title tab and quiet panel body, at the shared atlas density.
+/// Home's floating title tab and panel body, with the common border geometry.
 class MenuPanel extends StatelessWidget {
   const MenuPanel({
     required this.child,
@@ -24,7 +24,7 @@ class MenuPanel extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final titleWidth = math.min(280.0, constraints.maxWidth - 16);
-      final inset = 8 * PixelArtScale.of(context);
+      const inset = 2 * GameSurfaceStyle.borderWidth;
       final titleStyle = Theme.of(context).textTheme.labelLarge!
           .merge(GameTypography.panelTitle)
           .copyWith(color: PixelUiColors.gold);

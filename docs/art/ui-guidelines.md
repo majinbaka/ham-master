@@ -5,27 +5,28 @@ các cụm UI. Mọi menu dùng lại các component đã tách từ Home. Các 
 cũ chỉ tham khảo vai trò vùng nội dung; không dùng kích thước pixel của ảnh
 làm dp hoặc tự tạo một hệ khung khác cho mỗi màn.
 
-## Hai hệ kích thước, một phong cách
+## Một mẫu hình học cho mọi khung
 
-Home dựng artwork trên hệ tọa độ rộng 940 đơn vị rồi thu bằng một hệ số chung,
-chặn ở `390 / 940`. Góc khung 14 đơn vị vì thế chỉ còn khoảng **5,8 dp** trên
-điện thoại 390 dp. Đây là mật độ chuẩn; vẽ góc 14 dp trực tiếp ở menu làm
-viền lớn hơn Home hơn hai lần và không đạt concept.
+`GameSurfaceStyle` sở hữu duy nhất viền **2 dp** và bán kính góc **8 dp**.
+Home, menu, HUD, tab panel, nút chữ/icon, quay lại, dialog và track EXP đều
+lấy cùng mẫu này. Màu/nền được đổi theo skin và trạng thái; độ dày, độ cong
+không đổi theo feature, selected, disabled, kích thước panel hay text scale.
+Track rất thấp dùng cùng bán kính, được Flutter chặn tự nhiên theo nửa chiều cao.
 
-`GameChromeLayout` tính cùng hệ số cho Home và menu, không phụ thuộc hướng
-xoay. `ScaledArtwork` chỉ dùng cho HUD, tiện ích và nút hành động có tỷ lệ cố định.
-Nội dung nhiệm vụ, bản đồ và hội thoại Home dùng `MenuPanel` ở logical pixel,
-không đi qua phép thu nhỏ artwork. Trong vùng menu,
-`PixelArtScale` chỉ áp dụng hệ số này cho atlas và lề bảo vệ viền; chữ, nội
-dung và vùng chạm vẫn được bố trí ở logical pixel. Không scale cả trang menu
-để che lỗi overflow. Không scale hai lần: artwork bên trong `ScaledArtwork`
-luôn dùng density 1 trước khi được chiếu ra màn hình.
+Khung được vẽ bằng code để loại bỏ khác biệt hình học giữa các sprite atlas.
+`frame-atlas.png` giữ làm tư liệu art, không còn đóng gói/vẽ trong runtime.
+Icon vẫn dùng atlas pixel trong suốt, nearest-neighbor và giữ đúng tỷ lệ.
+
+`GameChromeLayout` giữ hệ tọa độ artwork rộng 940 đơn vị, scale chặn ở
+`390 / 940`. `ScaledArtwork` chiếu HUD/tiện ích/hành động và cung cấp
+`ArtworkProjection`: viền và góc chia cho scale trước khi vẽ, nên sau phép
+chiếu vẫn đúng 2/8 dp như các panel bố trí trực tiếp ở logical pixel.
+Không nhân viền/góc theo cỡ icon. Chữ nội dung Home/menu vẫn dùng dp.
 
 Palette giữ nguyên: cảnh đen, mặt khung tím than, chữ kem, điểm nhấn vàng/cyan.
-Giấy kem dành cho nội dung đọc như chi tiết nhiệm vụ/hội thoại. Chỉ dùng
-`PixelUiColors`, atlas khung/icon hiện có và `appTheme`; không tự chọn bộ màu,
-bộ icon trang trí riêng cho mỗi feature. Nút dùng viền kem bo mềm chung để tạo cảm giác dễ thương; icon nền trong
-suốt, không thêm nền hay viền riêng bên trong nút. Panel vẫn giữ atlas pixel.
+Giấy kem dành cho nội dung đọc. Chỉ dùng `PixelUiColors`, `GameSurfaceStyle`
+và theme chung; không tự chọn radius/BorderSide hoặc tạo viền trang trí riêng
+ở feature. Icon không thêm nền hay viền riêng bên trong nút.
 
 ## Component dùng chung và quyền sở hữu
 
@@ -35,17 +36,18 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 
 | Component | Vai trò và quy tắc |
 | --- | --- |
-| `pixel/PixelFrame`, `PixelFrameArtwork` | Atlas 9-slice; chỉ kéo cạnh/tâm, giữ góc theo `PixelArtScale`, nearest-neighbor, giữ alpha. |
+| `pixel/PixelFrame`, `PixelFrameArtwork` | Khung code dùng `GameSurfaceStyle`; skin chỉ đổi màu/nền, không đổi hình học. |
+| `ArtworkProjection` | Bù phép chiếu của `ScaledArtwork` để viền/góc có cùng kích thước thực. |
 | `pixel/PixelIcon`, `PixelLabel` | Icon giữ ô vuông kể cả khi cha stretch, nhãn HUD trong slot artwork cố định; không dùng cho nội dung/panel title, không bake chữ vào bitmap. Nhãn đầy đủ vẫn có semantics. |
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo profile, tài nguyên, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud`, `ResourceHud`, `ScaledArtwork` | Chính các cụm HUD của Home; cùng kích thước, tỷ lệ và placeholder `—` trên mọi màn. |
-| `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 18 dp; mục đang chọn có viền vàng và dấu tick. |
+| `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có viền vàng và dấu tick. |
 | `MenuShell` | HUD trên, tiêu đề/quay lại/thông báo xem trước, cửa sổ nội dung giữa và navigation dưới. Chỉ nội dung giữa cuộn. |
 | `MenuPanel` | Thân `cool` tím than với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
-| `MenuButton` | Viền kem 2 dp, góc bo 18 dp, nền tím; có icon thì chỉ hiện icon 36 dp, tên đầy đủ qua tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có viền vàng và tick; mục khóa giữ icon khóa. |
+| `MenuButton` | Viền kem 2 dp, góc bo 8 dp, nền tím; có icon thì chỉ hiện icon 36 dp, tên đầy đủ qua tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có viền vàng và tick; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô; bốn chỉ số tránh bố cục 3+1. |
 | `MenuPreview` | Cửa sổ cảnh đen gọn giống minimap, icon 48 dp; không tạo banner lớn chỉ để lấp chỗ. |
-| `PixelProgress` | Thanh EXP vuông, viền kem, nền tối và fill vàng như track EXP của HUD. |
+| `PixelProgress` | Thanh EXP cùng mẫu viền 2 dp/góc 8 dp, nền tối và fill vàng như HUD. |
 
 Không sao chép shell/HUD/frame vào feature mới. Nếu thiếu một biến thể thực
 sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm tra lại các màn
@@ -75,7 +77,7 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 - Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ dùng ô tối thiểu
   `120 × hệ số chữ` dp, tối đa bốn cột; tab và nhóm cài đặt dùng `Wrap`.
 - Padding nội dung và khoảng giữa panel/hàng là 8 dp; icon–chữ/tab cách
-  4 dp. Lề bảo vệ sprite được tính riêng theo density. Panel cùng cấp phải
+  4 dp. Lề bảo vệ khung lấy từ độ dày viền chung. Panel cùng cấp phải
   thẳng mép, không co ngang theo độ dài nội dung.
 
 ## Chữ và tương tác
@@ -91,9 +93,10 @@ co chữ bằng `FittedBox`. Launch giữ bố cục NDAS nhưng dùng cùng fon
 Icon nội dung nổi bật dùng 48 dp, icon trong nút/phần thưởng/chỉ số dùng 36 dp;
 HUD giữ kích thước theo hệ tọa độ artwork. Material icon chỉ dùng cho ký hiệu
 hệ thống (quay lại, trạng thái chọn/hoàn thành), không thay atlas trang trí.
-`gameControlShape` và theme sở hữu viền/góc bo của TextButton/IconButton,
+`GameSurfaceStyle` và theme sở hữu viền/góc bo của TextButton/IconButton,
 bao gồm nút đóng dialog. Ba nút hành động Home dùng chính `MenuButton` với
-`artworkScale: 2` trước khi chiếu, không tự vẽ một mẫu nút khác.
+`artworkScale: 2` cho icon trước khi chiếu; viền/góc bù theo
+`ArtworkProjection`, không nhân theo icon.
 
 Nội dung menu 17 dp, line height 1.35; tiêu đề màn 22 dp đậm; tab tiêu đề
 panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas giữ nền trong
@@ -134,7 +137,7 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 
 ## Điều kiện duyệt
 
-1. So sánh trực tiếp với Home: cùng HUD, density viền và vị trí navigation.
+1. So sánh trực tiếp với Home: cùng HUD, viền 2 dp/góc 8 dp và vị trí navigation.
    Không chấp nhận chỉ trùng palette nhưng khác tỷ lệ khung.
 2. Xem ảnh render mọi màn ở điện thoại, ngang và desktop để kiểm tra mép
    panel, hàng ô, icon–chữ, contrast và khoảng cách. Không chỉ dựa vào việc
@@ -143,5 +146,7 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
    không overflow/chồng panel, phần cuối nội dung vẫn cuộn tới được.
 4. Kiểm tra chọn tab/nhóm, route, quay lại, dialog; cuộn không dịch chuyển
    HUD, tiêu đề hoặc navigation. Kiểm tra Android/web thực khi có thiết bị.
-5. Chạy format/analyze/test theo `AGENTS.md`. Thay đổi quy tắc dùng chung
+5. Test pixel kiểm tra đúng hai hàng viền và silhouette góc khi đổi skin,
+   kích thước và projection; kiểm tra shape của nút/quay lại/dialog.
+6. Chạy format/analyze/test theo `AGENTS.md`. Thay đổi quy tắc dùng chung
    phải sửa component, regression test và tài liệu này trong cùng thay đổi.

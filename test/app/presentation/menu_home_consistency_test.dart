@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/presentation/game_chrome_layout.dart';
 import 'package:pixel_rpg/app/presentation/menu_panel.dart';
-import 'package:pixel_rpg/app/presentation/pixel/pixel_art_scale.dart';
+import 'package:pixel_rpg/app/presentation/artwork_projection.dart';
 import 'package:pixel_rpg/app/presentation/pixel/pixel_frame.dart';
 import 'package:pixel_rpg/app/presentation/pixel_navigation.dart';
 import 'package:pixel_rpg/app/presentation/player_hud.dart';
@@ -140,11 +140,11 @@ void main() {
                   matching: find.byType(PixelFrame),
                 )
                 .first;
+            expect(ArtworkProjection.of(tester.element(panelFrame)), 1);
             expect(
-              PixelArtScale.of(tester.element(panelFrame)),
+              ArtworkProjection.of(tester.element(find.byType(PlayerHud))),
               GameChromeLayout(size).scale,
             );
-            expect(PixelArtScale.of(tester.element(find.byType(PlayerHud))), 1);
             await tester.drag(
               find.byKey(const ValueKey('menu-content')),
               const Offset(0, -2000),

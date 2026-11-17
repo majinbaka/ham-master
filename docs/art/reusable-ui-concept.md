@@ -10,14 +10,14 @@ Chuyển cách xử lý thị giác của ảnh mẫu thành một bộ khung c�
 riêng từng phần và ghép lại cho game sau này. Đây là **tài liệu art direction
 và prompt** cho các component tái sử dụng.
 
-Màn hình chính tại `lib/features/home/presentation/` đã áp dụng palette, viền
-bậc pixel và cách ghép sprite 9-slice bằng Flutter: HUD, nhiệm vụ trống, bản đồ trống,
-lời chào, ba nút hành động và thanh chức năng. Sau loading 3 giây, app chuyển
-sang màn hình này. Cảnh dùng nền đen, nhân vật là khối vàng tạm theo yêu cầu;
-chưa triển khai gameplay. Khung dùng atlas bitmap sáu skin: cream, cool, gold,
-cyan, paper và selected; chữ/icon là lớp riêng. Icon hiện dùng atlas pixel art
-18 hình nền trong suốt trong `assets/ui/icon-atlas.png`, độc lập với atlas khung. `PixelFrame` ghép bốn góc,
-bốn cạnh và nền từ atlas; góc giữ hình khi đổi kích thước widget.
+Màn hình chính tại `lib/features/home/presentation/` dùng palette và bố cục
+Home với khung code chung: viền 2 dp, góc 8 dp từ `GameSurfaceStyle`.
+`ArtworkProjection` bù scale để HUD, panel, nút và dialog có cùng hình học.
+Sau loading 3 giây, app chuyển sang Home; cảnh đen, nhân vật vàng tạm,
+chưa có gameplay. Sáu skin chỉ đổi màu/nền. Chữ là widget riêng; 18 icon dùng
+atlas trong suốt `assets/ui/icon-atlas.png`. Atlas khung cũ giữ làm tư liệu art,
+không còn đóng gói runtime. Các quy tắc generate bên dưới là art direction,
+không thay thế mẫu hình học runtime trong `ui-guidelines.md`.
 Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
 [assets/ui/README.md](../../assets/ui/README.md). Đây là bộ khung chung đầu tiên;
 chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bên dưới
@@ -159,10 +159,9 @@ Không bắt buộc xuất mỗi lớp thành một file nếu không có nhu c�
 | Track/fill F04 | Hai lớp riêng, ngoài trong suốt | Clip độ dài fill theo dữ liệu; không kéo giãn cả track. |
 | Selected overlay/glow | Ngoài trong suốt, không có chữ/icon | Chồng đúng kích thước lên frame tương ứng. |
 
-Panel chữ nhật hiện dùng **9-slice**: bốn góc giữ nguyên, bốn cạnh kéo phần
-thẳng, phần giữa mở rộng. Atlas đã được đo vùng nguồn và kiểm tra góc/đường
-nối ở hai kích thước. Metadata nằm trong `PixelFrameSkin` và tài liệu asset;
-ảnh generate không được mặc định là đúng lưới ô theo prompt.
+Ảnh concept chữ nhật từng dùng **9-slice**; atlas đã được đo vùng nguồn,
+lưu metadata trong tài liệu asset. Runtime hiện vẽ khung bằng code để mọi
+skin có cùng độ dày và độ cong. Không suy ra kích thước runtime từ atlas.
 Tab nhô, hoa văn góc và đuôi bong bóng phải ở ngoài vùng được kéo giãn.
 F03 dạng capsule có thể dùng ba phần trái–giữa–phải; F02/F07/F09 giữ tỷ lệ.
 
@@ -301,8 +300,8 @@ giãn bitmap chữ hoặc ép toàn bộ UI thành một ảnh nền cố địn
 Tên file gợi ý: `ui_<component>_<variant>_<state>.png`, ví dụ
 `ui_action_button_dark_default.png`, `ui_quest_body_gold_default.png`,
 `ui_dialogue_body_light_default.png`. Các file riêng này chưa được tạo; runtime
-hiện dùng `assets/ui/frame-atlas.png` với sáu vùng nguồn, dùng chung cho các
-component đã triển khai.
+hiện dùng `GameSurfaceStyle` với sáu skin màu. Atlas khung được giữ làm
+tư liệu gốc, không dùng để vẽ khung runtime.
 
 Checklist duyệt từng output:
 
@@ -322,11 +321,11 @@ màn hình cùng phong cách mà không phụ thuộc câu chuyện hoặc nhân
 
 `GameSpacing` trong `lib/app/presentation/` là nguồn chung cho khoảng cách
 artwork của Home và menu. `GameChromeLayout` sở hữu neo HUD/navigation,
-`PixelArtScale` giữ cùng mật độ viền cho menu vẽ trực tiếp ở dp. Lưới cơ sở 10 đơn vị
+`ArtworkProjection` bù scale cho viền/góc của HUD để khớp menu vẽ ở dp. Lưới cơ sở 10 đơn vị
 artwork tương đương khoảng 4 dp ở chiều ngắn 390 dp; dùng 1 bước cho khoảng
 icon–nhãn và padding nội dung, 2 bước (khoảng 8 dp) cho lề vùng an toàn,
 khoảng giữa panel và giữa nút hành động. Không cần bám khoảng cách ảnh gốc.
-Viền sprite được tính riêng, không dùng độ dày viền làm khoảng cách layout.
+Viền common được tính riêng, không dùng độ dày viền làm khoảng cách layout.
 Các cụm trên được đặt tiếp nhau theo cạnh panel và gap, tránh tọa độ rời rạc.
 
 Footer dùng cùng khoảng 2 bước giữa hội thoại, hành động và điều hướng;

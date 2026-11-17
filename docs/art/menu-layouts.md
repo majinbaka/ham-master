@@ -24,7 +24,7 @@ chỉ tham chiếu art direction; không yêu cầu điện thoại giữ bố c
 ## Cách tạo và tích hợp
 
 Giống bản [layout Nhiệm vụ](quest-layout.md), ảnh là khung trống ghép
-9-slice từ `assets/ui/frame-atlas.png`; không gọi ImageGen hoặc tạo bộ art mới.
+9-slice từ atlas khung tham chiếu `assets/ui/frame-atlas.png`; không gọi ImageGen hoặc tạo bộ art mới.
 Góc nguồn 56 px thu còn 14 px (giảm với ô nhỏ), cạnh và tâm kéo bằng
 nearest-neighbor. Có thể tái tạo cả bốn bằng:
 
@@ -40,10 +40,13 @@ cửa hàng dùng hai cột hoặc một cột tùy chiều rộng để giữ c
 Các panel cuộn phía trên thanh điều hướng cố định. Cốt truyện và Cài đặt
 xếp danh sách trên nội dung khi hẹp hoặc chữ lớn; chỉ chia hai cột 1:2 khi đủ
 600 × hệ số chữ dp. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
-Home là chuẩn runtime: menu dùng chính profile/tài nguyên của Home, cùng hệ
-số atlas và vị trí neo navigation. Tiêu đề và HUD cố định; chỉ cửa sổ ở giữa
+Home là chuẩn runtime: menu dùng chính profile/tài nguyên của Home, cùng mẫu
+viền 2 dp/góc 8 dp và vị trí neo navigation. Tiêu đề và HUD cố định; chỉ cửa sổ ở giữa
 cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Chương/vật phẩm dùng
 lưới ô đều thay vì danh sách nút kéo dài. Hội thoại dùng cùng shell.
+
+Runtime dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp); atlas khung chỉ
+phục vụ các ảnh concept ở trên. Các skin không thay đổi hình học.
 
 ## Luồng mẫu trong app
 
