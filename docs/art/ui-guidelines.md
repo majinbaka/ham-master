@@ -169,3 +169,6 @@ Thanh tiến độ đặt dưới mô tả chương; cảnh minh họa nhỏ dù
 
 Hội thoại tách cảnh minh họa, giấy lời thoại có tab tên người nói và ghi chú
 xem trước. Nút về danh sách chương nằm sau lời thoại, giữ đường quay lại trên header.
+
+Nhiệm vụ ưu tiên chương hiện tại, các chương khóa thu gọn. Mục tiêu mẫu có
+tiến độ 1/3, checkbox lớn và phần thưởng kèm tên/số lượng trong lưới hai cột.

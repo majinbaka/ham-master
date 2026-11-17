@@ -50,23 +50,37 @@ class _ChapterList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MenuPanel(
     title: 'Danh sách chương',
-    child: MenuGrid(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 8,
       children: [
-        for (final (index, name) in const [
-          'Khởi hành',
-          'Bên kia đồi',
-          'Lối mòn cũ',
-          'Chân trời mới',
-        ].indexed)
-          Semantics(
-            label: index == 0 ? null : 'Đã khóa',
-            child: MenuButton(
-              label: 'Chương ${index + 1}\n$name',
-              icon: index == 0 ? PixelIconKind.story : PixelIconKind.lock,
-              selected: index == 0,
-              onPressed: null,
+        const MenuButton(
+          label: 'Chương 1\nKhởi hành',
+          icon: PixelIconKind.story,
+          showLabel: true,
+          selected: true,
+          onPressed: null,
+        ),
+        ExpansionTile(
+          title: const Text('3 chương đã khóa'),
+          children: [
+            MenuGrid(
+              children: [
+                for (final (index, name) in const [
+                  'Bên kia đồi',
+                  'Lối mòn cũ',
+                  'Chân trời mới',
+                ].indexed)
+                  MenuButton(
+                    label: 'Chương ${index + 2}\n$name\nĐã khóa',
+                    icon: PixelIconKind.lock,
+                    showLabel: true,
+                    onPressed: null,
+                  ),
+              ],
             ),
-          ),
+          ],
+        ),
       ],
     ),
   );

@@ -38,7 +38,9 @@ class MenuButton extends StatelessWidget {
         style: TextButton.styleFrom(
           minimumSize: const Size(48, 56),
           foregroundColor: selected ? PixelUiColors.gold : PixelUiColors.paper,
-          disabledForegroundColor: PixelUiColors.cool,
+          disabledForegroundColor: selected
+              ? PixelUiColors.gold
+              : PixelUiColors.cool,
           backgroundColor: selected
               ? PixelUiColors.raised
               : PixelUiColors.surface,

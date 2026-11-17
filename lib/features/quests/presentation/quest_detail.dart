@@ -21,7 +21,8 @@ class QuestDetail extends StatelessWidget {
         const MenuPreview(icon: PixelIconKind.story),
         const Text('Bước chân đầu tiên', style: GameTypography.heading),
         const Text('Ghé trại và tìm đường tới cổng làng. (Dữ liệu mẫu)'),
-        const Text('Mục tiêu', style: GameTypography.heading),
+        const Text('Mục tiêu · 1 / 3', style: GameTypography.heading),
+        const PixelProgress(value: 1 / 3, label: 'Tiến độ nhiệm vụ mẫu: 1 / 3'),
         for (final (done, label) in const [
           (true, 'Ghé trại (1/1)'),
           (false, 'Tìm cổng làng (0/1)'),
@@ -32,7 +33,7 @@ class QuestDetail extends StatelessWidget {
             children: [
               Icon(
                 done ? Icons.check_box : Icons.check_box_outline_blank,
-                size: 16,
+                size: 24,
                 color: PixelUiColors.outline,
               ),
               Expanded(child: Text(label)),
@@ -40,8 +41,8 @@ class QuestDetail extends StatelessWidget {
           ),
         const Text('Phần thưởng', style: GameTypography.heading),
         MenuGrid(
-          minItemWidth: 60,
-          maxColumns: 4,
+          minItemWidth: 120,
+          maxColumns: 2,
           children: [
             for (final (icon, label, value) in const [
               (PixelIconKind.story, 'Kinh nghiệm', '50'),
@@ -53,7 +54,11 @@ class QuestDetail extends StatelessWidget {
                 label: '$label: $value',
                 excludeSemantics: true,
                 child: Column(
-                  children: [PixelIcon(icon, size: 36), Text(value)],
+                  children: [
+                    PixelIcon(icon, size: 36),
+                    Text(label, textAlign: TextAlign.center),
+                    Text(value, style: GameTypography.heading),
+                  ],
                 ),
               ),
           ],
