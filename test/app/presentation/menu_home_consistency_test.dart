@@ -103,6 +103,8 @@ void main() {
                 ? find.text(
                     'Ghé trại và tìm đường tới cổng làng. (Dữ liệu mẫu)',
                   )
+                : name == 'profile'
+                ? find.text('ID mẫu: 1004527')
                 : find
                       .descendant(
                         of: find.byType(MenuPanel).first,
