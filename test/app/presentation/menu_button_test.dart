@@ -5,6 +5,28 @@ import 'package:pixel_rpg/app/presentation/pixel/pixel_icon.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 
 void main() {
+  testWidgets('content cards expose their names before interaction', (
+    tester,
+  ) async {
+    var opened = false;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: appTheme,
+        home: Scaffold(
+          body: MenuButton(
+            label: 'Chương 1\nKhởi hành',
+            icon: PixelIconKind.story,
+            showLabel: true,
+            onPressed: () => opened = true,
+          ),
+        ),
+      ),
+    );
+    expect(find.text('Chương 1\nKhởi hành'), findsOneWidget);
+    await tester.tap(find.text('Chương 1\nKhởi hành'));
+    expect(opened, isTrue);
+  });
+
   testWidgets(
     'icon controls show artwork and retain an accessible action name',
     (tester) async {

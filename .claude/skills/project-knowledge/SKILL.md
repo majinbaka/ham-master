@@ -58,8 +58,9 @@ and future HTTP adapters. Core owns game rules and state transitions; platform
 adapters handle local saves when progression is introduced. Offline remains in
 scope; online synchronization and conflicts are undecided.
 
-UI dùng chữ nội dung menu 17 dp, tiêu đề 22 dp. Nút có icon chỉ hiện icon lớn
-trong suốt, không nền/viền bọc icon; viền kem bo mềm chỉ thuộc nút; tên giữ qua tooltip/semantics. Nút không có icon giữ chữ.
+UI dùng chữ nội dung menu 17 dp, tiêu đề 22 dp. Nút compact chỉ hiện icon lớn
+trong suốt và tên qua tooltip/semantics; thẻ nội dung bật `showLabel` để hiện tên.
+Không nền/viền bọc icon; viền kem bo mềm chỉ thuộc nút. Nút không có icon giữ chữ.
 
 Font `GameRoboto` được đóng gói cùng app (regular/medium/bold và giấy phép),
 không phụ thuộc font hệ điều hành hoặc mạng. `GameTypography`/`appTheme` sở hữu

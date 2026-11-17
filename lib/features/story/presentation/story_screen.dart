@@ -21,22 +21,38 @@ class StoryScreen extends StatelessWidget {
     selected: 'story',
     onNavigate: onNavigate,
     child: MenuColumns(
-      leading: MenuGrid(
+      leading: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 8,
         children: [
-          for (final (index, title) in const [
-            'Khởi hành',
-            'Bên kia đồi',
-            'Lối mòn cũ',
-            'Chân trời mới',
-            'Lời kết',
-          ].indexed)
-            MenuButton(
-              label:
-                  'Chương ${index + 1}\n$title${index == 0 ? '' : '\nĐã khóa'}',
-              icon: index == 0 ? PixelIconKind.story : PixelIconKind.lock,
-              selected: index == 0,
-              onPressed: index == 0 ? () => onNavigate('story') : null,
-            ),
+          MenuButton(
+            label: 'Chương 1\nKhởi hành',
+            icon: PixelIconKind.story,
+            showLabel: true,
+            selected: true,
+            onPressed: () => onNavigate('story'),
+          ),
+          ExpansionTile(
+            title: const Text('4 chương chưa mở'),
+            children: [
+              MenuGrid(
+                children: [
+                  for (final (index, title) in const [
+                    'Bên kia đồi',
+                    'Lối mòn cũ',
+                    'Chân trời mới',
+                    'Lời kết',
+                  ].indexed)
+                    MenuButton(
+                      label: 'Chương ${index + 2}\n$title\nĐã khóa',
+                      showLabel: true,
+                      icon: PixelIconKind.lock,
+                      onPressed: null,
+                    ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
       detail: MenuPanel(
@@ -50,6 +66,7 @@ class StoryScreen extends StatelessWidget {
               'Một lời nhắn từ người gác làng mở đầu hành trình. Ghé trại, tìm đường tới cổng làng và gặp người bạn đồng hành.',
             ),
             const Text('Tiến độ chương · 0 / 5', style: GameTypography.heading),
+            const PixelProgress(value: 0, label: 'Tiến độ chương mẫu'),
             for (final (index, title) in const [
               'Lời nhắn đầu tiên',
               'Dấu vết bên đường',
@@ -59,6 +76,7 @@ class StoryScreen extends StatelessWidget {
             ].indexed)
               MenuButton(
                 label: '${index + 1}. $title${index == 0 ? '' : ' · Đã khóa'}',
+                showLabel: true,
                 icon: index == 0 ? PixelIconKind.talk : PixelIconKind.lock,
                 selected: index == 0,
                 onPressed: index == 0 ? onStart : null,

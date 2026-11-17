@@ -13,7 +13,7 @@ và prompt** cho các component tái sử dụng.
 Màn hình chính tại `lib/features/home/presentation/` dùng palette và bố cục
 Home với khung code chung: viền 2 dp, góc 8 dp từ `GameSurfaceStyle`.
 `ArtworkProjection` bù scale để HUD, panel, nút và dialog có cùng hình học.
-Sau loading 3 giây, app chuyển sang Home; cảnh đen, nhân vật vàng tạm,
+Sau loading 3 giây, app chuyển sang Home; cảnh làng hoàng hôn tĩnh, portrait nhà lữ hành vẽ bằng code,
 chưa có gameplay. Sáu skin chỉ đổi màu/nền. Chữ là widget riêng; 18 icon dùng
 atlas trong suốt `assets/ui/icon-atlas.png`. Atlas khung cũ giữ làm tư liệu art,
 không còn đóng gói runtime. Các quy tắc generate bên dưới là art direction,
@@ -27,7 +27,7 @@ vẫn là định hướng cho những component chi tiết chưa tạo.
 neo trái, tài nguyên/minimap neo phải, hội thoại/nút hành động/thanh dưới neo
 ở giữa. Nhiệm vụ luôn xếp dọc; minimap luôn hiện; sáu mục điều hướng luôn trên
 một hàng. Khi xoay ngang, các cụm dịch sang cạnh hoặc giữ trục giữa, không
-kéo giãn hay thu nhỏ theo chiều cao. Nền đen nhận phần không gian dư.
+kéo giãn hay thu nhỏ theo chiều cao. Tranh làng nhận phần không gian dư.
 `HomeLayout` mở rộng `GameChromeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
 được chặn ở 390/940 và chỉ giảm theo chiều ngắn thiết bị nhỏ hơn 390 dp.
 Khoảng cách giữa các cụm được thu gọn trên cửa sổ thấp, hẹp; kích thước khung
@@ -330,7 +330,7 @@ Các cụm trên được đặt tiếp nhau theo cạnh panel và gap, tránh t
 
 Footer dùng cùng khoảng 2 bước giữa hội thoại, hành động và điều hướng;
 cửa sổ thấp, hẹp không đủ chỗ đặt footer cạnh HUD dùng 1 bước. Các panel vẫn
-cùng kích thước khi xoay. Nút có icon chỉ hiện icon lớn căn giữa, trong suốt không viền riêng;
+cùng kích thước khi xoay. Nút compact có icon lớn căn giữa; thẻ nội dung hiện thêm tên qua `showLabel`. Icon trong suốt không viền riêng;
 viền kem bo mềm chỉ bao quanh nút; nhãn giữ trong
 tooltip/semantics, trạng thái chọn có dấu tick. Nút chữ giữ nhãn căn giữa,
 các ô điều hướng có padding và hàng nội dung giống nhau dù đang chọn hay chưa.

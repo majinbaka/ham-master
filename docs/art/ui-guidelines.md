@@ -44,9 +44,9 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có viền vàng và dấu tick. |
 | `MenuShell` | HUD trên, tiêu đề/quay lại/thông báo xem trước, cửa sổ nội dung giữa và navigation dưới. Chỉ nội dung giữa cuộn. |
 | `MenuPanel` | Thân `cool` tím than với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
-| `MenuButton` | Viền kem 2 dp, góc bo 8 dp, nền tím; có icon thì chỉ hiện icon 36 dp, tên đầy đủ qua tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có viền vàng và tick; mục khóa giữ icon khóa. |
+| `MenuButton` | Viền kem 2 dp, góc bo 8 dp, nền tím; có icon thì mặc định hiện icon 36 dp; thẻ nội dung dùng `showLabel` để hiện tên, còn HUD/hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có viền vàng và tick; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô; bốn chỉ số tránh bố cục 3+1. |
-| `MenuPreview` | Cửa sổ cảnh đen gọn giống minimap, icon 48 dp; không tạo banner lớn chỉ để lấp chỗ. |
+| `MenuPreview` | Cửa sổ làng hoàng hôn cao 96 dp, phủ tím than và icon 48 dp; không tạo banner lớn chỉ để lấp chỗ. |
 | `PixelProgress` | Thanh EXP cùng mẫu viền 2 dp/góc 8 dp, nền tối và fill vàng như HUD. |
 
 Không sao chép shell/HUD/frame vào feature mới. Nếu thiếu một biến thể thực
@@ -100,8 +100,9 @@ bao gồm nút đóng dialog. Ba nút hành động Home dùng chính `MenuButto
 
 Nội dung menu 17 dp, line height 1.35; tiêu đề màn 22 dp đậm; tab tiêu đề
 panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas giữ nền trong
-suốt và không có lớp nền/viền bọc riêng; các nút icon không hiện chữ, vẫn có
-tooltip và semantics.
+suốt và không có lớp nền/viền bọc riêng; các nút icon compact không hiện chữ, vẫn có
+tooltip và semantics. Thẻ chương/đoạn truyện hiển thị tên và trạng thái khóa,
+không bắt người chơi đoán nội dung từ icon.
 Home dùng ba nút hành động icon lớn, không có nhãn; phần chữ nội dung không
 phụ thuộc hệ số artwork. Chữ dài trong nội dung và nút xuống dòng, tăng chiều cao và cuộn được.
 Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn HUD compact trong slot cố định; không fit tiêu đề
@@ -159,3 +160,9 @@ tranh nhưng phủ tím than 86% để chữ rõ. Nhân vật là portrait pixel
 không có animation hoặc trạng thái gameplay. Giữ nguyên khung 2/8 dp, màu sẵn
 và neo HUD/navigation. Chạy `flutter test tool/preview_ui_test.dart` để cập nhật
 ảnh; thêm `--dart-define=EXTENDED=true` để rà đủ kích thước/chữ lớn.
+
+Cốt truyện dùng thẻ icon kèm tên chương/đoạn, khóa hiển thị cả chữ và icon.
+Thanh tiến độ đặt dưới mô tả chương; cảnh minh họa nhỏ dùng lại tranh Home.
+
+Ở Cốt truyện, chương hiện tại luôn hiện; các chương khóa nằm trong mục mở rộng
+để không đẩy mô tả và nút bắt đầu quá xa trên điện thoại.

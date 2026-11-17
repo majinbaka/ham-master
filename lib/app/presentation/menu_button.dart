@@ -13,12 +13,16 @@ class MenuButton extends StatelessWidget {
     this.selected = false,
     this.icon,
     this.artworkScale = 1,
+    this.showLabel = false,
     super.key,
   });
   final String label;
   final VoidCallback? onPressed;
   final bool selected;
   final PixelIconKind? icon;
+
+  /// Content cards show names; compact HUD actions keep tooltip-only labels.
+  final bool showLabel;
 
   /// Scales the icon only; border geometry compensates for the outer projection.
   final double artworkScale;
@@ -28,7 +32,7 @@ class MenuButton extends StatelessWidget {
     message: label,
     excludeFromSemantics: true,
     child: Semantics(
-      label: icon == null ? null : label,
+      label: icon == null || showLabel ? null : label,
       selected: selected,
       child: TextButton(
         style: TextButton.styleFrom(
@@ -48,16 +52,23 @@ class MenuButton extends StatelessWidget {
         onPressed: onPressed,
         child: icon == null
             ? Text(label, textAlign: TextAlign.center)
-            : Stack(
-                alignment: Alignment.center,
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 8,
                 children: [
-                  PixelIcon(icon!, size: 36 * artworkScale),
-                  if (selected)
-                    const Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Icon(Icons.check_circle, size: 14),
-                    ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      PixelIcon(icon!, size: 36 * artworkScale),
+                      if (selected)
+                        const Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Icon(Icons.check_circle, size: 14),
+                        ),
+                    ],
+                  ),
+                  if (showLabel) Text(label, textAlign: TextAlign.center),
                 ],
               ),
       ),
