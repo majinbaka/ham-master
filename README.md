@@ -89,11 +89,15 @@ Android application ID: `com.jinshu.pixel_rpg`.
   chỉ thay vị trí neo và mở rộng nền đen; không wrap, kéo rộng panel hay cuộn.
   Kích thước chuẩn tương ứng chiều ngắn 390 dp; thiết bị nhỏ hơn dùng một hệ số
   chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
-  lớn UI. Vùng an toàn được áp dụng khi đặt các cụm. Nhãn nằm trong slot cố định;
+  lớn UI. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
+  để giữ vùng chạm trên điện thoại nhỏ. Vùng an toàn được áp dụng khi đặt các
+  cụm. Nhãn nằm trong slot cố định;
   hộp thông tin vẫn dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
-  Khoảng cách dùng lưới chung `HomeSpacing` khoảng 4 dp/bước: lề an toàn và
+  Khoảng cách dùng lưới chung `GameSpacing` khoảng 4 dp/bước: lề an toàn và
   khoảng giữa cụm khoảng 8 dp, footer cửa sổ thấp dùng khoảng 4 dp. Nội dung
-  icon–chữ căn giữa trong nút, padding các ô điều hướng đồng nhất. Xem
+  nút có icon chỉ hiển thị icon lớn trên nền trong suốt, chỉ nút có viền kem
+  bo mềm; tên giữ trong tooltip và
+  semantics. Nội dung menu 17 dp, tiêu đề 22 dp; padding các ô điều hướng đồng nhất. Xem
   [quy ước spacing](docs/art/reusable-ui-concept.md#9-quy-ước-spacing-runtime-mobile).
   Khung dùng sprite 9-slice: góc giữ hình, cạnh và nền co giãn; sáu skin dùng
   chung atlas trong `assets/ui/`. Chữ là widget riêng; 18 icon dùng atlas pixel art
@@ -103,18 +107,25 @@ Android application ID: `com.jinshu.pixel_rpg`.
   mẫu Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ, Cài đặt. Chỉ số Trang chủ
   chưa có dùng dấu `—`.
 - Chọn **Xem nhiệm vụ** trong khung Nhiệm vụ chính để mở màn hình mẫu.
-  Bốn tab nằm trên hai cột chương và chi tiết; nội dung cuộn bên trên
+  Tab tự xuống hàng; chương và chi tiết xếp dọc trên màn hẹp/chữ lớn,
+  chia hai cột khi đủ chỗ; nội dung cuộn bên trên
   thanh điều hướng. Nút quay lại và mục Trang chủ đều về màn hình chính.
   Chương, mục tiêu, tài nguyên và phần thưởng là dữ liệu minh họa cố định.
 - Cốt truyện mở hội thoại xem thử; Cửa hàng lọc danh mục và xem chi tiết;
   Hồ sơ đổi tab sưu tầm/huy hiệu; Cài đặt đổi nhóm và thao tác thử slider,
   switch, lựa chọn. Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
-  tiến trình hoặc lưu cấu hình. Nội dung cuộn trên thanh điều hướng cố định.
+  tiến trình hoặc lưu cấu hình. HUD dùng lại chính profile/tài nguyên của Home
+  và vẫn neo cố định khi cuộn.
+  Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
+  Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
+  Chương/vật phẩm/chỉ số dùng lưới ô đều, thanh EXP dùng track vuông.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
   chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
   Kiểm tra pixel xác minh góc sprite không méo và cạnh không hở khi đổi cỡ khung.
-- Các thư mục sprites, tilesets, maps, audio, fonts vẫn trống.
+- Font Roboto được đóng gói trong `assets/fonts/` với giấy phép; mọi màn dùng
+  `GameTypography`/`appTheme`, icon atlas và nút common, kể cả khi offline.
+- Các thư mục sprites, tilesets, maps, audio vẫn trống.
 - CI format/analyze/test, hướng dẫn agent, skills và Dart format hook.
 
 ```text
@@ -125,10 +136,10 @@ lib/
     router/app_router.dart
     theme/app_theme.dart
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
-  features/home/presentation/ # screen, HUD, panels, navigation, pixel frame
+  features/home/presentation/ # scene, quest panels, minimap, dialogue and actions
   features/quests/presentation/ # read-only quest preview
   features/{story,shop,profile,settings}/presentation/ # interactive UI previews
-  app/presentation/ # shared menu shell and controls
+  app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ atlas widgets
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
 ```
@@ -137,6 +148,15 @@ Thêm feature dưới `lib/features/<feature>/`; chỉ tạo các lớp presenta
 application, domain, infrastructure khi có code thực tế cần sở hữu.
 
 ## Tài liệu concept artwork
+
+[Quy chuẩn UI runtime](docs/art/ui-guidelines.md) là quy tắc bắt buộc cho mọi
+màn hiện tại và về sau: palette, kiểu chữ, spacing, shell, navigation, breakpoint,
+trạng thái và điều kiện kiểm tra. Menu/hội thoại dùng chung shell, nội dung
+thích ứng theo chiều rộng và cỡ chữ. Home là mẫu chuẩn: HUD, hệ số artwork,
+viền, vị trí navigation và spacing được dùng lại, không tự dựng một bộ khung
+lớn hơn cho menu. Component dùng chung nằm tại `lib/app/presentation/`,
+primitives của atlas nằm trong `pixel/`; feature chỉ sở hữu nội dung.
+Ảnh concept bên dưới chỉ tham chiếu hình ảnh, không cố định layout điện thoại.
 
 [Concept khung UI pixel RPG tái sử dụng](docs/art/reusable-ui-concept.md)
 phân tích ảnh mẫu do người dùng cung cấp, tách các khung/panel/nút thành

@@ -3,7 +3,8 @@
 The home UI also uses the independent `icon-atlas.png` described below.
 
 `frame-atlas.png` is the production atlas consumed by `PixelFrameArtwork`.
-Generated with built-in ImageGen for this project; no external art/font pack.
+Generated with built-in ImageGen for this project; no external art pack.
+UI text uses the separately bundled Roboto family in `assets/fonts/`.
 Style follows the user-supplied reference and `docs/art/reusable-ui-concept.md`.
 No text, icons, portraits or game content are baked into the sprites.
 
@@ -16,19 +17,22 @@ Coordinates are top-left origins in the full atlas.
 
 | Skin | x | y | Use |
 | --- | ---: | ---: | --- |
-| cream | 48 | 40 | Map, action buttons, speaker tab |
+| cream | 48 | 40 | Map, scene preview, speaker tab |
 | cool | 544 | 40 | Profile, counters, utilities, navigation tray |
 | gold | 1040 | 40 | Main quest body and title |
 | cyan | 48 | 540 | Secondary quest body and title |
 | paper | 544 | 540 | Dialogue body |
-| selected | 1040 | 540 | Selected navigation entry |
+| selected | 1040 | 540 | Available highlighted frame skin |
 
 Within each rectangle, slice x at `0, 56, 392, 448` and y at
 `0, 56, 384, 440`. This yields four corners, four edges and one center.
 Render caps at **14 design units** (1/4 source size); stretch only the long
 axis of edges and both axes of the center. For slots smaller than 28 units,
 reduce both caps equally to avoid overlap. HomeLayout applies its shared
-device scale afterward. `FilterQuality.none` preserves pixel steps.
+device scale afterward. These primitives live in `lib/app/presentation/pixel/`.
+Menus use `PixelArtScale` at the same device scale so 14 design units become
+about 5.8 dp at a 390 dp short side; do not render menu corners at 14 dp.
+`FilterQuality.none` preserves pixel steps.
 
 Keep the atlas alpha untouched, including lightly translucent edge pixels.
 Flutter caches the image; widgets share it and release their image handles.
@@ -47,9 +51,11 @@ Use case: stylized-concept. Asset type: production pixel RPG UI sprite atlas, tr
 ## Pixel icon atlas
 
 `icon-atlas.png`: **1536 × 1024 RGBA**, generated with built-in ImageGen.
-Original alpha is preserved; no external art or fonts were imported. It replaces
+Original alpha is preserved; the atlas contains no imported art or baked text. It replaces
 all 18 Material icons in the home HUD, quests, map, utilities, actions and navigation.
-Text, semantics, selected plates and unavailable states remain separate widgets.
+Text, semantics, selection marks and unavailable states remain separate widgets.
+Home actions and navigation use the shared MenuButton shape from appTheme;
+icons never add a separate background or border.
 
 `PixelIconKind` records six columns (x = column × 256) and three measured
 row origins **64, 388, 720**. Each source region is **256 × 256 px**; the

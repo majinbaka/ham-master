@@ -5,6 +5,8 @@ import 'package:pixel_rpg/app/pixel_rpg_app.dart';
 import 'package:pixel_rpg/app/router/app_router.dart';
 import 'package:pixel_rpg/app/presentation/menu_components.dart';
 import 'package:pixel_rpg/app/presentation/menu_shell.dart';
+import 'package:pixel_rpg/app/theme/app_theme.dart';
+import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
@@ -32,7 +34,7 @@ void main() {
       ('Nhiệm vụ', 'quests'),
       ('Trang chủ', ''),
     ]) {
-      await tester.tap(find.text(label).last);
+      await tester.tap(find.byTooltip(label).last);
       await tester.pumpAndSettle();
       expect(
         router.routeInformationProvider.value.uri.path,
@@ -40,7 +42,7 @@ void main() {
       );
       expect(tester.takeException(), isNull);
     }
-    await tester.tap(find.text('Cốt truyện'));
+    await tester.tap(find.byTooltip('Cốt truyện'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Bắt đầu xem thử'));
     await tester.tap(find.text('Bắt đầu xem thử'));
@@ -60,9 +62,14 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: ShopScreen(onNavigate: (_) {})));
     await tester.tap(find.text('Trang bị'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Thuốc hồi phục'), findsNothing);
-    await tester.ensureVisible(find.textContaining('Kiếm tập luyện'));
-    await tester.tap(find.textContaining('Kiếm tập luyện'));
+    expect(
+      find.byTooltip('Thuốc hồi phục\n120 ngọc\nXem chi tiết'),
+      findsNothing,
+    );
+    await tester.ensureVisible(
+      find.byTooltip('Kiếm tập luyện\n300 vàng\nXem chi tiết'),
+    );
+    await tester.tap(find.byTooltip('Kiếm tập luyện\n300 vàng\nXem chi tiết'));
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsOneWidget);
     expect(find.textContaining('Chưa thực hiện giao dịch'), findsOneWidget);
@@ -92,9 +99,21 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  for (final size in [const Size(320, 568), const Size(844, 390)]) {
+  for (final size in [
+    const Size(320, 568),
+    const Size(390, 844),
+    const Size(844, 390),
+    const Size(1440, 900),
+  ]) {
     for (final scale in [1.0, 2.0]) {
-      for (final screen in ['story', 'shop', 'profile', 'settings']) {
+      for (final screen in [
+        'story',
+        'shop',
+        'profile',
+        'settings',
+        'quests',
+        'episode',
+      ]) {
         testWidgets(
           '$screen fits $size at text scale $scale and keeps navigation visible',
           (tester) async {
@@ -106,10 +125,13 @@ void main() {
               'story' => StoryScreen(onNavigate: (_) {}, onStart: () {}),
               'shop' => ShopScreen(onNavigate: (_) {}),
               'profile' => ProfileScreen(onNavigate: (_) {}),
+              'quests' => QuestScreen(onBack: () {}),
+              'episode' => StoryEpisodeScreen(onBack: () {}),
               _ => SettingsScreen(onNavigate: (_) {}),
             };
             await tester.pumpWidget(
               MaterialApp(
+                theme: appTheme,
                 builder: (context, child) => MediaQuery(
                   data: MediaQuery.of(
                     context,
@@ -120,7 +142,7 @@ void main() {
               ),
             );
             await tester.pumpAndSettle();
-            final navigation = find.text('Trang chủ');
+            final navigation = find.byTooltip('Trang chủ');
             final position = tester.getCenter(navigation);
             await tester.drag(
               find.byType(SingleChildScrollView).first,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/pixel_ui_colors.dart';
+import '../../theme/pixel_ui_colors.dart';
+import '../../theme/game_typography.dart';
 import 'pixel_frame_skin.dart';
+import 'pixel_art_scale.dart';
 
 export 'pixel_frame_skin.dart' show PixelFrameSkin;
 
@@ -22,7 +24,10 @@ class PixelFrame extends StatelessWidget {
   Widget build(BuildContext context) => Stack(
     children: [
       Positioned.fill(child: PixelFrameArtwork(skin: skin)),
-      Padding(padding: padding.add(const EdgeInsets.all(4)), child: child),
+      Padding(
+        padding: padding.add(EdgeInsets.all(4 * PixelArtScale.of(context))),
+        child: child,
+      ),
     ],
   );
 }
@@ -49,11 +54,7 @@ class PixelLabel extends StatelessWidget {
     alignment: alignment,
     child: Text(
       text,
-      style: TextStyle(
-        fontSize: fontSize,
-        fontWeight: FontWeight.w600,
-        color: color,
-      ),
+      style: GameTypography.label.copyWith(fontSize: fontSize, color: color),
     ),
   );
 }

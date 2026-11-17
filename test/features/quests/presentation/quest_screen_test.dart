@@ -24,12 +24,15 @@ void main() {
     );
     final router = container.read(appRouterProvider);
 
-    for (final back in [find.byTooltip('Quay lại'), find.text('Trang chủ')]) {
+    for (final back in [
+      find.byTooltip('Quay lại'),
+      find.byTooltip('Trang chủ'),
+    ]) {
       await tester.tap(find.byTooltip('Mở Nhiệm vụ'));
       await tester.pumpAndSettle();
       expect(router.routeInformationProvider.value.uri.path, '/home/quests');
       expect(find.byType(QuestScreen), findsOneWidget);
-      expect(find.text('Chương 1\nKhởi hành'), findsOneWidget);
+      expect(find.byTooltip('Chương 1\nKhởi hành'), findsOneWidget);
       expect(find.text('Bước chân đầu tiên'), findsOneWidget);
       expect(tester.takeException(), isNull);
 
@@ -59,7 +62,7 @@ void main() {
         home: QuestScreen(onBack: () {}),
       ),
     );
-    final footer = find.text('Trang chủ');
+    final footer = find.byTooltip('Trang chủ');
     final footerBefore = tester.getCenter(footer);
     final status = find.text('Đang thực hiện');
     await tester.ensureVisible(status);

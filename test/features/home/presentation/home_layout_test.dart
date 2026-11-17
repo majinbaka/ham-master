@@ -3,11 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 import 'package:pixel_rpg/features/home/presentation/home_layout.dart';
-import 'package:pixel_rpg/features/home/presentation/home_spacing.dart';
+import 'package:pixel_rpg/app/presentation/game_spacing.dart';
 import 'package:pixel_rpg/features/home/presentation/home_footer.dart';
 import 'package:pixel_rpg/features/home/presentation/home_overview.dart';
-import 'package:pixel_rpg/features/home/presentation/pixel_frame.dart';
-import 'package:pixel_rpg/features/home/presentation/pixel_icon.dart';
+import 'package:pixel_rpg/app/presentation/pixel/pixel_frame.dart';
+import 'package:pixel_rpg/app/presentation/pixel/pixel_icon.dart';
 
 void main() {
   testWidgets('keeps reference groups visible and navigation on one row', (
@@ -23,8 +23,8 @@ void main() {
 
     expect(find.text('BẢN ĐỒ'), findsOneWidget);
     expect(find.byType(SingleChildScrollView), findsNothing);
-    final home = tester.getCenter(find.text('Trang chủ'));
-    final story = tester.getCenter(find.text('Cốt truyện'));
+    final home = tester.getCenter(find.byTooltip('Trang chủ'));
+    final story = tester.getCenter(find.byTooltip('Cốt truyện'));
     expect(story.dy, closeTo(home.dy, 0.1));
     expect(story.dx, greaterThan(home.dx));
     expect(tester.takeException(), isNull);
@@ -42,26 +42,23 @@ void main() {
     );
     final frames = find.descendant(
       of: find.byType(HomeActions),
-      matching: find.byType(PixelFrame),
+      matching: find.byType(TextButton),
     );
+    expect(frames, findsNWidgets(3));
     final rects = <Rect>[];
     for (final frame in frames.evaluate()) {
       final finder = find.byWidget(frame.widget);
       final rect = tester.getRect(finder);
       rects.add(rect);
-      final content = find.descendant(
-        of: finder,
-        matching: find.byType(Column),
-      );
       final icon = find.descendant(
         of: finder,
         matching: find.byType(PixelIcon),
       );
-      expect(tester.getCenter(content).dx, closeTo(rect.center.dx, 0.01));
-      expect(tester.getCenter(content).dy, closeTo(rect.center.dy, 0.01));
+
       expect(tester.getCenter(icon).dx, closeTo(rect.center.dx, 0.01));
+      expect(tester.getCenter(icon).dy, closeTo(rect.center.dy, 0.01));
     }
-    final gap = HomeSpacing.gap * HomeLayout(const Size(390, 844)).scale;
+    final gap = GameSpacing.gap * HomeLayout(const Size(390, 844)).scale;
     expect(rects[1].left - rects[0].right, closeTo(gap, 0.01));
     expect(rects[2].left - rects[1].right, closeTo(gap, 0.01));
     final utilities = find.descendant(
@@ -152,8 +149,8 @@ void main() {
         expect(dialogue.center.dx, closeTo(viewport.width / 2, 0.01));
         expect(character.center.dx, closeTo(viewport.width / 2, 0.01));
         expect(
-          tester.getCenter(find.text('Cốt truyện')).dy,
-          closeTo(tester.getCenter(find.text('Trang chủ')).dy, 0.1),
+          tester.getCenter(find.byTooltip('Cốt truyện')).dy,
+          closeTo(tester.getCenter(find.byTooltip('Trang chủ')).dy, 0.1),
         );
         expect(find.byType(SingleChildScrollView), findsNothing);
         expect(tester.takeException(), isNull);
@@ -232,7 +229,7 @@ void main() {
       );
       final nav = tester.getRect(find.byKey(const ValueKey('home-navigation')));
       final layout = HomeLayout(size, deviceShortSide: size.shortestSide);
-      final edge = HomeSpacing.edge * layout.scale;
+      final edge = GameSpacing.edge * layout.scale;
       expect(profile.left, closeTo(padding.left + edge, 0.01));
       expect(profile.top, closeTo(padding.top + edge, 0.01));
       expect(nav.bottom, lessThanOrEqualTo(size.height - padding.bottom));

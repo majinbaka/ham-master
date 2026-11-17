@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
-import '../../home/presentation/pixel_icon.dart';
+import '../../../app/presentation/pixel/pixel_icon.dart';
 
 /// Browsable sample catalogue; no payments, purchases or resource mutations.
 class ShopScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _ShopScreenState extends State<ShopScreen> {
     onNavigate: widget.onNavigate,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 10,
+      spacing: 8,
       children: [
         const MenuPanel(
           title: 'Chào nhà lữ hành!',
@@ -56,7 +56,7 @@ class _ShopScreenState extends State<ShopScreen> {
           title: 'Gói khởi hành',
           child: Row(
             children: [
-              const PixelIcon(PixelIconKind.backpack, size: 64),
+              const PixelIcon(PixelIconKind.backpack, size: 48),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(
@@ -81,29 +81,20 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
         MenuPanel(
           title: 'Vật phẩm · ${_tabs[_category]}',
-          child: LayoutBuilder(
-            builder: (context, constraints) => Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final (name, icon, price, category) in _items)
-                  if (_category == 0 || category == _category)
-                    SizedBox(
-                      width: constraints.maxWidth >= 260
-                          ? (constraints.maxWidth - 8) / 2
-                          : constraints.maxWidth,
-                      child: MenuButton(
-                        label: '$name\n$price\nXem chi tiết',
-                        icon: icon,
-                        onPressed: () => showSampleDetail(
-                          context,
-                          name,
-                          'Giá minh họa: $price. Vật phẩm chuẩn bị cho hành trình.',
-                        ),
-                      ),
+          child: MenuGrid(
+            children: [
+              for (final (name, icon, price, category) in _items)
+                if (_category == 0 || category == _category)
+                  MenuButton(
+                    label: '$name\n$price\nXem chi tiết',
+                    icon: icon,
+                    onPressed: () => showSampleDetail(
+                      context,
+                      name,
+                      'Giá minh họa: $price. Vật phẩm chuẩn bị cho hành trình.',
                     ),
-              ],
-            ),
+                  ),
+            ],
           ),
         ),
         MenuPanel(

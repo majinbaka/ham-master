@@ -1,43 +1,30 @@
-import 'dart:math' as math;
-
 import 'package:flutter/widgets.dart';
 
-import 'home_spacing.dart';
+import '../../../app/presentation/game_chrome_layout.dart';
+import '../../../app/presentation/game_spacing.dart';
 
 /// Reference artwork dimensions, projected using one orientation-invariant scale.
 /// Rotating a device changes anchors and empty scene space, never frame sizes.
-class HomeLayout {
-  HomeLayout(Size viewport, {double? deviceShortSide})
-    : scale = math.min(
-        math.min((deviceShortSide ?? viewport.shortestSide) / 940, 390 / 940),
-        viewport.width / 940,
-      ),
-      viewport = viewport;
-
-  final Size viewport;
-  final double scale;
+class HomeLayout extends GameChromeLayout {
+  HomeLayout(super.viewport, {super.deviceShortSide});
 
   double get _width => viewport.width / scale;
   double get _height => viewport.height / scale;
   bool get _roomBesideFooter => _width >= 1790;
 
-  static const _edge = HomeSpacing.edge;
-  static const _gap = HomeSpacing.gap;
+  static const _edge = GameSpacing.edge;
+  static const _gap = GameSpacing.gap;
 
-  Rect get profile => _rect(_edge, _edge, 440, 120);
-  Rect get resources => _rect(_width - _edge - 420, _edge, 420, 120);
   Rect get quests => _rect(_edge, profile.bottom / scale + _gap, 440, 280);
   Rect get utilities =>
       _rect(_width - _edge - 280, resources.bottom / scale + _gap, 280, 80);
   Rect get minimap =>
       _rect(_width - _edge - 320, utilities.bottom / scale + _gap, 320, 216);
-  Rect get navigation =>
-      _rect((_width - 900) / 2, _height - _edge - 160, 900, 160);
 
   // Half-grid gaps keep the centered footer clear of side panels on short
   // landscape windows, without changing any component's size on rotation.
   bool get _tight => !_roomBesideFooter && _height < 1200;
-  double get _footerGap => _tight ? HomeSpacing.small : _gap;
+  double get _footerGap => _tight ? GameSpacing.small : _gap;
 
   Rect get actions => _rect(
     (_width - 840) / 2,

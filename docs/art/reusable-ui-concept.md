@@ -1,5 +1,9 @@
 # Concept khung giao diện pixel RPG tái sử dụng
 
+Quy tắc triển khai cho mọi màn hình nằm ở [Quy chuẩn UI](ui-guidelines.md).
+Tài liệu này giữ vai trò art direction và prompt; kích thước ảnh không phải
+ràng buộc bố cục runtime. Trang chủ giữ HUD neo cảnh, menu dùng layout thích ứng.
+
 ## Mục đích và phạm vi
 
 Chuyển cách xử lý thị giác của ảnh mẫu thành một bộ khung có thể generate
@@ -19,12 +23,12 @@ Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
 chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bên dưới
 vẫn là định hướng cho những component chi tiết chưa tạo.
 
-Layout runtime giữ kích thước và tỉ lệ từng cụm theo ảnh mẫu: hồ sơ/nhiệm vụ
+Layout runtime của Trang chủ giữ kích thước và tỉ lệ từng cụm theo ảnh mẫu: hồ sơ/nhiệm vụ
 neo trái, tài nguyên/minimap neo phải, hội thoại/nút hành động/thanh dưới neo
 ở giữa. Nhiệm vụ luôn xếp dọc; minimap luôn hiện; sáu mục điều hướng luôn trên
 một hàng. Khi xoay ngang, các cụm dịch sang cạnh hoặc giữ trục giữa, không
 kéo giãn hay thu nhỏ theo chiều cao. Nền đen nhận phần không gian dư.
-`HomeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
+`HomeLayout` mở rộng `GameChromeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
 được chặn ở 390/940 và chỉ giảm theo chiều ngắn thiết bị nhỏ hơn 390 dp.
 Khoảng cách giữa các cụm được thu gọn trên cửa sổ thấp, hẹp; kích thước khung
 không đổi. Nhãn fit trong slot cố định, giữ toàn bộ nội dung cho semantics;
@@ -314,7 +318,9 @@ màn hình cùng phong cách mà không phụ thuộc câu chuyện hoặc nhân
 
 ## 9. Quy ước spacing runtime mobile
 
-`HomeSpacing` là nguồn chung cho khoảng cách UI home. Lưới cơ sở 10 đơn vị
+`GameSpacing` trong `lib/app/presentation/` là nguồn chung cho khoảng cách
+artwork của Home và menu. `GameChromeLayout` sở hữu neo HUD/navigation,
+`PixelArtScale` giữ cùng mật độ viền cho menu vẽ trực tiếp ở dp. Lưới cơ sở 10 đơn vị
 artwork tương đương khoảng 4 dp ở chiều ngắn 390 dp; dùng 1 bước cho khoảng
 icon–nhãn và padding nội dung, 2 bước (khoảng 8 dp) cho lề vùng an toàn,
 khoảng giữa panel và giữa nút hành động. Không cần bám khoảng cách ảnh gốc.
@@ -323,7 +329,9 @@ Các cụm trên được đặt tiếp nhau theo cạnh panel và gap, tránh t
 
 Footer dùng cùng khoảng 2 bước giữa hội thoại, hành động và điều hướng;
 cửa sổ thấp, hẹp không đủ chỗ đặt footer cạnh HUD dùng 1 bước. Các panel vẫn
-cùng kích thước khi xoay. Nội dung nút căn giữa cả cụm icon–nhãn–trạng thái,
+cùng kích thước khi xoay. Nút có icon chỉ hiện icon lớn căn giữa, trong suốt không viền riêng;
+viền kem bo mềm chỉ bao quanh nút; nhãn giữ trong
+tooltip/semantics, trạng thái chọn có dấu tick. Nút chữ giữ nhãn căn giữa,
 các ô điều hướng có padding và hàng nội dung giống nhau dù đang chọn hay chưa.
 Nút tiện ích căn giữa icon cả hai trục; counter và tab nhiệm vụ căn giữa cụm
 icon–chữ. Artwork có thể nhỏ hơn vùng chạm; nút thông tin hoạt động vẫn có

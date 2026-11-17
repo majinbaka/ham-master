@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
+import 'package:pixel_rpg/app/presentation/pixel_navigation.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 
 void main() {
@@ -40,9 +41,18 @@ void main() {
           find.byKey(const ValueKey('character-placeholder')).hitTestable(),
           findsOneWidget,
         );
-        await tester.ensureVisible(find.text('Trang chủ'));
+        await tester.ensureVisible(find.byTooltip('Trang chủ'));
         await tester.pumpAndSettle();
-        expect(find.text('Trang chủ').hitTestable(), findsOneWidget);
+        expect(find.byTooltip('Trang chủ').hitTestable(), findsOneWidget);
+        final controls = find.descendant(
+          of: find.byType(PixelNavigation),
+          matching: find.byType(TextButton),
+        );
+        for (final control in controls.evaluate()) {
+          final target = tester.getSize(find.byWidget(control.widget));
+          expect(target.width, greaterThanOrEqualTo(48));
+          expect(target.height, greaterThanOrEqualTo(48));
+        }
         expect(tester.takeException(), isNull);
       });
     }

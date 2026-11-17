@@ -2,9 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../app/presentation/player_hud.dart';
+import '../../../app/presentation/scaled_artwork.dart';
 import '../../../app/theme/pixel_ui_colors.dart';
 import 'home_footer.dart';
-import 'home_hud.dart';
 import 'home_layout.dart';
 import 'home_navigation.dart';
 import 'home_overview.dart';
@@ -32,13 +33,13 @@ class HomeScreen extends StatelessWidget {
                 'home-profile',
                 layout.profile,
                 layout.scale,
-                const HomeProfile(),
+                const PlayerHud(),
               ),
               _place(
                 'home-resources',
                 layout.resources,
                 layout.scale,
-                const HomeResources(),
+                const ResourceHud(),
               ),
               _place(
                 'home-quests',
@@ -81,11 +82,12 @@ class HomeScreen extends StatelessWidget {
                 layout.scale,
                 const HomeActions(),
               ),
-              _place(
-                'home-navigation',
-                layout.navigation,
-                layout.scale,
-                HomeNavigation(onNavigate: onNavigate),
+              Positioned.fromRect(
+                rect: layout.navigation,
+                child: SizedBox(
+                  key: const ValueKey('home-navigation'),
+                  child: HomeNavigation(onNavigate: onNavigate),
+                ),
               ),
               // Keep the real control's hit target at least 48 logical pixels,
               // independently of the fixed-size artwork underneath it.
@@ -96,6 +98,11 @@ class HomeScreen extends StatelessWidget {
                 height: 48,
                 child: IconButton(
                   tooltip: 'Thông tin màn hình',
+                  // Artwork is rendered below; this is only its touch target.
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shape: const RoundedRectangleBorder(),
+                  ),
                   onPressed: () => _showInformation(context),
                   icon: const SizedBox.shrink(),
                 ),
@@ -112,13 +119,10 @@ class HomeScreen extends StatelessWidget {
         rect: rect,
         child: SizedBox(
           key: ValueKey(key),
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: SizedBox(
-              width: rect.width / scale,
-              height: rect.height / scale,
-              child: child,
-            ),
+          child: ScaledArtwork(
+            scale: scale,
+            size: Size(rect.width / scale, rect.height / scale),
+            child: child,
           ),
         ),
       );

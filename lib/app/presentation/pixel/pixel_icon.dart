@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -77,10 +78,14 @@ class _PixelIconState extends State<PixelIcon> {
 
   @override
   Widget build(BuildContext context) => ExcludeSemantics(
-    child: SizedBox.square(
-      dimension: widget.size,
-      child: CustomPaint(
-        painter: _IconPainter(image: _image?.image, kind: widget.kind),
+    child: Align(
+      widthFactor: 1,
+      heightFactor: 1,
+      child: SizedBox.square(
+        dimension: widget.size,
+        child: CustomPaint(
+          painter: _IconPainter(image: _image?.image, kind: widget.kind),
+        ),
       ),
     ),
   );
@@ -99,7 +104,11 @@ class _IconPainter extends CustomPainter {
     canvas.drawImageRect(
       atlas,
       kind.source,
-      Offset.zero & size,
+      Rect.fromCenter(
+        center: size.center(Offset.zero),
+        width: math.min(size.width, size.height) * 0.84,
+        height: math.min(size.width, size.height) * 0.84,
+      ),
       Paint()
         ..isAntiAlias = false
         ..filterQuality = FilterQuality.none,

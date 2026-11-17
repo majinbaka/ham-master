@@ -3,6 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import 'pixel_art_scale.dart';
+
 /// Sprite bounds in frame-atlas.png. Each 448 × 440 sprite has 56 px caps.
 /// Artwork is rendered at 1/4 size; corners stay 14 design units when resized.
 enum PixelFrameSkin {
@@ -65,15 +67,24 @@ class _PixelFrameArtworkState extends State<PixelFrameArtwork> {
   @override
   Widget build(BuildContext context) => ExcludeSemantics(
     child: CustomPaint(
-      painter: _SpriteFramePainter(image: _image?.image, skin: widget.skin),
+      painter: _SpriteFramePainter(
+        image: _image?.image,
+        skin: widget.skin,
+        scale: PixelArtScale.of(context),
+      ),
     ),
   );
 }
 
 class _SpriteFramePainter extends CustomPainter {
-  const _SpriteFramePainter({required this.image, required this.skin});
+  const _SpriteFramePainter({
+    required this.image,
+    required this.skin,
+    required this.scale,
+  });
 
   final ui.Image? image;
+  final double scale;
   final PixelFrameSkin skin;
 
   @override
@@ -81,7 +92,7 @@ class _SpriteFramePainter extends CustomPainter {
     final atlas = image;
     if (atlas == null || size.isEmpty) return;
     // Small slots shrink both caps equally instead of overlapping the corners.
-    final cap = math.min(14.0, size.shortestSide / 2);
+    final cap = math.min(14.0 * scale, size.shortestSide / 2);
     final sourceX = [skin.x, skin.x + 56, skin.x + 392, skin.x + 448];
     final sourceY = [skin.y, skin.y + 56, skin.y + 384, skin.y + 440];
     final targetX = [0.0, cap, size.width - cap, size.width];
@@ -116,5 +127,7 @@ class _SpriteFramePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_SpriteFramePainter oldDelegate) =>
-      oldDelegate.image != image || oldDelegate.skin != skin;
+      oldDelegate.image != image ||
+      oldDelegate.skin != skin ||
+      oldDelegate.scale != scale;
 }

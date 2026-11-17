@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/pixel_ui_colors.dart';
-import 'home_spacing.dart';
-import 'pixel_frame.dart';
-import 'pixel_icon.dart';
+import '../../../app/presentation/game_spacing.dart';
+import '../../../app/presentation/pixel/pixel_frame.dart';
+import '../../../app/presentation/pixel/pixel_icon.dart';
 
 /// Quest panels always stay stacked at the left edge, as in the reference.
 class HomeQuests extends StatelessWidget {
@@ -43,7 +43,7 @@ class HomeQuests extends StatelessWidget {
           ],
         ),
       ),
-      const SizedBox(height: HomeSpacing.gap),
+      const SizedBox(height: GameSpacing.gap),
       const SizedBox(
         width: 414,
         height: 100,
@@ -63,12 +63,12 @@ class HomeMinimap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => PixelFrame(
-    padding: const EdgeInsets.all(HomeSpacing.small),
+    padding: const EdgeInsets.all(GameSpacing.small),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 38, child: PixelLabel('BẢN ĐỒ', fontSize: 27)),
-        const SizedBox(height: HomeSpacing.small),
+        const SizedBox(height: 38, child: PixelLabel('BẢN ĐỒ', fontSize: 36)),
+        const SizedBox(height: GameSpacing.small),
         Expanded(
           child: Semantics(
             label: 'Bản đồ chưa mở',
@@ -110,7 +110,7 @@ class _QuestPanel extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: PixelLabel(
               message,
-              fontSize: 28,
+              fontSize: 36,
               alignment: Alignment.centerLeft,
             ),
           ),
@@ -130,13 +130,13 @@ class _QuestPanel extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PixelIcon(icon, size: 32),
-                const SizedBox(width: HomeSpacing.small),
+                PixelIcon(icon, size: 40),
+                const SizedBox(width: GameSpacing.small),
                 Flexible(
                   child: PixelLabel(
                     title,
                     color: accent,
-                    fontSize: 27,
+                    fontSize: 36,
                     alignment: Alignment.center,
                   ),
                 ),
@@ -154,7 +154,7 @@ class HomeUtilities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-    spacing: HomeSpacing.small,
+    spacing: GameSpacing.small,
     children: [
       for (final icon in const [
         PixelIconKind.mail,
@@ -165,7 +165,7 @@ class HomeUtilities extends StatelessWidget {
           child: ExcludeSemantics(
             child: PixelFrame(
               skin: PixelFrameSkin.cool,
-              padding: const EdgeInsets.all(HomeSpacing.small),
+              padding: const EdgeInsets.all(GameSpacing.small),
               child: Center(child: PixelIcon(icon, size: 40)),
             ),
           ),

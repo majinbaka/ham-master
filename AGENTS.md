@@ -50,13 +50,15 @@ menus are presentation-only previews. Do not implement gameplay unless requested
 - `lib/main.dart`: bootstrap and `ProviderScope`.
 - `lib/app/`: app composition, router and theme.
 - `lib/features/launch/presentation/`: three-second neon loading screen.
-- `lib/features/home/presentation/`: pixel home UI, fixed-proportion edge/center-anchored
-  HUD/panels/navigation, reusable nine-slice sprite frames and pixel icons.
+- `lib/features/home/presentation/`: home scene and fixed-proportion anchored
+  quest panels, minimap, dialogue and action placeholders.
+- `lib/app/presentation/pixel/`: shared atlas frames/icons, labels and artwork density.
 - `lib/features/quests/presentation/`: quest layout and fixed sample content.
 - `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.
-- `lib/app/presentation/`: shared menu shell, navigation and framed controls.
+- `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
+  spacing, navigation, menu shell, panels, buttons, grids, preview and progress.
 - `assets/`: NDAS branding and `ui/` frame and icon atlases; empty character sprite, tileset,
-  map, audio and font folders.
+  map and audio folders; bundled Roboto fonts and license in `assets/fonts/`.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
 - `android/`, `web/`: platform scaffolds with NDAS launcher/web icons.
 - `ios/`: unchanged platform scaffold.
@@ -68,6 +70,14 @@ menus are presentation-only previews. Do not implement gameplay unless requested
 - `deferred-work/`: out-of-scope issues, using the template.
 
 ## Working rules
+
+For every UI change, read and follow `docs/art/ui-guidelines.md`, the runtime
+UI concept for current and future screens. Reuse the shared menu shell,
+responsive columns, navigation, palette and atlas components. Home is the visual
+reference: menus must use its HUD, artwork density and navigation anchors;
+only their middle content scrolls. Reference layout
+PNGs describe visual intent, not fixed runtime dimensions. Update this guideline
+in the same change when intentionally changing the shared visual rules.
 
 Read scoped instructions and relevant docs before editing. State the intended
 behavior and owning module. Make the smallest change that satisfies the task.

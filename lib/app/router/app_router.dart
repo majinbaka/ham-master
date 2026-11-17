@@ -37,8 +37,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: 'episode',
                 name: 'story-episode',
-                builder: (context, state) =>
-                    StoryEpisodeScreen(onBack: () => context.goNamed('story')),
+                builder: (context, state) => StoryEpisodeScreen(
+                  onBack: () => context.goNamed('story'),
+                  onNavigate: context.goNamed,
+                ),
               ),
             ],
           ),

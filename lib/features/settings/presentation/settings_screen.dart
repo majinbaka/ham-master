@@ -33,38 +33,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
     title: 'Cài đặt',
     selected: 'settings',
     onNavigate: widget.onNavigate,
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8,
-      children: [
-        Expanded(
-          flex: 30,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 6,
-            children: [
-              for (final category in [
-                'Chung',
-                'Điều khiển',
-                'Âm thanh',
-                'Đồ họa',
-                'Ngôn ngữ',
-                'Tài khoản',
-                'Thông tin',
-              ])
-                MenuButton(
-                  label: category,
-                  selected: category == _category,
-                  onPressed: () => setState(() => _category = category),
-                ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 70,
-          child: MenuPanel(title: _category, child: _content(context)),
-        ),
-      ],
+    child: MenuColumns(
+      leading: Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: [
+          for (final category in [
+            'Chung',
+            'Điều khiển',
+            'Âm thanh',
+            'Đồ họa',
+            'Ngôn ngữ',
+            'Tài khoản',
+            'Thông tin',
+          ])
+            MenuButton(
+              label: category,
+              selected: category == _category,
+              onPressed: () => setState(() => _category = category),
+            ),
+        ],
+      ),
+      detail: MenuPanel(title: _category, child: _content(context)),
     ),
   );
 

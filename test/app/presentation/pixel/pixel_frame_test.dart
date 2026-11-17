@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pixel_rpg/features/home/presentation/pixel_frame_skin.dart';
+import 'package:pixel_rpg/app/presentation/pixel/pixel_frame_skin.dart';
 
 void main() {
   testWidgets('all sprite skins preserve corners when panels grow', (

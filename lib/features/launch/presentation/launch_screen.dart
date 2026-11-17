@@ -79,7 +79,7 @@ class _LaunchScreenState extends State<LaunchScreen>
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     letterSpacing: width * 0.012,
-                                    fontSize: (width * 0.07).clamp(10.0, 14.0),
+                                    fontSize: (width * 0.07).clamp(14.0, 18.0),
                                   ),
                                 ),
                               ),
@@ -103,8 +103,7 @@ class _LaunchScreenState extends State<LaunchScreen>
                           'Loading...',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: 'monospace',
-                            fontSize: (width * 0.09).clamp(12.0, 22.0),
+                            fontSize: (width * 0.09).clamp(16.0, 26.0),
                             letterSpacing: 1,
                             color: const Color(0xFFFFFDEB),
                           ),

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/pixel_ui_colors.dart';
+import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
-import '../../home/presentation/pixel_frame.dart';
-import '../../home/presentation/pixel_icon.dart';
+import '../../../app/presentation/pixel/pixel_icon.dart';
 import 'quest_detail.dart';
 
-/// A preview of the quest layout using presentation-only sample content.
+/// Read-only sample quests using the same controls and density as Home menus.
 class QuestScreen extends StatelessWidget {
   const QuestScreen({required this.onBack, this.onNavigate, super.key});
-
   final VoidCallback onBack;
   final ValueChanged<String>? onNavigate;
 
@@ -19,19 +17,11 @@ class QuestScreen extends StatelessWidget {
     selected: 'quests',
     onNavigate: onNavigate ?? (_) => onBack(),
     child: const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8,
       children: [
         _CategoryTabs(),
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 6,
-            children: [
-              Expanded(flex: 38, child: _ChapterList()),
-              Expanded(flex: 62, child: QuestDetail()),
-            ],
-          ),
-        ),
+        MenuColumns(leading: _ChapterList(), detail: QuestDetail()),
       ],
     ),
   );
@@ -39,10 +29,10 @@ class QuestScreen extends StatelessWidget {
 
 class _CategoryTabs extends StatelessWidget {
   const _CategoryTabs();
-
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(BuildContext context) => Wrap(
     spacing: 4,
+    runSpacing: 4,
     children: [
       for (final (index, label) in const [
         'Chính truyện',
@@ -50,40 +40,17 @@ class _CategoryTabs extends StatelessWidget {
         'Hàng ngày',
         'Thành tựu',
       ].indexed)
-        Expanded(
-          child: Semantics(
-            selected: index == 0,
-            enabled: index == 0,
-            child: PixelFrame(
-              skin: index == 0 ? PixelFrameSkin.selected : PixelFrameSkin.cream,
-              padding: EdgeInsets.zero,
-              child: SizedBox(
-                height: 32,
-                child: PixelLabel(
-                  label,
-                  fontSize: 13,
-                  color: index == 0
-                      ? PixelUiColors.outline
-                      : PixelUiColors.paper,
-                ),
-              ),
-            ),
-          ),
-        ),
+        MenuButton(label: label, selected: index == 0, onPressed: null),
     ],
   );
 }
 
 class _ChapterList extends StatelessWidget {
   const _ChapterList();
-
   @override
-  Widget build(BuildContext context) => PixelFrame(
-    skin: PixelFrameSkin.cool,
-    padding: EdgeInsets.zero,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 4,
+  Widget build(BuildContext context) => MenuPanel(
+    title: 'Danh sách chương',
+    child: MenuGrid(
       children: [
         for (final (index, name) in const [
           'Khởi hành',
@@ -92,29 +59,12 @@ class _ChapterList extends StatelessWidget {
           'Chân trời mới',
         ].indexed)
           Semantics(
-            selected: index == 0,
             label: index == 0 ? null : 'Đã khóa',
-            child: PixelFrame(
-              skin: index == 0 ? PixelFrameSkin.gold : PixelFrameSkin.cool,
-              padding: EdgeInsets.zero,
-              child: Row(
-                spacing: 2,
-                children: [
-                  PixelIcon(
-                    index == 0 ? PixelIconKind.story : PixelIconKind.lock,
-                    size: 21,
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Text(
-                        'Chương ${index + 1}\n$name',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            child: MenuButton(
+              label: 'Chương ${index + 1}\n$name',
+              icon: index == 0 ? PixelIconKind.story : PixelIconKind.lock,
+              selected: index == 0,
+              onPressed: null,
             ),
           ),
       ],

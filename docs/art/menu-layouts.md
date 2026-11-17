@@ -18,6 +18,9 @@ Không lấy nhân vật, yêu thú, bối cảnh, chủ đề thám tử hoặc
 [Cài đặt](../../Vietnamese%20Pixel%20RPG%20Settings%20Screen.png).
 Đây là ảnh tham chiếu do người dùng cung cấp, không phải artwork runtime.
 
+Quy tắc runtime hiện tại: [Quy chuẩn UI](ui-guidelines.md). Ảnh khung dưới đây
+chỉ tham chiếu art direction; không yêu cầu điện thoại giữ bố cục hai cột.
+
 ## Cách tạo và tích hợp
 
 Giống bản [layout Nhiệm vụ](quest-layout.md), ảnh là khung trống ghép
@@ -35,7 +38,12 @@ atlas thật bằng `PixelFrame` và icon rời; chữ luôn là widget. Không 
 chụp toàn màn hình làm UI. Trên điện thoại, HUD/tab có thể xuống dòng,
 cửa hàng dùng hai cột hoặc một cột tùy chiều rộng để giữ chữ đọc được.
 Các panel cuộn phía trên thanh điều hướng cố định. Cốt truyện và Cài đặt
-giữ hai vùng trái/phải. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
+xếp danh sách trên nội dung khi hẹp hoặc chữ lớn; chỉ chia hai cột 1:2 khi đủ
+600 × hệ số chữ dp. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
+Home là chuẩn runtime: menu dùng chính profile/tài nguyên của Home, cùng hệ
+số atlas và vị trí neo navigation. Tiêu đề và HUD cố định; chỉ cửa sổ ở giữa
+cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Chương/vật phẩm dùng
+lưới ô đều thay vì danh sách nút kéo dài. Hội thoại dùng cùng shell.
 
 ## Luồng mẫu trong app
 
@@ -54,6 +62,7 @@ Thanh dưới nối Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ
   mất khi rời màn hình; chưa áp dụng âm thanh, đồ họa hay cấu hình thiết bị.
 - `/home/quests`: giữ mục tiêu/phần thưởng mẫu, dùng chung shell điều hướng.
 
-Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. Những số như cấp 12,
-48.720 vàng và tiến trình sưu tầm không phải state game thật; HUD Trang chủ
-vẫn dùng dấu `—`. Chưa giới thiệu core, persistence hoặc mock API.
+Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. HUD menu dùng cùng placeholder `—` như Home;
+các số cấp độ và tiến trình trong nội dung là minh họa,
+không phải state game thật. HUD Trang chủ vẫn dùng dấu `—`.
+Chưa giới thiệu core, persistence hoặc mock API.

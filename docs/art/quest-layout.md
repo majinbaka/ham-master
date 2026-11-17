@@ -18,7 +18,13 @@ viền bậc, vàng cho lựa chọn và nền kem cho nội dung dài.
 | Chi tiết | x = 334, y = 252, rộng 507, cao 848; từ trên xuống gồm vùng banner, tiêu đề, mô tả, mục tiêu, bốn ô thưởng và nút trạng thái | `paper` cho thân; `cool`, `gold` và `cream` cho khung con |
 | Điều hướng | x = 12, y = 1168, rộng 829, cao 100; vùng chọn ở ô thứ năm trong sáu ô | Khay `cool`, ô chọn `selected` |
 
-Hai cột chiếm khoảng **38:62**, cách nhau 12 px. Các số đo dùng để
+Runtime lấy Home làm chuẩn theo [Quy chuẩn UI](ui-guidelines.md): cùng HUD,
+mật độ viền và neo navigation; tiêu đề cố định, nội dung cuộn trong cửa sổ giữa.
+Chương dùng lưới ô đều; tab tự xuống hàng;
+danh sách chương nằm trên chi tiết khi hẹp/chữ lớn, chia hai cột 1:2 khi đủ
+600 × hệ số chữ dp. Ảnh này không phải golden của màn hình hiện tại.
+
+Hai cột trong ảnh chiếm khoảng **38:62**, cách nhau 12 px. Các số đo dùng để
 dựng ảnh tham chiếu, không phải kích thước Flutter cố định. Khi triển khai,
 chừa vùng an toàn và kiểm tra chỗ cho chữ, nội dung cuộn và vùng chạm
 trên màn hình hẹp.
@@ -29,5 +35,5 @@ trên màn hình hẹp.
 tranh, trạng thái nhiệm vụ và dữ liệu thưởng sẽ là các lớp riêng.
 PNG này dùng để duyệt bố cục. Màn `/home/quests` dựng khung và nội dung mẫu
 bằng widget và atlas rời. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
-Nhiệm vụ chính. Hai cột cuộn cùng nhau phía trên shell điều hướng dùng chung với
+Nhiệm vụ chính. Danh sách và chi tiết cuộn cùng nhau phía trên shell điều hướng dùng chung với
 [các menu mẫu khác](menu-layouts.md); thanh dưới nối sáu màn hình.

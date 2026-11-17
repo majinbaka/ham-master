@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/game_typography.dart';
+
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
-import '../../home/presentation/pixel_icon.dart';
+import '../../../app/presentation/pixel/pixel_icon.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({required this.onNavigate, super.key});
@@ -22,28 +24,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     onNavigate: widget.onNavigate,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 10,
+      spacing: 8,
       children: [
         MenuPanel(
           title: 'Nhà lữ hành · ID mẫu: 1004527',
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 12,
+            spacing: 8,
             children: [
-              const PixelIcon(PixelIconKind.beasts, size: 64),
+              const PixelIcon(PixelIconKind.beasts, size: 48),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  spacing: 12,
+                  spacing: 8,
                   children: [
                     const Text('Cấp 12 · EXP 2.340 / 3.600 (65%)'),
-                    Semantics(
-                      label: 'Kinh nghiệm mẫu: 65 phần trăm',
-                      child: const LinearProgressIndicator(
-                        value: .65,
-                        minHeight: 10,
-                      ),
-                    ),
+                    const PixelProgress(value: .65, label: 'Kinh nghiệm mẫu'),
                     const Text('Nhà sưu tầm trên hành trình mới!'),
                     MenuButton(
                       label: 'Thông tin hồ sơ mẫu',
@@ -61,27 +57,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const MenuPanel(
           title: 'Tiến trình hành trình',
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: MenuGrid(
+            minItemWidth: 120,
+            maxColumns: 4,
             children: [
-              Expanded(
-                child: _Stat(
-                  PixelIconKind.beasts,
-                  'Yêu thú đã gặp',
-                  '28 / 150',
-                ),
-              ),
-              Expanded(
-                child: _Stat(PixelIconKind.quest, 'Nhiệm vụ hoàn thành', '42'),
-              ),
-              Expanded(
-                child: _Stat(
-                  PixelIconKind.compass,
-                  'Khu vực khám phá',
-                  '3 / 8',
-                ),
-              ),
-              Expanded(child: _Stat(PixelIconKind.coin, 'Huy hiệu', '5')),
+              _Stat(PixelIconKind.beasts, 'Yêu thú đã gặp', '28 / 150'),
+              _Stat(PixelIconKind.quest, 'Nhiệm vụ hoàn thành', '42'),
+              _Stat(PixelIconKind.compass, 'Khu vực khám phá', '3 / 8'),
+              _Stat(PixelIconKind.coin, 'Huy hiệu', '5'),
             ],
           ),
         ),
@@ -155,16 +138,9 @@ class _Stat extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     mainAxisSize: MainAxisSize.min,
     children: [
-      PixelIcon(icon, size: 32),
-      Text(
-        label,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 12),
-      ),
-      Text(
-        value,
-        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-      ),
+      PixelIcon(icon, size: 36),
+      Text(label, textAlign: TextAlign.center, style: GameTypography.body),
+      Text(value, style: GameTypography.value),
     ],
   );
 }

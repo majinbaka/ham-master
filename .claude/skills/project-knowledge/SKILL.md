@@ -19,8 +19,18 @@ advancing progress; shop filters sample items and shows details; profile switche
 collection/badge tabs; settings controls change ephemeral local widget selections.
 No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and atlas assets, with
-scrolling content above fixed navigation. Four blank 2:3 design images and the
-atlas composition script are documented in `docs/art/menu-layouts.md`.
+scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
+for the shared runtime concept. Home is the visual reference: menu HUD uses
+PlayerHud/ResourceHud projected at exactly the same scale and anchors;
+GameChromeLayout owns shared chrome geometry. PixelArtScale matches Home's
+final atlas density while menu copy and touch targets use logical pixels.
+Only the middle framed content scrolls; headers and navigation stay fixed.
+MenuPanel uses a dark body/floating gold title tab, with paper for reading;
+MenuGrid aligns card rows and PixelProgress reuses the square EXP style.
+Shared widgets live in lib/app/presentation/, atlas primitives in pixel/.
+Master/detail columns stack below 600 times text scale. Story episodes reuse
+the menu shell. HUD counters use the same unavailable placeholders as Home. Four blank 2:3
+design images and the atlas composition script are documented in `docs/art/menu-layouts.md`.
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
 when rotating: profile/stacked quests anchor left, resources/map anchor right,
 and dialogue/actions/single-row navigation anchor bottom-center. Only the black
@@ -29,11 +39,11 @@ One shared device scale accommodates smaller screens; desktop does not enlarge U
 and platform shells remain in place. NDAS
 branding is in `assets/branding/` with Android/web icons. Six frame skins share
 `assets/ui/frame-atlas.png`; corners keep their shape while edges/centers stretch.
-Text/icons remain separate widgets; only the selected navigation item has a plate.
-HomeSpacing defines a roughly 4 dp grid at a 390 dp short side, with 8 dp outer
+Text/icons remain separate widgets; selected controls use a gold border and check mark.
+GameSpacing defines a roughly 4 dp grid at a 390 dp short side, with 8 dp outer
 gutters/group gaps and compact footer gaps on short windows. Button content is
 centered, with identical content padding for selected/unselected navigation slots.
-Other asset folders remain empty. Separate implemented behavior from future ideas. There is no gameplay, game engine, save system, backend,
+Sprite, tileset, map and audio folders remain empty. Separate implemented behavior from future ideas. There is no gameplay, game engine, save system, backend,
 Widgetbook, Patrol or localization. Do not reuse FlashKids product history as
 facts about this repository. Cite current files when answering.
 
@@ -45,3 +55,10 @@ are no longer the agreed approach. Feature ports isolate presentation from local
 and future HTTP adapters. Core owns game rules and state transitions; platform
 adapters handle local saves when progression is introduced. Offline remains in
 scope; online synchronization and conflicts are undecided.
+
+UI dùng chữ nội dung menu 17 dp, tiêu đề 22 dp. Nút có icon chỉ hiện icon lớn
+trong suốt, không nền/viền bọc icon; viền kem bo mềm chỉ thuộc nút; tên giữ qua tooltip/semantics. Nút không có icon giữ chữ.
+
+Font `GameRoboto` được đóng gói cùng app (regular/medium/bold và giấy phép),
+không phụ thuộc font hệ điều hành hoặc mạng. `GameTypography`/`appTheme` sở hữu
+kiểu chữ và shape nút chung; Home action dùng `MenuButton` như các menu.

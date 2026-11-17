@@ -1,0 +1,137 @@
+# Quy chuẩn UI PixelRPG — lấy Home làm chuẩn
+
+Home là mẫu chuẩn về tỷ lệ artwork, mật độ viền, HUD, khoảng cách và cách neo
+các cụm UI. Mọi menu dùng lại các component đã tách từ Home. Các ảnh concept
+cũ chỉ tham khảo vai trò vùng nội dung; không dùng kích thước pixel của ảnh
+làm dp hoặc tự tạo một hệ khung khác cho mỗi màn.
+
+## Hai hệ kích thước, một phong cách
+
+Home dựng artwork trên hệ tọa độ rộng 940 đơn vị rồi thu bằng một hệ số chung,
+chặn ở `390 / 940`. Góc khung 14 đơn vị vì thế chỉ còn khoảng **5,8 dp** trên
+điện thoại 390 dp. Đây là mật độ chuẩn; vẽ góc 14 dp trực tiếp ở menu làm
+viền lớn hơn Home hơn hai lần và không đạt concept.
+
+`GameChromeLayout` tính cùng hệ số cho Home và menu, không phụ thuộc hướng
+xoay. `ScaledArtwork` dùng cho các cụm HUD có tỷ lệ cố định. Trong vùng menu,
+`PixelArtScale` chỉ áp dụng hệ số này cho atlas và lề bảo vệ viền; chữ, nội
+dung và vùng chạm vẫn được bố trí ở logical pixel. Không scale cả trang menu
+để che lỗi overflow. Không scale hai lần: artwork bên trong `ScaledArtwork`
+luôn dùng density 1 trước khi được chiếu ra màn hình.
+
+Palette giữ nguyên: cảnh đen, mặt khung tím than, chữ kem, điểm nhấn vàng/cyan.
+Giấy kem dành cho nội dung đọc như chi tiết nhiệm vụ/hội thoại. Chỉ dùng
+`PixelUiColors`, atlas khung/icon hiện có và `appTheme`; không tự chọn bộ màu,
+bộ icon trang trí riêng cho mỗi feature. Nút dùng viền kem bo mềm chung để tạo cảm giác dễ thương; icon nền trong
+suốt, không thêm nền hay viền riêng bên trong nút. Panel vẫn giữ atlas pixel.
+
+## Component dùng chung và quyền sở hữu
+
+Tất cả component dùng chung nằm trong `lib/app/presentation/`. Chúng chỉ
+hiển thị và gửi callback; feature giữ nội dung và state trình bày, router
+ở `lib/app/router/` xử lý điều hướng. App không import widget riêng của Home.
+
+| Component | Vai trò và quy tắc |
+| --- | --- |
+| `pixel/PixelFrame`, `PixelFrameArtwork` | Atlas 9-slice; chỉ kéo cạnh/tâm, giữ góc theo `PixelArtScale`, nearest-neighbor, giữ alpha. |
+| `pixel/PixelIcon`, `PixelLabel` | Icon giữ ô vuông kể cả khi cha stretch, nhãn trong slot artwork cố định; không bake chữ vào bitmap. Nhãn đầy đủ vẫn có semantics. |
+| `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo profile, tài nguyên, điều hướng dùng cho cả Home/menu. |
+| `PlayerHud`, `ResourceHud`, `ScaledArtwork` | Chính các cụm HUD của Home; cùng kích thước, tỷ lệ và placeholder `—` trên mọi màn. |
+| `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 18 dp; mục đang chọn có viền vàng và dấu tick. |
+| `MenuShell` | HUD trên, tiêu đề/quay lại/thông báo xem trước, cửa sổ nội dung giữa và navigation dưới. Chỉ nội dung giữa cuộn. |
+| `MenuPanel` | Thân `cool` tím than với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
+| `MenuButton` | Viền kem 2 dp, góc bo 18 dp, nền tím; có icon thì chỉ hiện icon 36 dp, tên đầy đủ qua tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có viền vàng và tick; mục khóa giữ icon khóa. |
+| `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô; bốn chỉ số tránh bố cục 3+1. |
+| `MenuPreview` | Cửa sổ cảnh đen gọn giống minimap, icon 48 dp; không tạo banner lớn chỉ để lấp chỗ. |
+| `PixelProgress` | Thanh EXP vuông, viền kem, nền tối và fill vàng như track EXP của HUD. |
+
+Không sao chép shell/HUD/frame vào feature mới. Nếu thiếu một biến thể thực
+sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm tra lại các màn
+đang dùng; không tạo component gần giống với một bộ số đo riêng.
+
+## Bố cục chung
+
+- Áp dụng `SafeArea`. Profile neo trái, tài nguyên neo phải, navigation neo
+  giữa đáy theo cùng `GameChromeLayout` ở cả Home và menu. Desktop không
+  phóng lớn HUD. Home vẫn là HUD phủ cảnh đen với nhân vật vàng tạm.
+- Menu đặt nội dung dưới HUD và trên navigation, khoảng cách lấy từ
+  `GameSpacing`: 10 đơn vị ≈ 4 dp, lề/gap 20 đơn vị ≈ 8 dp ở điện thoại 390.
+  Vùng nội dung rộng tối đa 760 dp và căn giữa trên màn lớn.
+- Tiêu đề và quay lại nằm ngoài phần cuộn; thông báo xem trước đặt đầu nội dung
+  cuộn để chừa chỗ đọc ở màn thấp/chữ lớn. Tiêu đề tối đa hai dòng, ellipsis
+  khi thiếu chỗ; nội dung chi tiết giữ đầy đủ. Một cửa sổ
+  `cool` chứa một vùng cuộn dọc; không cuộn cả HUD ra khỏi màn hình, không
+  tạo vùng cuộn lồng cho từng panel. Không kéo panel chạm vào navigation.
+- `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
+  (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
+- Chương Cốt truyện/Nhiệm vụ dùng `MenuGrid` mặc định: ô tối thiểu
+  `140 × hệ số chữ` dp (đo tại 13 dp), tối đa hai cột. Tránh một cột năm
+  nút cao đẩy chi tiết ra quá xa. Hàng có nhãn khác số dòng vẫn căn đều.
+- Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ dùng ô tối thiểu
+  `120 × hệ số chữ` dp, tối đa bốn cột; tab và nhóm cài đặt dùng `Wrap`.
+- Padding nội dung và khoảng giữa panel/hàng là 8 dp; icon–chữ/tab cách
+  4 dp. Lề bảo vệ sprite được tính riêng theo density. Panel cùng cấp phải
+  thẳng mép, không co ngang theo độ dài nội dung.
+
+## Chữ và tương tác
+
+Toàn app dùng font `GameRoboto` đóng gói tại `assets/fonts/` (Roboto regular,
+medium và bold, kèm giấy phép), kể cả offline trên Android/web. `GameTypography`
+và `appTheme` sở hữu cỡ chữ, độ đậm và line height; feature chỉ chọn vai trò
+body/heading/value, không tự đặt font riêng. `PixelLabel` lấy cùng kiểu nhãn,
+chỉ thay cỡ theo slot artwork. Launch giữ bố cục NDAS nhưng dùng cùng font.
+Icon nội dung nổi bật dùng 48 dp, icon trong nút/phần thưởng/chỉ số dùng 36 dp;
+HUD giữ kích thước theo hệ tọa độ artwork. Material icon chỉ dùng cho ký hiệu
+hệ thống (quay lại, trạng thái chọn/hoàn thành), không thay atlas trang trí.
+`gameControlShape` và theme sở hữu viền/góc bo của TextButton/IconButton,
+bao gồm nút đóng dialog. Ba nút hành động Home dùng chính `MenuButton` với
+`artworkScale: 2` trước khi chiếu, không tự vẽ một mẫu nút khác.
+
+Nội dung menu 17 dp, line height 1.35; tiêu đề màn 22 dp đậm; tab tiêu đề
+panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas giữ nền trong
+suốt và không có lớp nền/viền bọc riêng; các nút icon không hiện chữ, vẫn có
+tooltip và semantics.
+Home tăng chữ trong slot artwork và dùng ba nút hành động icon lớn, không có nhãn. Chữ dài trong nội dung và nút xuống dòng, tăng chiều cao và cuộn được.
+Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn ngắn trong slot cố
+định như HUD/tab tiêu đề; không fit cả nội dung đọc.
+
+Navigation luôn có thứ tự: Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ,
+Cài đặt. Mục đang chọn có semantics, viền vàng và dấu tick; hội thoại thuộc Cốt truyện.
+Nút quay lại menu về Home, hội thoại về danh sách chương. Vùng neo navigation
+cao ít nhất 60 dp; nút hoạt động có vùng chạm ít nhất 48 × 48 dp ở màn hình
+từ 320 dp, độc lập tỷ lệ sprite. Không chỉ dùng màu để biểu thị khóa/chọn.
+
+Dialog dùng theme tím than/chữ kem, nội dung cuộn và nút đóng rõ ràng. Các
+màn luôn ghi rõ dữ liệu mẫu, không lưu thay đổi; nội dung mẫu không biến
+thành chỉ số thật trên HUD. Launch giữ nhận diện NDAS/neon ba giây riêng.
+
+## Ảnh runtime để đối chiếu
+
+Các ảnh 390 × 844 dưới đây được render trực tiếp từ widget Flutter với font
+GameRoboto đóng gói và Material Icons của SDK, dùng để rà bố cục. Đây là ảnh QA, không phải
+asset UI hoặc golden khóa hành vi; khác biệt font giữa nền tảng vẫn cần kiểm
+tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu cùng code.
+
+| Màn | Tham chiếu |
+| --- | --- |
+| Home — mẫu chuẩn | [home.png](runtime-preview/home.png) |
+| Cốt truyện | [story.png](runtime-preview/story.png) |
+| Nhiệm vụ | [quests.png](runtime-preview/quests.png) |
+| Cửa hàng | [shop.png](runtime-preview/shop.png) |
+| Hồ sơ | [profile.png](runtime-preview/profile.png) |
+| Cài đặt | [settings.png](runtime-preview/settings.png) |
+| Hội thoại | [episode.png](runtime-preview/episode.png) |
+
+## Điều kiện duyệt
+
+1. So sánh trực tiếp với Home: cùng HUD, density viền và vị trí navigation.
+   Không chấp nhận chỉ trùng palette nhưng khác tỷ lệ khung.
+2. Xem ảnh render mọi màn ở điện thoại, ngang và desktop để kiểm tra mép
+   panel, hàng ô, icon–chữ, contrast và khoảng cách. Không chỉ dựa vào việc
+   widget test không ném exception.
+3. Test 320 × 568, 390 × 844, 844 × 390, 1440 × 900 và chữ 1×/2×;
+   không overflow/chồng panel, phần cuối nội dung vẫn cuộn tới được.
+4. Kiểm tra chọn tab/nhóm, route, quay lại, dialog; cuộn không dịch chuyển
+   HUD, tiêu đề hoặc navigation. Kiểm tra Android/web thực khi có thiết bị.
+5. Chạy format/analyze/test theo `AGENTS.md`. Thay đổi quy tắc dùng chung
+   phải sửa component, regression test và tài liệu này trong cùng thay đổi.
