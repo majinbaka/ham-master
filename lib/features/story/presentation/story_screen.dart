@@ -106,23 +106,26 @@ class StoryEpisodeScreen extends StatelessWidget {
     onNavigate: onNavigate ?? (_) => onBack(),
     onBack: onBack,
     backLabel: 'Về Cốt truyện',
-    child: MenuPanel(
-      title: 'Bản xem trước hội thoại',
-      light: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: 8,
-        children: [
-          const PixelIcon(PixelIconKind.talk, size: 48),
-          const Text(
-            'Người gác làng: Chào nhà lữ hành! Hãy ghé trại trước khi lên đường. Người bạn đồng hành đang đợi bạn ở đó.',
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 8,
+      children: [
+        const MenuPreview(icon: PixelIconKind.talk),
+        const MenuPanel(
+          title: 'Người gác làng',
+          light: true,
+          child: Text(
+            'Chào nhà lữ hành! Hãy ghé trại trước khi lên đường. Người bạn đồng hành đang đợi bạn ở đó.',
           ),
-          const Text(
+        ),
+        const MenuPanel(
+          title: 'Trang đầu hành trình',
+          child: Text(
             'Đây là nội dung minh họa. Chưa có gameplay hoặc phần thưởng; tiến độ chương vẫn là 0/5.',
           ),
-          MenuButton(label: 'Về danh sách chương', onPressed: onBack),
-        ],
-      ),
+        ),
+        MenuButton(label: 'Về danh sách chương', onPressed: onBack),
+      ],
     ),
   );
 }

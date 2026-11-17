@@ -166,3 +166,6 @@ Thanh tiến độ đặt dưới mô tả chương; cảnh minh họa nhỏ dù
 
 Ở Cốt truyện, chương hiện tại luôn hiện; các chương khóa nằm trong mục mở rộng
 để không đẩy mô tả và nút bắt đầu quá xa trên điện thoại.
+
+Hội thoại tách cảnh minh họa, giấy lời thoại có tab tên người nói và ghi chú
+xem trước. Nút về danh sách chương nằm sau lời thoại, giữ đường quay lại trên header.
