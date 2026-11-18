@@ -20,6 +20,7 @@ class MenuShell extends StatelessWidget {
     this.onBack,
     this.showBack = true,
     this.backLabel = 'Quay lại',
+    this.notice = 'Dữ liệu mẫu · Không lưu thay đổi',
     super.key,
   });
 
@@ -30,6 +31,7 @@ class MenuShell extends StatelessWidget {
   final VoidCallback? onBack;
   final bool showBack;
   final String backLabel;
+  final String? notice;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -120,13 +122,14 @@ class MenuShell extends StatelessWidget {
                                       CrossAxisAlignment.stretch,
                                   spacing: 8,
                                   children: [
-                                    Text(
-                                      'Dữ liệu mẫu · Không lưu thay đổi',
-                                      textAlign: TextAlign.center,
-                                      style: GameTypography.caption.copyWith(
-                                        color: PixelUiColors.mutedInk,
+                                    if (notice != null)
+                                      Text(
+                                        notice!,
+                                        textAlign: TextAlign.center,
+                                        style: GameTypography.caption.copyWith(
+                                          color: PixelUiColors.mutedInk,
+                                        ),
                                       ),
-                                    ),
                                     child,
                                   ],
                                 ),

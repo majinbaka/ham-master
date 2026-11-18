@@ -14,6 +14,8 @@ import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
 
+import '../../support/profile_card_test_scope.dart';
+
 double renderedFontSize(WidgetTester tester, Finder text) {
   final paragraph = tester.renderObject<RenderParagraph>(
     find.descendant(of: text, matching: find.byType(RichText)),
@@ -38,19 +40,25 @@ void main() {
           tester.view.devicePixelRatio = 1;
           addTearDown(tester.view.resetPhysicalSize);
           addTearDown(tester.view.resetDevicePixelRatio);
-          Future<void> show(Widget screen, String name) => tester.pumpWidget(
-            MaterialApp(
-              key: ValueKey(name),
-              theme: appTheme,
-              builder: (context, child) => MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: TextScaler.linear(textScale)),
-                child: child!,
+          Future<void> show(Widget screen, String name) async {
+            await tester.pumpWidget(
+              withProfileCard(
+                MaterialApp(
+                  key: ValueKey(name),
+                  theme: appTheme,
+                  builder: (context, child) => MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: TextScaler.linear(textScale)),
+                    child: child!,
+                  ),
+                  home: screen,
+                ),
               ),
-              home: screen,
-            ),
-          );
+            );
+            await tester.pump();
+          }
+
           await show(HomeScreen(onNavigate: (_) {}), 'home');
           // The two projection paths may differ below 1e-6 dp due to doubles.
           final homeLabel = tester.widget<Text>(
@@ -91,7 +99,7 @@ void main() {
               reason: name,
             );
             final menuText = name == 'profile'
-                ? find.text('ID mẫu: 1004527')
+                ? find.text('Một hành trình mới bắt đầu!')
                 : find
                       .descendant(
                         of: find.byType(MenuPanel).first,

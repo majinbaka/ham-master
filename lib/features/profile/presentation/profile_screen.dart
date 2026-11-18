@@ -1,180 +1,175 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
-import '../../../app/theme/game_typography.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
-import '../../../app/presentation/traveler_portrait.dart';
+import '../../../app/presentation/pixel/pixel_frame_skin.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
+import '../application/profile_card_controller.dart';
+import '../domain/profile_card.dart';
+import 'profile_card_editor.dart';
+import 'profile_journal.dart';
+import 'profile_showcase_card.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({required this.onNavigate, super.key});
+
   final ValueChanged<String> onNavigate;
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  var _tab = 0;
-
-  static const _collection = [
-    (
-      'Bạn đồng hành',
-      PixelIconKind.beasts,
-      'Ghi chép về người bạn đang đợi ở trại khởi hành.',
-    ),
-    (
-      'Dấu chân nhỏ',
-      PixelIconKind.search,
-      'Dấu chân được ghi lại trên lối đá gần cổng làng.',
-    ),
-    (
-      'Người dẫn đường',
-      PixelIconKind.compass,
-      'Ghi chép về người gác làng và lời chỉ đường đầu tiên.',
-    ),
-    (
-      'Trang sách mới',
-      PixelIconKind.story,
-      'Trang mở đầu trong sổ ghi chép hành trình.',
-    ),
-  ];
-  static const _badges = [
-    (
-      'Bước chân đầu',
-      PixelIconKind.coin,
-      'Huy hiệu dành cho nhà lữ hành lần đầu ghé thăm làng.',
-    ),
-    (
-      'Người khám phá',
-      PixelIconKind.compass,
-      'Huy hiệu minh họa cho việc ghé thăm các địa điểm trong làng.',
-    ),
-  ];
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  final _cardKey = GlobalKey();
+  var _sharing = false;
 
   @override
-  Widget build(BuildContext context) => MenuShell(
-    title: 'Hồ sơ Nhà lữ hành',
-    selected: 'profile',
-    onNavigate: widget.onNavigate,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 8,
-      children: [
-        MenuPanel(
-          title: 'Thẻ nhà lữ hành',
-          light: true,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 8,
-            children: [
-              const SizedBox(width: 48, height: 80, child: TravelerPortrait()),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  spacing: 8,
-                  children: [
-                    const Text('Nhà lữ hành', style: GameTypography.value),
-                    const Text('ID mẫu: 1004527'),
-                    const Text('Cấp 12 · EXP 2.340 / 3.600 (65%)'),
-                    const PixelProgress(value: .65, label: 'Kinh nghiệm mẫu'),
-                    const Text('Nhà sưu tầm trên hành trình mới!'),
-                    MenuButton(
-                      label: 'Thông tin hồ sơ mẫu',
-                      onPressed: () => showSampleDetail(
-                        context,
-                        'Hồ sơ minh họa',
-                        'Nhà lữ hành · ID 1004527. Cấp 12 với 2.340 / 3.600 EXP trong thẻ minh họa.',
-                        icon: PixelIconKind.info,
-                      ),
-                    ),
-                  ],
+  Widget build(BuildContext context) {
+    final profile = ref.watch(profileCardProvider);
+    return MenuShell(
+      title: 'Hồ sơ Nhà lữ hành',
+      selected: 'profile',
+      notice: null,
+      onNavigate: widget.onNavigate,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 8,
+        children: [
+          profile.when(
+            data: _showcase,
+            loading: () => const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: CircularProgressIndicator(
+                  semanticsLabel: 'Đang tải thẻ',
                 ),
               ),
-            ],
-          ),
-        ),
-        MenuButton(
-          label: 'Mở danh sách yêu thú',
-          icon: PixelIconKind.beasts,
-          showLabel: true,
-          onPressed: () => widget.onNavigate('beasts'),
-        ),
-        const MenuPanel(
-          title: 'Tiến trình hành trình',
-          child: MenuGrid(
-            minItemWidth: 120,
-            maxColumns: 3,
-            children: [
-              _Stat(PixelIconKind.beasts, 'Yêu thú đã gặp', '28 / 150'),
-              _Stat(PixelIconKind.compass, 'Khu vực khám phá', '3 / 8'),
-              _Stat(PixelIconKind.coin, 'Huy hiệu', '5'),
-            ],
-          ),
-        ),
-        Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          children: [
-            for (final (index, label) in [
-              'Hồ sơ',
-              'Sổ sưu tầm',
-              'Huy hiệu',
-            ].indexed)
-              MenuButton.tab(
-                label: label,
-                selected: _tab == index,
-                onPressed: () => setState(() => _tab = index),
-              ),
-            MenuButton(
-              label: 'Mở Cài đặt',
-              icon: PixelIconKind.tasks,
-              onPressed: () => widget.onNavigate('settings'),
             ),
-          ],
-        ),
-        MenuPanel(
-          title: [
-            'Nhật ký sưu tầm gần đây',
-            'Sổ sưu tầm mẫu',
-            'Huy hiệu hành trình',
-          ][_tab],
-          child: MenuGrid(
-            children: [
-              for (final (name, icon, detail) in switch (_tab) {
-                1 => _collection,
-                2 => _badges,
-                _ => _collection.take(2),
-              })
-                MenuButton(
-                  label: name,
-                  icon: icon,
-                  showLabel: true,
-                  onPressed: () =>
-                      showSampleDetail(context, name, detail, icon: icon),
-                ),
-            ],
+            error: (error, stack) => MenuPanel(
+              light: true,
+              child: Column(
+                spacing: 8,
+                children: [
+                  const Text('Không mở được thẻ hồ sơ.'),
+                  MenuButton(
+                    label: 'Thử lại',
+                    onPressed: () => ref.invalidate(profileCardProvider),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+          MenuButton(
+            label: 'Mở danh sách yêu thú',
+            icon: PixelIconKind.beasts,
+            showLabel: true,
+            onPressed: () => widget.onNavigate('beasts'),
+          ),
+          ProfileJournal(onNavigate: widget.onNavigate),
+        ],
+      ),
+    );
+  }
 
-class _Stat extends StatelessWidget {
-  const _Stat(this.icon, this.label, this.value);
-  final PixelIconKind icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
+  Widget _showcase(ProfileCard card) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    spacing: 8,
     children: [
-      PixelIcon(icon, size: 36),
-      Text(label, textAlign: TextAlign.center, style: GameTypography.body),
-      Text(value, style: GameTypography.value),
+      Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 8,
+        runSpacing: 4,
+        children: [
+          MenuButton(
+            label: 'Chỉnh sửa thẻ',
+            skin: PixelFrameSkin.gold,
+            onPressed: _sharing ? null : () => _edit(card),
+          ),
+          Builder(
+            builder: (buttonContext) => MenuButton(
+              label: _sharing ? 'Đang tạo ảnh…' : 'Chia sẻ ảnh',
+              onPressed: _sharing ? null : () => _share(buttonContext, card),
+            ),
+          ),
+          IconButton(
+            tooltip: 'Sao chép mã kết bạn',
+            onPressed: () => _copyCode(card.friendCode),
+            icon: const Icon(Icons.copy),
+          ),
+        ],
+      ),
+      RepaintBoundary(
+        key: _cardKey,
+        child: ProfileShowcaseCard(card: card),
+      ),
     ],
   );
+
+  void _edit(ProfileCard card) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => ProfileCardEditor(
+        card: card,
+        onSave: ref.read(profileCardProvider.notifier).saveEdits,
+      ),
+    );
+  }
+
+  Future<void> _copyCode(String code) async {
+    try {
+      await Clipboard.setData(ClipboardData(text: code));
+      _showMessage('Đã sao chép mã kết bạn.');
+    } on Exception {
+      _showMessage('Chưa sao chép được mã kết bạn.');
+    }
+  }
+
+  Future<void> _share(BuildContext buttonContext, ProfileCard card) async {
+    final button = buttonContext.findRenderObject()! as RenderBox;
+    final origin = button.localToGlobal(Offset.zero) & button.size;
+    final boundary =
+        _cardKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    setState(() => _sharing = true);
+    try {
+      final image = await boundary.toImage(pixelRatio: 3);
+      final bytes = await _encodePng(image);
+      if (!mounted) return;
+      final filename = 'pixel-rpg-${card.friendCode}.png';
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile.fromData(bytes, mimeType: 'image/png', name: filename)],
+          fileNameOverrides: [filename],
+          sharePositionOrigin: origin,
+        ),
+      );
+    } on Exception {
+      _showMessage('Chưa chia sẻ được ảnh thẻ. Thử lại.');
+    } finally {
+      if (mounted) setState(() => _sharing = false);
+    }
+  }
+
+  Future<Uint8List> _encodePng(ui.Image image) async {
+    try {
+      final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (bytes == null) throw const FormatException('Unable to encode card');
+      return bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    } finally {
+      image.dispose();
+    }
+  }
+
+  void _showMessage(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
 }

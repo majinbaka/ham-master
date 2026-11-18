@@ -47,21 +47,20 @@ cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Vật p
 Runtime dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp); atlas khung chỉ
 phục vụ các ảnh concept ở trên. Các skin không thay đổi hình học.
 
-## Luồng mẫu trong app
+## Luồng trong app
 
 Thanh dưới nối Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
 `lib/app/presentation/` sở hữu shell/component menu dùng chung;
-`lib/app/router/` sở hữu route. Từng feature chỉ sở hữu presentation.
+`lib/app/router/` sở hữu route. Hồ sơ sở hữu tùy chọn của thẻ trưng bày.
 
 - `/home/shop`: đổi danh mục, mở chi tiết vật phẩm/gói mẫu, đóng hộp thoại.
   Không có thao tác mua, thanh toán hoặc trừ tài nguyên.
-- `/home/profile`: xem thông tin, ba chỉ số, đổi tab sổ sưu tầm/huy hiệu,
-  mở chi tiết mẫu hoặc chuyển Cài đặt.
+- `/home/profile`: chỉnh thẻ trưng bày, sao chép mã kết bạn, quét QR hoặc
+  chia sẻ PNG. Sổ sưu tầm, huy hiệu và Cài đặt nằm dưới thẻ.
 - `/home/settings` mở mặc định ở Tài khoản và có thêm tab Chung và Thông tin.
   Mục Chung chứa các tùy chọn thử cho âm lượng, đồ họa, điều khiển và nút
   khôi phục mặc định có xác nhận. Lựa chọn chỉ tồn tại khi ở màn hình này.
   Mục Thông tin có hộp thoại giới thiệu PixelRPG.
 
-Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. Cấp độ và tiến trình
+Hồ sơ lưu các tùy chọn hiển thị cục bộ. Cấp độ và tiến trình
 trong Hồ sơ là dữ liệu minh họa.
-Chưa giới thiệu core, persistence hoặc mock API.

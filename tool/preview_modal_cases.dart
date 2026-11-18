@@ -16,7 +16,7 @@ const previewModalCases = <String, Map<String, List<String>>>{
     'adventure-pack': ['Gói phiêu lưu'],
   },
   'profile': {
-    'information': ['Thông tin hồ sơ mẫu'],
+    'editor': ['Chỉnh sửa thẻ'],
     'companion': ['Sổ sưu tầm', 'Bạn đồng hành'],
     'footprints': ['Sổ sưu tầm', 'Dấu chân nhỏ'],
     'guide': ['Sổ sưu tầm', 'Người dẫn đường'],

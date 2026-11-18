@@ -109,17 +109,22 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Thanh dưới có Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
   Hộp thư chỉ hiện biểu tượng phong bì, với vùng chạm 48 × 48 dp.
   Nói chuyện, Quan sát và Tìm kiếm cập nhật nội dung ô hội thoại.
-- Cửa hàng lọc danh mục và xem chi tiết. Hồ sơ đổi tab sưu tầm và huy hiệu.
+- Cửa hàng lọc danh mục và xem chi tiết.
   Cài đặt có ba mục Tài khoản, Chung và
   Thông tin, mở mặc định ở Tài khoản. Mục Chung chứa các tùy chọn thử và
   nút khôi phục mặc định.
-  Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
-  tiến trình hoặc lưu cấu hình.
+  Cửa hàng, Cài đặt, Yêu thú và Trận chiến dùng dữ liệu mẫu.
   Các menu dùng chung thanh nhân vật với Home. Thanh nhân vật, tiêu đề,
   nút quay lại và thanh điều hướng đứng yên khi cuộn.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
   Vật phẩm và chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
-- Hồ sơ mở **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm
+- Hồ sơ dùng thẻ rộng với ảnh nền, avatar, yêu thú đồng hành, tên, danh hiệu,
+  giới thiệu, huy hiệu và chỉ số mẫu. **Chỉnh sửa thẻ** lưu tùy chọn trên thiết
+  bị hoặc trình duyệt. Thẻ có mã bạn bè tạo cục bộ, QR quét ra cùng mã và nút
+  sao chép. **Chia sẻ ảnh** xuất PNG qua trình đơn chia sẻ Android hoặc tải
+  ảnh khi trình duyệt không có hỗ trợ chia sẻ tệp. Chức năng kết bạn trực tuyến
+  chưa được triển khai. Xem [quyết định lưu tùy chọn](docs/adr/0004-local-profile-card.md).
+- Hồ sơ giữ sổ sưu tầm, huy hiệu và lối vào **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm
   Sói Bóng Đêm, bộ lọc theo hệ/yêu thích, sắp xếp theo cấp và thẻ chi tiết
   có chỉ số, chiêu thức và các thao tác xem thử.
 - Chọn **Trận chiến** trên Trang chủ để mở đấu trường rừng toàn màn hình.
@@ -146,7 +151,8 @@ lib/
     theme/app_theme.dart
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
   features/home/presentation/ # scene, dialogue and actions
-  features/{shop,profile,settings,beasts,battle}/presentation/ # interactive UI previews
+  features/{shop,settings,beasts,battle}/presentation/ # interactive UI previews
+  features/profile/ # local showcase card and its preferences
   app/presentation/ # shared anchors, scale, menus, controls and pixel/ frame and icon widgets
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart

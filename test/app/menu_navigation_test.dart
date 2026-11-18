@@ -12,13 +12,15 @@ import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
 
+import '../support/profile_card_test_scope.dart';
+
 void main() {
   testWidgets('remaining menus navigate through real routes', (tester) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
+    await tester.pumpWidget(withProfileCard(const PixelRpgApp()));
     await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
     final router = ProviderScope.containerOf(
@@ -46,7 +48,7 @@ void main() {
   testWidgets('home and beasts open battle through real routes', (
     tester,
   ) async {
-    await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
+    await tester.pumpWidget(withProfileCard(const PixelRpgApp()));
     await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
 
@@ -187,11 +189,14 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(
-        theme: appTheme,
-        home: ProfileScreen(onNavigate: (_) {}),
+      withProfileCard(
+        MaterialApp(
+          theme: appTheme,
+          home: ProfileScreen(onNavigate: (_) {}),
+        ),
       ),
     );
+    await tester.pumpAndSettle();
     expect(find.text('Trang sách mới'), findsNothing);
     for (final (tab, item, description) in [
       ('Sổ sưu tầm', 'Trang sách mới', 'Trang mở đầu'),
@@ -233,15 +238,17 @@ void main() {
               _ => SettingsScreen(onNavigate: (_) {}),
             };
             await tester.pumpWidget(
-              MaterialApp(
-                theme: appTheme,
-                builder: (context, child) => MediaQuery(
-                  data: MediaQuery.of(
-                    context,
-                  ).copyWith(textScaler: TextScaler.linear(scale)),
-                  child: child!,
+              withProfileCard(
+                MaterialApp(
+                  theme: appTheme,
+                  builder: (context, child) => MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: TextScaler.linear(scale)),
+                    child: child!,
+                  ),
+                  home: child,
                 ),
-                home: child,
               ),
             );
             await tester.pumpAndSettle();

@@ -17,6 +17,7 @@ import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
 
+import '../test/support/profile_card_test_scope.dart';
 import 'preview_modal_cases.dart';
 
 void main() {
@@ -78,16 +79,18 @@ void main() {
           await tester.pumpWidget(
             RepaintBoundary(
               key: key,
-              child: MaterialApp(
-                theme: appTheme,
-                debugShowCheckedModeBanner: false,
-                builder: (context, child) => MediaQuery(
-                  data: MediaQuery.of(
-                    context,
-                  ).copyWith(textScaler: TextScaler.linear(scale)),
-                  child: child!,
+              child: withProfileCard(
+                MaterialApp(
+                  theme: appTheme,
+                  debugShowCheckedModeBanner: false,
+                  builder: (context, child) => MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: TextScaler.linear(scale)),
+                    child: child!,
+                  ),
+                  home: widget,
                 ),
-                home: widget,
               ),
             ),
           );

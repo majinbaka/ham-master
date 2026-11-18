@@ -77,7 +77,7 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 - `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
   (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
 - Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ dùng ô tối thiểu
-  `120 × hệ số chữ` dp, tối đa ba cột; tab và nhóm cài đặt dùng `Wrap`.
+  `96 × hệ số chữ` dp, tối đa ba cột; tab và nhóm cài đặt dùng `Wrap`.
 - Tab lọc và lựa chọn cài đặt dùng `MenuButton.tab` với padding ngang 6 dp,
   dọc 4 dp và khung cao tối thiểu 40 dp. Vùng chạm tối thiểu 48 × 48 dp.
   Khung tăng chiều cao khi nhãn xuống dòng hoặc chữ được phóng to.
@@ -124,7 +124,7 @@ từ 320 dp, độc lập tỷ lệ sprite. Trạng thái khóa có icon khóa.
 
 Dialog dùng nền giấy kem, chữ xanh đậm và nội dung cuộn. Hộp thoại chi tiết
 dùng icon atlas và có nút đóng. Khôi phục cài đặt mẫu có hai nút Hủy và Khôi phục. Các
-menu luôn ghi rõ dữ liệu mẫu và không lưu thay đổi. Launch giữ nhận diện NDAS ba giây.
+menu mẫu ghi rõ dữ liệu minh họa. Hồ sơ lưu tùy chọn hiển thị thẻ. Launch giữ nhận diện NDAS ba giây.
 
 ## Ảnh runtime để đối chiếu
 
@@ -172,8 +172,12 @@ Cửa hàng dùng giấy kem cho lời chào, thẻ vật phẩm hiện icon + t
 nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ lọc đi thẳng vào hàng
 đang chọn; các gói khác dùng cùng lưới thẻ có tên. Không có mua/thanh toán.
 
-Hồ sơ dùng thẻ giấy kem với portrait nhà lữ hành cùng Home, tên/ID mẫu và EXP.
-Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trước khi chạm.
+Hồ sơ dành toàn bộ chiều rộng nội dung cho thẻ giấy kem. Ảnh nền, avatar và
+sprite yêu thú mở đầu thẻ. Tên, danh hiệu và giới thiệu nằm trên nền đặc; huy hiệu,
+chỉ số mẫu tùy chọn và QR đặt bên dưới trên cùng nền giấy, dùng đường phân cách
+thay cho khung con. Mã chữ và QR xếp dọc khi cỡ chữ hoặc
+chiều rộng cần thêm chỗ. Nút chỉnh sửa mở biểu mẫu cuộn độc lập. Ảnh PNG chỉ
+chứa thẻ, còn các nút thao tác và sổ sưu tầm nằm ngoài thẻ.
 
 Yêu thú dùng cùng `MenuColumns` cho danh sách và chi tiết. Chạm một thẻ
 đưa phần chi tiết vào vùng nhìn ở điện thoại. Chỉ số và chiêu dùng `MenuGrid`.
@@ -190,7 +194,7 @@ Trong tab Chung, âm lượng có tên bên trái, phần trăm màu nâu hổ p
 và track 8 dp. Công tắc
 dùng cả hàng nhãn làm vùng chạm; chữ được xuống dòng theo text scale.
 
-Thông báo đầu vùng cuộn rút gọn thành “Dữ liệu mẫu · Không lưu thay đổi” để
+Thông báo đầu vùng cuộn của các menu mẫu dùng “Dữ liệu mẫu · Không lưu thay đổi” để
 nhường chỗ đọc khi chữ lớn. Caption thương hiệu và loading giữ một dòng,
 fit trong cụm NDAS; nội dung đọc của các menu vẫn tăng theo text scale.
 

@@ -7,7 +7,8 @@ and a code-drawn traveler portrait. Home and menus share a character bar.
 The unframed mail icon opens a dialog,
 and the battle action opens the full-screen battle preview. Scene actions
 update the dialogue panel.
-Shop, profile, settings, beasts and battle are presentation-only previews.
+Shop, settings, beasts and battle are presentation-only previews. Profile has
+a locally customizable showcase card with sample stats.
 Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
@@ -35,7 +36,7 @@ Do not implement gameplay unless requested.
   saves for Android and web. Offline progress must survive app restart when
   progression is introduced. Keep storage technology and serialization details
   outside core rules. JSON may encode content or saves, but is not a substitute
-  for actual game behavior. No storage system is implemented yet.
+  for actual game behavior. Profile cosmetics use separate client preferences.
 - Make tests controllable through injected clock, randomness and storage when
   needed. Test real state transitions, validation, failures and save/restore
   with deterministic inputs. Verify implemented flows offline on Android and
@@ -56,7 +57,8 @@ Do not implement gameplay unless requested.
 - `lib/features/home/presentation/`: home scene with anchored artwork, shared
   logical-size dialogue panel, interactive utilities and large-text reflow.
 - `lib/app/presentation/pixel/`: shared code frames, atlas icons and progress tracks.
-- `lib/features/{shop,profile,settings}/presentation/`: interactive menu previews.
+- `lib/features/{shop,settings}/presentation/`: interactive menu previews.
+- `lib/features/profile/`: customizable showcase card, local preferences, QR and image sharing.
 - `lib/features/beasts/presentation/`: sample roster, collection, filters and details.
 - `lib/features/battle/presentation/`: full-screen arena, sample HP, and manual attack previews.
 - `lib/app/presentation/`: shared character bar, Home/menu chrome anchors, artwork projection,
@@ -99,7 +101,7 @@ used for controllers; Flutter provider wiring belongs at composition boundaries.
 Production must not import tests or future catalogues.
 
 Riverpod owns state/DI; go_router owns app navigation. There is no game engine,
-save system, backend, localization, code generation, Widgetbook or Patrol yet.
+progression save system, backend, localization, code generation, Widgetbook or Patrol yet.
 Introduce those only for concrete requested behavior. Keep game rules separate
 from rendering. Do not invent generic repositories, managers or utility layers.
 Keep each file cohesive and below 400 lines.

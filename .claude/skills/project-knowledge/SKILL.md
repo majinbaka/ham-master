@@ -12,15 +12,17 @@ The app contains a three-second dark NDAS loading screen at `/`, a main screen
 at `/home` with shared code frames, a static daylight village, a code-drawn
 pixel traveler portrait, dialogue and navigation to sample menus. An unframed
 mail icon opens a preview dialog. Scene actions update the Home dialogue panel.
-Shop, profile and settings previews live at `/home/shop`, `/home/profile`
+Shop, profile and settings live at `/home/shop`, `/home/profile`
 and `/home/settings`. Shop filters sample items and shows details. Profile
-has collection and badge tabs. Settings opens on Account, with General and Information
+has a customizable local showcase card, a public code with offline QR encoding,
+PNG sharing and collection and badge tabs. Settings opens on Account, with General and Information
 as the other tabs. General controls change local widget selections and offer a
 confirmation dialog to reset them.
 Profile opens `/home/beasts`, an illustrative roster with collection, filters,
 sorting, favorites and details. Home and Beasts open
 `/home/battle`, a full-screen encounter with fixed HP and manual attack previews.
-No purchase, game progress, audio/device configuration or persistence occurs.
+Only the profile card preferences persist. Purchase, game progress and audio/device
+configuration remain previews.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
 for the shared runtime concept. Home is the visual reference for menu framing
