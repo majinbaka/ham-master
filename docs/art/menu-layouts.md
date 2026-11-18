@@ -40,8 +40,8 @@ cửa hàng dùng hai cột hoặc một cột tùy chiều rộng để giữ c
 Các panel cuộn phía trên thanh điều hướng cố định. Cài đặt
 xếp danh sách trên nội dung khi hẹp hoặc chữ lớn; chỉ chia hai cột 1:2 khi đủ
 600 × hệ số chữ dp. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
-Home là chuẩn runtime: menu dùng cùng mẫu viền 2 dp/góc 8 dp và vị trí
-neo navigation. Tiêu đề cố định; chỉ cửa sổ ở giữa
+Home là chuẩn runtime. Menu dùng chung thanh nhân vật, mẫu viền 2 dp/góc
+8 dp và vị trí neo điều hướng. Thanh nhân vật và tiêu đề cố định; chỉ cửa sổ ở giữa
 cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Vật phẩm và chỉ số dùng lưới ô đều.
 
 Runtime dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp); atlas khung chỉ

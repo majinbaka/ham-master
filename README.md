@@ -82,8 +82,9 @@ Android application ID: `com.jinshu.pixel_rpg`.
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
 - Màn hình chính dùng khung sáng chung, viền 2 dp, bo góc 8 dp,
-  ô hội thoại và thanh chức năng. Cảnh làng pixel ban ngày có nhà lữ hành đội mũ
-  vàng. Biểu tượng Hộp thư neo góc trên bên phải. Hội thoại, bốn nút
+  ô hội thoại và thanh chức năng. Thanh nhân vật neo góc trên bên trái,
+  hiển thị chân dung, tên, cấp và EXP. Biểu tượng Hộp thư neo góc trên bên
+  phải. Cảnh làng pixel ban ngày có nhà lữ hành đội mũ vàng. Hội thoại, bốn nút
   hành động và thanh điều hướng bốn mục trên một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
   chỉ thay vị trí neo và mở rộng tranh nền ở cỡ chữ thường. Nội dung chữ
   xuống dòng theo chỗ trống.
@@ -92,7 +93,7 @@ Android application ID: `com.jinshu.pixel_rpg`.
   lớn artwork. Hội thoại Home dùng `MenuPanel`
   với cùng cỡ nội dung 17 dp/tiêu đề panel 16 dp như menu, không bị thu
   nhỏ theo artwork. Chữ hệ thống lớn hơn 1.15× chuyển Home sang vùng nội
-  dung cuộn chung và giữ thanh điều hướng cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
+  dung cuộn chung và giữ thanh nhân vật cùng thanh điều hướng cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
   để giữ vùng chạm trên điện thoại nhỏ. Vùng an toàn được áp dụng khi đặt các
   cụm. Hộp thoại dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
   Khoảng cách dùng lưới chung `GameSpacing` khoảng 4 dp/bước: lề an toàn và
@@ -114,7 +115,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
   nút khôi phục mặc định.
   Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
   tiến trình hoặc lưu cấu hình.
-  Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
+  Các menu dùng chung thanh nhân vật với Home. Thanh nhân vật, tiêu đề,
+  nút quay lại và thanh điều hướng đứng yên khi cuộn.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
   Vật phẩm và chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
 - Hồ sơ mở **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm

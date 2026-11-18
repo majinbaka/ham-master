@@ -15,6 +15,15 @@ class GameChromeLayout {
   final Size viewport;
   final double scale;
 
+  static const profileSize = Size(440, 120);
+
+  Rect get profile => _rect(
+    GameSpacing.edge,
+    GameSpacing.edge,
+    profileSize.width,
+    profileSize.height,
+  );
+
   Rect get navigation {
     final height = math.max(160.0, 60 / scale);
     return _rect(

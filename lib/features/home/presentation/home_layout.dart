@@ -47,7 +47,7 @@ class HomeLayout extends GameChromeLayout {
   );
 
   Rect get character {
-    final top = _edge;
+    final top = _width > _height ? _edge : profile.bottom / scale + _gap;
     final bottom = dialogue.top / scale;
     final centerY = math.min((top + bottom) / 2, bottom - 64 - _gap / 2);
     return _rect((_width - 72) / 2, centerY - 64, 72, 128);

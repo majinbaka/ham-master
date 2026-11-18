@@ -24,9 +24,12 @@ No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
 for the shared runtime concept. Home is the visual reference for menu framing
-and bottom navigation. GameChromeLayout owns the shared navigation anchor. GameSurfaceStyle owns 2 dp
+and bottom navigation. Home and menus share a top-left character bar with a
+portrait, name, level and EXP. GameChromeLayout owns both anchors.
+GameSurfaceStyle owns 2 dp
 borders and 8 dp corners. Selected menu controls use color and semantics.
-Only the middle framed content scrolls; headers and navigation stay fixed.
+Only the middle framed content scrolls. The character bar, header and
+navigation stay fixed.
 MenuPanel uses a dark body/floating gold title tab, with paper for reading;
 MenuGrid aligns card rows and PixelProgress uses the common border shape.
 Shared widgets live in lib/app/presentation/, shared frames and icons in pixel/.
@@ -69,5 +72,5 @@ kiểu chữ và shape nút chung; Home action dùng `MenuButton` như các menu
 Home dialogue uses MenuPanel at logical sizes: body 17 dp,
 panel title 16 dp, matching menus after transforms. Panel titles keep their logical font size.
 HomeReadingView reflows Home in the shared scrolling shell above 1.15 text
-scale so larger copy is readable with navigation fixed.
+scale with the character bar and navigation fixed.
 Widget tests load bundled GameRoboto and compare rendered font sizes.

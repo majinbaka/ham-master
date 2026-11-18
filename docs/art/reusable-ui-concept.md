@@ -23,7 +23,8 @@ Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
 chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bên dưới
 vẫn là định hướng cho những component chi tiết chưa tạo.
 
-Ở cỡ chữ thường, biểu tượng Hộp thư neo góc trên bên phải. Hội thoại,
+Thanh nhân vật neo góc trên bên trái. Ở cỡ chữ thường, biểu tượng Hộp thư
+neo góc trên bên phải. Hội thoại,
 nút hành động và thanh điều hướng bốn mục neo giữa. Khi xoay ngang, các cụm
 dịch sang cạnh hoặc giữ trục giữa, không kéo giãn hay thu nhỏ theo chiều cao. Tranh làng nhận phần không gian dư.
 `HomeLayout` mở rộng `GameChromeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
@@ -31,7 +32,7 @@ dịch sang cạnh hoặc giữ trục giữa, không kéo giãn hay thu nhỏ t
 Khoảng cách giữa các cụm được thu gọn trên cửa sổ thấp, hẹp; kích thước khung
 không đổi khi xoay. Hội thoại
 dùng MenuPanel ở dp, cùng cỡ nội dung 17 dp và tiêu đề
-16 dp như menu. Chữ lớn hơn 1.15× dùng shell cuộn chung, giữ thanh điều hướng cố định.
+16 dp như menu. Chữ lớn hơn 1.15× dùng shell cuộn chung, giữ thanh nhân vật và thanh điều hướng cố định.
 
 Ảnh tham chiếu: [Pixel Detective Office — Mira’s New Clue](../../Pixel%20Detective%20Office_%20Mira%E2%80%99s%20New%20Clue.png).
 Ảnh do người dùng cung cấp; đường dẫn cần giữ cùng repo để xem lại tham chiếu.
@@ -318,7 +319,7 @@ màn hình cùng phong cách mà không phụ thuộc câu chuyện hoặc nhân
 ## 9. Quy ước spacing runtime mobile
 
 `GameSpacing` trong `lib/app/presentation/` là nguồn chung cho khoảng cách
-artwork của Home và menu. `GameChromeLayout` sở hữu neo điều hướng. Lưới cơ sở 10 đơn vị
+artwork của Home và menu. `GameChromeLayout` sở hữu neo thanh nhân vật và thanh điều hướng. Lưới cơ sở 10 đơn vị
 artwork tương đương khoảng 4 dp ở chiều ngắn 390 dp; dùng 1 bước cho khoảng
 icon–nhãn và padding nội dung, 2 bước (khoảng 8 dp) cho lề vùng an toàn,
 khoảng giữa panel và giữa nút hành động. Không cần bám khoảng cách ảnh gốc.

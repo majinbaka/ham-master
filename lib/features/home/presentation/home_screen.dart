@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/presentation/game_chrome_layout.dart';
+import '../../../app/presentation/player_hud.dart';
+import '../../../app/presentation/scaled_artwork.dart';
 import '../../../app/presentation/village_backdrop.dart';
 import '../../../app/presentation/traveler_portrait.dart';
 import 'home_footer.dart';
@@ -69,6 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
             return Stack(
               children: [
                 const Positioned.fill(child: VillageBackdrop()),
+                Positioned.fromRect(
+                  rect: layout.profile,
+                  child: ScaledArtwork(
+                    size: GameChromeLayout.profileSize,
+                    scale: layout.scale,
+                    child: const PlayerHud(),
+                  ),
+                ),
                 _placeControls(
                   'home-mail',
                   layout.mail,

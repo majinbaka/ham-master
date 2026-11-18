@@ -7,8 +7,10 @@ import 'village_backdrop.dart';
 import 'game_spacing.dart';
 import 'pixel/pixel_frame.dart';
 import 'pixel_navigation.dart';
+import 'player_hud.dart';
+import 'scaled_artwork.dart';
 
-/// Menus share Home's density and bottom navigation; only content scrolls.
+/// Menus share Home's character bar and bottom navigation; only content scrolls.
 class MenuShell extends StatelessWidget {
   const MenuShell({
     required this.title,
@@ -42,10 +44,18 @@ class MenuShell extends StatelessWidget {
           return Stack(
             children: [
               const Positioned.fill(child: VillageBackdrop(softened: true)),
+              Positioned.fromRect(
+                rect: layout.profile,
+                child: ScaledArtwork(
+                  size: GameChromeLayout.profileSize,
+                  scale: layout.scale,
+                  child: const PlayerHud(),
+                ),
+              ),
               Positioned(
                 left: gap,
                 right: gap,
-                top: gap,
+                top: layout.profile.bottom + gap,
                 bottom: constraints.maxHeight - layout.navigation.top + gap,
                 child: Center(
                   child: ConstrainedBox(
