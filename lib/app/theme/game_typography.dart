@@ -9,6 +9,11 @@ abstract final class GameTypography {
     height: 1.2,
     fontWeight: FontWeight.bold,
   );
+  static const menuTitle = TextStyle(
+    fontSize: 18,
+    height: 1.2,
+    fontWeight: FontWeight.bold,
+  );
   static const heading = TextStyle(fontWeight: FontWeight.bold);
   static const value = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   static const label = TextStyle(fontSize: 17, fontWeight: FontWeight.w600);

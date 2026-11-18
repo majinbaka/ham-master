@@ -64,7 +64,7 @@ and future HTTP adapters. Core owns game rules and state transitions; platform
 adapters handle local saves when progression is introduced. Offline remains in
 scope; online synchronization and conflicts are undecided.
 
-UI dùng chữ nội dung menu 17 dp, tiêu đề 22 dp. Nút compact chỉ hiện icon lớn
+UI dùng chữ nội dung menu 17 dp, tiêu đề menu 18 dp. Nút compact chỉ hiện icon lớn
 trong suốt và tên qua tooltip/semantics; thẻ nội dung bật `showLabel` để hiện tên.
 Không nền/viền bọc icon; viền kem bo mềm chỉ thuộc nút. Nút không có icon giữ chữ.
 

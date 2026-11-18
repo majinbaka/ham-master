@@ -101,7 +101,7 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Khoảng cách dùng lưới chung `GameSpacing` khoảng 4 dp/bước: lề an toàn và
   khoảng giữa cụm khoảng 8 dp, footer cửa sổ thấp dùng khoảng 4 dp. Nội dung
   nút compact có icon lớn và tên qua tooltip/semantics; thẻ nội dung hiện
-  cả icon và tên bằng `showLabel`. Viền bo mềm thuộc nút, icon không có viền riêng. Nội dung menu 17 dp, tiêu đề 22 dp; padding các ô điều hướng đồng nhất. Xem
+  cả icon và tên bằng `showLabel`. Viền bo mềm thuộc nút, icon không có viền riêng. Nội dung menu 17 dp, tiêu đề menu 18 dp; padding các ô điều hướng đồng nhất. Xem
   [quy ước spacing](docs/art/reusable-ui-concept.md#9-quy-ước-spacing-runtime-mobile).
   Mọi khung/nút/dialog/EXP dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp).
   `ArtworkProjection` bù scale HUD để giữ cùng độ dày/độ cong trên màn hình.

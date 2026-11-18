@@ -46,7 +46,7 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo profile, tài nguyên, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud`, `ResourceHud`, `ScaledArtwork` | Chính các cụm HUD của Home; cùng kích thước, tỷ lệ và placeholder `—` trên mọi màn. |
 | `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và dấu tick. |
-| `MenuShell` | HUD trên, tiêu đề/quay lại/thông báo xem trước, cửa sổ nội dung giữa và navigation dưới. Chỉ nội dung giữa cuộn. |
+| `MenuShell` | HUD trên, navigation dưới và một khung giấy kem ở giữa. Tiêu đề và nút quay lại nằm ở mép trên của khung. Chỉ nội dung dưới tiêu đề cuộn. |
 | `MenuPanel` | Thân `cool` xanh bạc hà với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
 | `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn HUD/hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và dấu tick; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô; bốn chỉ số tránh bố cục 3+1. |
@@ -68,11 +68,11 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 - Menu đặt nội dung dưới HUD và trên navigation, khoảng cách lấy từ
   `GameSpacing`: 10 đơn vị ≈ 4 dp, lề/gap 20 đơn vị ≈ 8 dp ở điện thoại 390.
   Vùng nội dung rộng tối đa 760 dp và căn giữa trên màn lớn.
-- Tiêu đề và quay lại nằm ngoài phần cuộn; thông báo xem trước đặt đầu nội dung
-  cuộn để chừa chỗ đọc ở màn thấp/chữ lớn. Tiêu đề tối đa hai dòng, ellipsis
-  khi thiếu chỗ; nội dung chi tiết giữ đầy đủ. Một cửa sổ
-  `cream` chứa một vùng cuộn dọc; không cuộn cả HUD ra khỏi màn hình, không
-  tạo vùng cuộn lồng cho từng panel. Không kéo panel chạm vào navigation.
+- Tiêu đề và quay lại dùng chung hàng cố định ở đầu cửa sổ `cream`.
+  Ô nút quay lại rộng 36 dp với vùng chạm tối thiểu 48 × 48 dp. Tiêu đề
+  tối đa hai dòng và dùng dấu ba chấm khi thiếu chỗ. Vùng cuộn bắt đầu ngay
+  dưới hàng tiêu đề, từ thông báo xem trước đến hết nội dung chi tiết.
+  Giữ HUD cố định, dùng một vùng cuộn dọc và chừa khoảng cách với navigation.
 - `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
   (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
 - Chương hiện tại của Cốt truyện/Nhiệm vụ luôn hiện; các chương khóa nằm
@@ -106,7 +106,7 @@ bao gồm nút đóng dialog. Nút hành động và tiện ích Home dùng `Men
 trực tiếp ở logical pixel với vùng chạm tối thiểu 48 × 48 dp. Icon hành động
 giữ tỷ lệ với artwork, viền và góc giữ 2/8 dp.
 
-Nội dung menu 17 dp, line height 1.35; tiêu đề màn 22 dp đậm; tab tiêu đề
+Nội dung menu 17 dp, line height 1.35; tiêu đề menu 18 dp đậm; tab tiêu đề
 panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas giữ nền trong
 suốt và không có lớp nền/viền bọc riêng; các nút icon compact không hiện chữ, vẫn có
 tooltip và semantics. Thẻ chương/đoạn truyện hiển thị tên và trạng thái khóa,

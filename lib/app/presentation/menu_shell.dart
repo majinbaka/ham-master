@@ -68,62 +68,81 @@ class MenuShell extends StatelessWidget {
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 760),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 8,
-                      children: [
-                        Row(
-                          spacing: 8,
-                          children: [
-                            if (showBack)
-                              IconButton(
-                                tooltip: backLabel,
-                                onPressed: onBack ?? () => onNavigate('home'),
-                                icon: const Icon(Icons.arrow_back, size: 30),
-                              ),
-                            Expanded(
-                              child: PixelFrame(
-                                skin: PixelFrameSkin.gold,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                                child: Text(
-                                  title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GameTypography.title.copyWith(
-                                    color: PixelUiColors.outline,
-                                  ),
-                                ),
-                              ),
+                    child: PixelFrame(
+                      skin: PixelFrameSkin.cream,
+                      padding: EdgeInsets.zero,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: showBack ? 4 : 8,
+                              right: 8,
                             ),
-                          ],
-                        ),
-                        Expanded(
-                          child: PixelFrame(
-                            skin: PixelFrameSkin.cream,
-                            padding: const EdgeInsets.all(8),
-                            child: SingleChildScrollView(
-                              key: const ValueKey('menu-content'),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                spacing: 8,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(minHeight: 48),
+                              child: Row(
+                                spacing: 4,
                                 children: [
-                                  Text(
-                                    'Dữ liệu mẫu · Không lưu thay đổi',
-                                    textAlign: TextAlign.center,
-                                    style: GameTypography.caption.copyWith(
-                                      color: PixelUiColors.mutedInk,
+                                  if (showBack)
+                                    IconButton(
+                                      tooltip: backLabel,
+                                      onPressed:
+                                          onBack ?? () => onNavigate('home'),
+                                      style: IconButton.styleFrom(
+                                        minimumSize: const Size.square(36),
+                                        padding: EdgeInsets.zero,
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.padded,
+                                      ),
+                                      icon: const Icon(
+                                        Icons.arrow_back,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  Expanded(
+                                    child: Semantics(
+                                      header: true,
+                                      child: Text(
+                                        title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GameTypography.menuTitle
+                                            .copyWith(
+                                              color: PixelUiColors.outline,
+                                            ),
+                                      ),
                                     ),
                                   ),
-                                  child,
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                              child: SingleChildScrollView(
+                                key: const ValueKey('menu-content'),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  spacing: 8,
+                                  children: [
+                                    Text(
+                                      'Dữ liệu mẫu · Không lưu thay đổi',
+                                      textAlign: TextAlign.center,
+                                      style: GameTypography.caption.copyWith(
+                                        color: PixelUiColors.mutedInk,
+                                      ),
+                                    ),
+                                    child,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
