@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' show Tristate;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/presentation/menu_button.dart';
 import 'package:pixel_rpg/app/presentation/pixel/pixel_icon.dart';
+import 'package:pixel_rpg/app/presentation/pixel/pixel_frame.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 
 void main() {
@@ -82,7 +84,19 @@ void main() {
       expect(find.byTooltip('Mở túi'), findsOneWidget);
       expect(find.bySemanticsLabel('Mở túi'), findsOneWidget);
       expect(tester.widget<PixelIcon>(find.byType(PixelIcon)).size, 36);
-      expect(find.byIcon(Icons.check_circle), findsOneWidget);
+      expect(find.byIcon(Icons.check_circle), findsNothing);
+      expect(
+        tester
+            .getSemantics(find.bySemanticsLabel('Mở túi'))
+            .flagsCollection
+            .isSelected,
+        Tristate.isTrue,
+      );
+      final button = tester.widget<TextButton>(find.byType(TextButton));
+      expect(
+        button.style!.backgroundColor!.resolve({}),
+        PixelFrameSkin.selected.background,
+      );
       await tester.tap(find.byTooltip('Mở túi'));
       expect(taps, 1);
       await tester.longPress(find.byTooltip('Mở túi'));

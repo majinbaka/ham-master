@@ -2,7 +2,6 @@
 const previewModalCases = <String, Map<String, List<String>>>{
   'home': {
     'mail': ['Hộp thư'],
-    'information': ['Thông tin màn hình'],
   },
   'shop': {
     'starter-pack': ['Xem gói mẫu'],

@@ -8,10 +8,10 @@ description: Answer questions about the current PixelRPG foundation, architectur
 Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
-The app contains a three-second NDAS loading screen at `/`, a main screen
-at `/home` with shared code frames, HUD, a static daylight village, a code-drawn
-pixel traveler portrait, dialogue and navigation to sample menus. Mail opens a
-preview dialog, and scene actions update the Home dialogue panel.
+The app contains a three-second dark NDAS loading screen at `/`, a main screen
+at `/home` with shared code frames, a static daylight village, a code-drawn
+pixel traveler portrait, dialogue and navigation to sample menus. An unframed
+mail icon opens a preview dialog. Scene actions update the Home dialogue panel.
 Shop, profile and settings previews live at `/home/shop`, `/home/profile`
 and `/home/settings`. Shop filters sample items and shows details. Profile
 has collection and badge tabs. Settings opens on Account, with General and Information
@@ -23,20 +23,17 @@ sorting, favorites and details. Home and Beasts open
 No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
-for the shared runtime concept. Home is the visual reference: menu HUD uses
-PlayerHud/ResourceHud projected at exactly the same scale and anchors;
-GameChromeLayout owns shared chrome geometry. GameSurfaceStyle owns 2 dp
-borders and 8 dp corners; ArtworkProjection compensates for scaled HUDs.
+for the shared runtime concept. Home is the visual reference for menu framing
+and bottom navigation. GameChromeLayout owns the shared navigation anchor. GameSurfaceStyle owns 2 dp
+borders and 8 dp corners. Selected menu controls use color and semantics.
 Only the middle framed content scrolls; headers and navigation stay fixed.
 MenuPanel uses a dark body/floating gold title tab, with paper for reading;
 MenuGrid aligns card rows and PixelProgress uses the common border shape.
 Shared widgets live in lib/app/presentation/, shared frames and icons in pixel/.
 Master/detail columns stack below 600 times text scale.
-HUD counters use the same unavailable placeholders as Home. Four blank 2:3
-design images and the atlas composition script are documented in `docs/art/menu-layouts.md`.
-An information dialog explains this UI-only scope. UI groups keep fixed sizes
-when rotating: profile anchors left, resources/utilities anchor right,
-and dialogue/actions/single-row navigation anchor bottom-center. Only the village
+See `docs/art/menu-layouts.md` for the concept images and atlas composition script.
+UI groups keep fixed sizes when rotating. Mail anchors top-right and
+dialogue, actions and single-row navigation anchor bottom-center. Only the village
 scene expands at normal text scale. Content copy wraps at logical sizes;
 large text uses the shared scrolling shell. One device scale accommodates
 smaller artwork; desktop does not enlarge it. Riverpod scope, go_router, theme
@@ -70,8 +67,7 @@ không phụ thuộc font hệ điều hành hoặc mạng. `GameTypography`/`ap
 kiểu chữ và shape nút chung; Home action dùng `MenuButton` như các menu.
 
 Home dialogue uses MenuPanel at logical sizes: body 17 dp,
-panel title 16 dp, matching menus after transforms. ScaledArtwork is limited
-to the shared compact HUD; panel titles never fit down.
+panel title 16 dp, matching menus after transforms. Panel titles keep their logical font size.
 HomeReadingView reflows Home in the shared scrolling shell above 1.15 text
-scale so larger copy is readable without moving HUD/navigation anchors.
+scale so larger copy is readable with navigation fixed.
 Widget tests load bundled GameRoboto and compare rendered font sizes.

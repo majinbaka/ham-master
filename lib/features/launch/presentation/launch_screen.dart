@@ -38,11 +38,12 @@ class _LaunchScreenState extends State<LaunchScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: DecoratedBox(
         decoration: const BoxDecoration(
           gradient: RadialGradient(
             radius: .75,
-            colors: [PixelUiColors.paper, PixelUiColors.sky],
+            colors: [Color(0xFF302B46), Colors.black],
           ),
         ),
         child: SafeArea(
@@ -74,9 +75,7 @@ class _LaunchScreenState extends State<LaunchScreen>
                           Row(
                             children: [
                               const Expanded(
-                                child: Divider(
-                                  color: PixelUiColors.frameBorder,
-                                ),
+                                child: Divider(color: Colors.white70),
                               ),
                               Flexible(
                                 flex: 5,
@@ -93,7 +92,7 @@ class _LaunchScreenState extends State<LaunchScreen>
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         letterSpacing: width * 0.006,
-                                        color: PixelUiColors.outline,
+                                        color: PixelUiColors.paper,
                                         fontSize: (width * 0.07).clamp(
                                           14.0,
                                           18.0,
@@ -104,9 +103,7 @@ class _LaunchScreenState extends State<LaunchScreen>
                                 ),
                               ),
                               const Expanded(
-                                child: Divider(
-                                  color: PixelUiColors.frameBorder,
-                                ),
+                                child: Divider(color: Colors.white70),
                               ),
                             ],
                           ),
@@ -130,7 +127,7 @@ class _LaunchScreenState extends State<LaunchScreen>
                               style: TextStyle(
                                 fontSize: (width * 0.09).clamp(16.0, 26.0),
                                 letterSpacing: 1,
-                                color: PixelUiColors.outline,
+                                color: PixelUiColors.paper,
                               ),
                             ),
                           ),

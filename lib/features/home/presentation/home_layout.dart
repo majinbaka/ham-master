@@ -17,14 +17,9 @@ class HomeLayout extends GameChromeLayout {
   static const _edge = GameSpacing.edge;
   static const _gap = GameSpacing.gap;
 
-  Rect get utilities {
-    final width = 96 + GameSpacing.small * scale;
-    return Rect.fromLTWH(
-      viewport.width - _edge * scale - width,
-      resources.bottom + _gap * scale,
-      width,
-      48,
-    );
+  Rect get mail {
+    final edge = _edge * scale;
+    return Rect.fromLTWH(viewport.width - edge - 48, edge, 48, 48);
   }
 
   // Half-grid gaps keep the centered footer clear of side panels on short
@@ -52,7 +47,7 @@ class HomeLayout extends GameChromeLayout {
   );
 
   Rect get character {
-    final top = _width > _height ? 20.0 : profile.bottom / scale + _gap;
+    final top = _edge;
     final bottom = dialogue.top / scale;
     final centerY = math.min((top + bottom) / 2, bottom - 64 - _gap / 2);
     return _rect((_width - 72) / 2, centerY - 64, 72, 128);

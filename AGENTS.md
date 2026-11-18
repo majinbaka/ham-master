@@ -1,10 +1,11 @@
 # PixelRPG agent guidance
 
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
-structure and development skills of FlashKids. Runtime behavior is a three-second
-NDAS loading screen followed by a pixel-styled home UI with a static daylight village scene
-and a code-drawn pixel traveler portrait. Home opens a mail dialog and
-the full-screen battle preview. Scene actions update the dialogue panel.
+structure and development skills of FlashKids. The three-second dark NDAS
+loading screen leads to a pixel-styled Home with a static daylight village
+and a code-drawn traveler portrait. The unframed mail icon opens a dialog,
+and the battle action opens the full-screen battle preview. Scene actions
+update the dialogue panel.
 Shop, profile, settings, beasts and battle are presentation-only previews.
 Do not implement gameplay unless requested.
 
@@ -53,11 +54,11 @@ Do not implement gameplay unless requested.
 - `lib/features/launch/presentation/`: three-second NDAS loading screen.
 - `lib/features/home/presentation/`: home scene with anchored artwork, shared
   logical-size dialogue panel, interactive utilities and large-text reflow.
-- `lib/app/presentation/pixel/`: shared code frames, atlas icons, labels and EXP tracks.
+- `lib/app/presentation/pixel/`: shared code frames, atlas icons and progress tracks.
 - `lib/features/{shop,profile,settings}/presentation/`: interactive menu previews.
 - `lib/features/beasts/presentation/`: sample roster, collection, filters and details.
 - `lib/features/battle/presentation/`: full-screen arena, sample HP, and manual attack previews.
-- `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
+- `lib/app/presentation/`: shared Home/menu chrome anchors, artwork projection,
   spacing, navigation, menu shell, panels, buttons, grids and progress.
 - `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork;
   village and forest arena in `scenes/`; static beast and move sprites in
@@ -77,7 +78,7 @@ Do not implement gameplay unless requested.
 For every UI change, read and follow `docs/art/ui-guidelines.md`, the runtime
 UI concept for current and future screens. Reuse the shared menu shell,
 responsive columns, navigation, palette and atlas components. Home is the visual
-reference: menus must use its HUD, artwork density and navigation anchors;
+reference: menus must use its artwork density and navigation anchors;
 only their middle content scrolls. Reference layout
 PNGs describe visual intent, not fixed runtime dimensions. Update this guideline
 in the same change when intentionally changing the shared visual rules.

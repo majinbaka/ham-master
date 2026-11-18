@@ -86,18 +86,7 @@ class MenuButton extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   spacing: 8,
                   children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        visual,
-                        if (selected)
-                          const Positioned(
-                            right: 0,
-                            bottom: 0,
-                            child: Icon(Icons.check_circle, size: 14),
-                          ),
-                      ],
-                    ),
+                    visual,
                     if (showLabel) Text(label, textAlign: TextAlign.center),
                   ],
                 ),

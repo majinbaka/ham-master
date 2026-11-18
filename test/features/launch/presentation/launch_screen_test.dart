@@ -54,6 +54,16 @@ void main() {
   ) async {
     await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
     await tester.pump();
+    final launch = find.byType(LaunchScreen);
+    final scaffold = find.descendant(
+      of: launch,
+      matching: find.byType(Scaffold),
+    );
+    expect(tester.widget<Scaffold>(scaffold).backgroundColor, Colors.black);
+    final backdrop = tester.widget<Scaffold>(scaffold).body! as DecoratedBox;
+    final gradient = (backdrop.decoration as BoxDecoration).gradient!;
+    expect(gradient.colors.last, Colors.black);
+
     expect(
       tester.widget<NeonProgressBar>(find.byType(NeonProgressBar)).progress,
       0,

@@ -5,7 +5,6 @@ import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 import 'package:pixel_rpg/features/home/presentation/home_layout.dart';
 import 'package:pixel_rpg/app/presentation/game_spacing.dart';
 import 'package:pixel_rpg/features/home/presentation/home_footer.dart';
-import 'package:pixel_rpg/features/home/presentation/home_utilities.dart';
 import 'package:pixel_rpg/app/presentation/pixel/pixel_icon.dart';
 
 void main() {
@@ -60,20 +59,6 @@ void main() {
     final gap = GameSpacing.gap * HomeLayout(const Size(390, 844)).scale;
     expect(rects[1].left - rects[0].right, closeTo(gap, 0.01));
     expect(rects[2].left - rects[1].right, closeTo(gap, 0.01));
-    final utilities = find.descendant(
-      of: find.byType(HomeUtilities),
-      matching: find.byType(TextButton),
-    );
-    expect(utilities, findsNWidgets(2));
-    for (final frame in utilities.evaluate()) {
-      final finder = find.byWidget(frame.widget);
-      final icon = find.descendant(
-        of: finder,
-        matching: find.byType(PixelIcon),
-      );
-      expect(tester.getCenter(icon), tester.getCenter(finder));
-      expect(tester.getSize(finder).shortestSide, greaterThanOrEqualTo(48));
-    }
     expect(tester.takeException(), isNull);
   });
 
@@ -85,9 +70,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
       const ids = [
-        'home-profile',
-        'home-resources',
-        'home-utilities',
+        'home-mail',
         'home-dialogue',
         'home-actions',
         'home-navigation',
@@ -156,9 +139,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     final before = <String, Rect>{};
     const groups = [
-      'home-profile',
-      'home-resources',
-      'home-utilities',
+      'home-mail',
       'home-dialogue',
       'home-actions',
       'home-navigation',
@@ -174,9 +155,7 @@ void main() {
         if (before.containsKey(id)) {
           expect(rect.width, closeTo(before[id]!.width, 0.0001), reason: id);
           expect(rect.height, closeTo(before[id]!.height, 0.0001), reason: id);
-          if (id == 'home-profile') {
-            expect(rect.left, before[id]!.left);
-          } else if (id == 'home-resources' || id == 'home-utilities') {
+          if (id == 'home-mail') {
             expect(width - rect.right, closeTo(390 - before[id]!.right, 0.01));
           } else {
             expect(rect.center.dx, width / 2);
@@ -213,17 +192,15 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      final profile = tester.getRect(
-        find.byKey(const ValueKey('home-profile')),
-      );
+      final mail = tester.getRect(find.byKey(const ValueKey('home-mail')));
       final nav = tester.getRect(find.byKey(const ValueKey('home-navigation')));
       final layout = HomeLayout(size, deviceShortSide: size.shortestSide);
       final edge = GameSpacing.edge * layout.scale;
-      expect(profile.left, closeTo(padding.left + edge, 0.01));
-      expect(profile.top, closeTo(padding.top + edge, 0.01));
+      expect(mail.right, closeTo(size.width - padding.right - edge, 0.01));
+      expect(mail.top, closeTo(padding.top + edge, 0.01));
       expect(nav.bottom, lessThanOrEqualTo(size.height - padding.bottom));
-      if (portrait != null) expect(profile.size, portrait.size);
-      portrait = profile;
+      if (portrait != null) expect(mail.size, portrait.size);
+      portrait = mail;
       expect(tester.takeException(), isNull);
     }
   });

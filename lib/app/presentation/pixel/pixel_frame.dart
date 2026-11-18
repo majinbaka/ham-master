@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/pixel_ui_colors.dart';
-import '../../theme/game_typography.dart';
 import 'pixel_frame_skin.dart';
 import '../../theme/game_surface_style.dart';
 import '../artwork_projection.dart';
@@ -34,32 +32,5 @@ class PixelFrame extends StatelessWidget {
         child: child,
       ),
     ],
-  );
-}
-
-/// Fits copy inside a fixed artwork slot without resizing the surrounding UI.
-/// Full text remains available to semantics; dialogs use normal text scaling.
-class PixelLabel extends StatelessWidget {
-  const PixelLabel(
-    this.text, {
-    this.fontSize = 26,
-    this.color = PixelUiColors.outline,
-    this.alignment = Alignment.center,
-    super.key,
-  });
-
-  final String text;
-  final double fontSize;
-  final Color color;
-  final Alignment alignment;
-
-  @override
-  Widget build(BuildContext context) => FittedBox(
-    fit: BoxFit.scaleDown,
-    alignment: alignment,
-    child: Text(
-      text,
-      style: GameTypography.label.copyWith(fontSize: fontSize, color: color),
-    ),
   );
 }

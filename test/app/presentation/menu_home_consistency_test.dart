@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pixel_rpg/app/presentation/game_chrome_layout.dart';
 import 'package:pixel_rpg/app/presentation/menu_panel.dart';
 import 'package:pixel_rpg/app/presentation/artwork_projection.dart';
 import 'package:pixel_rpg/app/presentation/pixel/pixel_frame.dart';
 import 'package:pixel_rpg/app/presentation/pixel_navigation.dart';
-import 'package:pixel_rpg/app/presentation/player_hud.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 import 'package:pixel_rpg/app/theme/game_typography.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
@@ -52,14 +50,6 @@ void main() {
             ),
           );
           await show(HomeScreen(onNavigate: (_) {}), 'home');
-          // The two projection paths may differ below 1e-6 dp due to doubles.
-          final homeLabel = tester.widget<Text>(
-            find.text('Cấp —   Nhà lữ hành'),
-          );
-          final homeStyle = DefaultTextStyle.of(
-            tester.element(find.text('Cấp —   Nhà lữ hành')),
-          ).style.merge(homeLabel.style);
-          expect(homeStyle.fontFamily, GameTypography.family);
           final homeBodySize = renderedFontSize(
             tester,
             find.text('Chào mừng, nhà lữ hành!'),
@@ -70,25 +60,17 @@ void main() {
           );
           expect(homeBodySize, closeTo(17 * textScale, 0.001));
           expect(homeTitleSize, closeTo(16 * textScale, 0.001));
+          expect(find.text('Cấp —   Nhà lữ hành'), findsNothing);
+          expect(find.text('—'), findsNothing);
           final nav = tester.getRect(find.byType(PixelNavigation));
-          final profile = tester.getRect(find.byType(PlayerHud));
-          final resources = tester.getRect(find.byType(ResourceHud));
           for (final (name, screen) in <(String, Widget)>[
             ('shop', ShopScreen(onNavigate: (_) {})),
             ('profile', ProfileScreen(onNavigate: (_) {})),
             ('settings', SettingsScreen(onNavigate: (_) {})),
           ]) {
             await show(screen, name);
-            expect(
-              tester.getRect(find.byType(PlayerHud)),
-              rectMoreOrLessEquals(profile, epsilon: 0.000001),
-              reason: name,
-            );
-            expect(
-              tester.getRect(find.byType(ResourceHud)),
-              rectMoreOrLessEquals(resources, epsilon: 0.000001),
-              reason: name,
-            );
+            expect(find.text('Cấp —   Nhà lữ hành'), findsNothing);
+            expect(find.text('—'), findsNothing);
             expect(
               tester.getRect(find.byType(PixelNavigation)),
               rectMoreOrLessEquals(nav, epsilon: 0.000001),
@@ -105,7 +87,7 @@ void main() {
             final menuStyle = DefaultTextStyle.of(
               tester.element(menuText),
             ).style.merge(tester.widget<Text>(menuText).style);
-            expect(menuStyle.fontFamily, homeStyle.fontFamily, reason: name);
+            expect(menuStyle.fontFamily, GameTypography.family, reason: name);
             expect(
               renderedFontSize(tester, menuText),
               closeTo(homeBodySize, 0.001),
@@ -134,25 +116,11 @@ void main() {
                 )
                 .first;
             expect(ArtworkProjection.of(tester.element(panelFrame)), 1);
-            expect(
-              ArtworkProjection.of(tester.element(find.byType(PlayerHud))),
-              GameChromeLayout(size).scale,
-            );
             await tester.drag(
               find.byKey(const ValueKey('menu-content')),
               const Offset(0, -2000),
             );
             await tester.pumpAndSettle();
-            expect(
-              tester.getRect(find.byType(PlayerHud)),
-              rectMoreOrLessEquals(profile, epsilon: 0.000001),
-              reason: name,
-            );
-            expect(
-              tester.getRect(find.byType(ResourceHud)),
-              rectMoreOrLessEquals(resources, epsilon: 0.000001),
-              reason: name,
-            );
             expect(
               tester.getRect(find.byType(PixelNavigation)),
               rectMoreOrLessEquals(nav, epsilon: 0.000001),

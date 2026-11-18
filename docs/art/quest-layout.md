@@ -20,8 +20,7 @@ viền bậc, vàng cho lựa chọn và nền kem cho nội dung dài.
 | Chi tiết | x = 334, y = 252, rộng 507, cao 848; từ trên xuống gồm vùng banner, tiêu đề, mô tả, mục tiêu, bốn ô thưởng và nút trạng thái | `paper` cho thân; `cool`, `gold` và `cream` cho khung con |
 | Điều hướng | x = 12, y = 1168, rộng 829, cao 100; vùng chọn ở ô thứ năm trong sáu ô | Khay `cool`, ô chọn `selected` |
 
-Runtime lấy Home làm chuẩn theo [Quy chuẩn UI](ui-guidelines.md): cùng HUD,
-mật độ viền và neo navigation; tiêu đề cố định, nội dung cuộn trong cửa sổ giữa.
+Runtime lấy Home làm chuẩn theo [Quy chuẩn UI](ui-guidelines.md): cùng mật độ viền và neo navigation; tiêu đề cố định, nội dung cuộn trong cửa sổ giữa.
 Chương dùng lưới ô đều; tab tự xuống hàng;
 danh sách chương nằm trên chi tiết khi hẹp/chữ lớn, chia hai cột 1:2 khi đủ
 600 × hệ số chữ dp. Các số đo bên dưới mô tả bản concept.

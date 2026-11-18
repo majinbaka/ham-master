@@ -76,14 +76,14 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Riverpod cho state/DI; go_router với `/` (launch), `/home` (màn hình chính)
   và các màn mẫu `/home/shop`, `/home/profile`, `/home/settings`,
   `/home/beasts` và `/home/battle`.
-- Loading nền kem chuyển xanh trời, logo NDAS và thanh vàng đào tăng từ 0 đến 100% trong
+- Loading nền tím than chuyển đen, logo NDAS và thanh vàng đào tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
-- Màn hình chính dùng khung sáng chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
+- Màn hình chính dùng khung sáng chung, viền 2 dp, bo góc 8 dp,
   ô hội thoại và thanh chức năng. Cảnh làng pixel ban ngày có nhà lữ hành đội mũ
-  vàng. Hồ sơ neo trái, tài nguyên và tiện ích neo phải. Hội thoại, bốn nút
+  vàng. Biểu tượng Hộp thư neo góc trên bên phải. Hội thoại, bốn nút
   hành động và thanh điều hướng bốn mục trên một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
   chỉ thay vị trí neo và mở rộng tranh nền ở cỡ chữ thường. Nội dung chữ
   xuống dòng theo chỗ trống.
@@ -92,31 +92,28 @@ Android application ID: `com.jinshu.pixel_rpg`.
   lớn artwork. Hội thoại Home dùng `MenuPanel`
   với cùng cỡ nội dung 17 dp/tiêu đề panel 16 dp như menu, không bị thu
   nhỏ theo artwork. Chữ hệ thống lớn hơn 1.15× chuyển Home sang vùng nội
-  dung cuộn chung; HUD và navigation vẫn cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
+  dung cuộn chung và giữ thanh điều hướng cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
   để giữ vùng chạm trên điện thoại nhỏ. Vùng an toàn được áp dụng khi đặt các
-  cụm. Chỉ nhãn HUD compact nằm trong slot cố định;
-  hộp thông tin vẫn dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
+  cụm. Hộp thoại dùng cỡ chữ hệ thống và cuộn nội dung khi cần.
   Khoảng cách dùng lưới chung `GameSpacing` khoảng 4 dp/bước: lề an toàn và
   khoảng giữa cụm khoảng 8 dp, footer cửa sổ thấp dùng khoảng 4 dp. Nội dung
   nút compact có icon lớn và tên qua tooltip/semantics; thẻ nội dung hiện
   cả icon và tên bằng `showLabel`. Viền bo mềm thuộc nút, icon không có viền riêng. Nội dung menu 17 dp, tiêu đề menu 18 dp; padding các ô điều hướng đồng nhất. Xem
   [quy ước spacing](docs/art/reusable-ui-concept.md#9-quy-ước-spacing-runtime-mobile).
   Mọi khung/nút/dialog/EXP dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp).
-  `ArtworkProjection` bù scale HUD để giữ cùng độ dày/độ cong trên màn hình.
+  `ArtworkProjection` bù scale artwork để giữ cùng độ dày/độ cong trên màn hình.
   Sáu skin chỉ đổi màu; atlas khung cũ giữ làm tư liệu, không đóng gói runtime. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt. Khung dùng nền ngà, kem, bạc hà và xanh trời nhạt với chữ xanh đậm.
-  Mục điều hướng đang chọn có nền cam đào, viền nâu san hô và dấu tick.
+  Mục điều hướng đang chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn.
   Thanh dưới có Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
-  Cụm tiện ích mở Hộp thư và Thông tin màn hình.
+  Hộp thư chỉ hiện biểu tượng phong bì, với vùng chạm 48 × 48 dp.
   Nói chuyện, Quan sát và Tìm kiếm cập nhật nội dung ô hội thoại.
-  Chỉ số Trang chủ chưa có dùng dấu `—`.
 - Cửa hàng lọc danh mục và xem chi tiết. Hồ sơ đổi tab sưu tầm và huy hiệu.
   Cài đặt có ba mục Tài khoản, Chung và
   Thông tin, mở mặc định ở Tài khoản. Mục Chung chứa các tùy chọn thử và
   nút khôi phục mặc định.
   Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
-  tiến trình hoặc lưu cấu hình. HUD dùng lại chính profile/tài nguyên của Home
-  và vẫn neo cố định khi cuộn.
+  tiến trình hoặc lưu cấu hình.
   Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
   Vật phẩm và chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
@@ -148,7 +145,7 @@ lib/
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
   features/home/presentation/ # scene, dialogue and actions
   features/{shop,profile,settings,beasts,battle}/presentation/ # interactive UI previews
-  app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ frame and icon widgets
+  app/presentation/ # shared anchors, scale, menus, controls and pixel/ frame and icon widgets
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
 ```
@@ -161,7 +158,7 @@ application, domain, infrastructure khi có code thực tế cần sở hữu.
 [Quy chuẩn UI runtime](docs/art/ui-guidelines.md) là quy tắc bắt buộc cho mọi
 màn hiện tại và về sau: palette, kiểu chữ, spacing, shell, navigation, breakpoint,
 trạng thái và điều kiện kiểm tra. Các menu dùng chung shell, nội dung
-thích ứng theo chiều rộng và cỡ chữ. Home là mẫu chuẩn: HUD, hệ số artwork,
+thích ứng theo chiều rộng và cỡ chữ. Home là mẫu chuẩn: hệ số artwork,
 viền, vị trí navigation và spacing được dùng lại, không tự dựng một bộ khung
 lớn hơn cho menu. Component dùng chung nằm tại `lib/app/presentation/`,
 khung và icon common nằm trong `pixel/`; feature chỉ sở hữu nội dung.

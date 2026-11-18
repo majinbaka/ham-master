@@ -2,7 +2,7 @@
 
 Quy tắc triển khai cho mọi màn hình nằm ở [Quy chuẩn UI](ui-guidelines.md).
 Tài liệu này giữ vai trò art direction và prompt; kích thước ảnh không phải
-ràng buộc bố cục runtime. Trang chủ giữ HUD neo cảnh, menu dùng layout thích ứng.
+ràng buộc bố cục runtime. Trang chủ neo điều khiển trên cảnh, menu dùng layout thích ứng.
 
 ## Mục đích và phạm vi
 
@@ -12,7 +12,7 @@ và prompt** cho các component tái sử dụng.
 
 Màn hình chính tại `lib/features/home/presentation/` dùng palette và bố cục
 Home với khung code chung: viền 2 dp, góc 8 dp từ `GameSurfaceStyle`.
-`ArtworkProjection` bù scale để HUD, panel, nút và dialog có cùng hình học.
+`ArtworkProjection` bù scale để panel, nút và dialog có cùng hình học.
 Sau loading 3 giây, app chuyển sang Home với cảnh làng ban ngày tĩnh, portrait nhà lữ hành vẽ bằng code,
 chưa có gameplay. Sáu skin chỉ đổi màu/nền. Chữ là widget riêng; 18 icon dùng
 atlas trong suốt `assets/ui/icon-atlas.png`. Atlas khung cũ giữ làm tư liệu art,
@@ -23,15 +23,15 @@ Thông số nguồn thực tế, vùng cắt và prompt đã dùng nằm ở
 chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bên dưới
 vẫn là định hướng cho những component chi tiết chưa tạo.
 
-Ở cỡ chữ thường, hồ sơ neo trái, tài nguyên và tiện ích neo phải. Hội thoại,
+Ở cỡ chữ thường, biểu tượng Hộp thư neo góc trên bên phải. Hội thoại,
 nút hành động và thanh điều hướng bốn mục neo giữa. Khi xoay ngang, các cụm
 dịch sang cạnh hoặc giữ trục giữa, không kéo giãn hay thu nhỏ theo chiều cao. Tranh làng nhận phần không gian dư.
 `HomeLayout` mở rộng `GameChromeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
 được chặn ở 390/940 và chỉ giảm theo chiều ngắn thiết bị nhỏ hơn 390 dp.
 Khoảng cách giữa các cụm được thu gọn trên cửa sổ thấp, hẹp; kích thước khung
-không đổi khi xoay. Chỉ nhãn HUD compact fit trong slot cố định. Hội thoại
+không đổi khi xoay. Hội thoại
 dùng MenuPanel ở dp, cùng cỡ nội dung 17 dp và tiêu đề
-16 dp như menu. Chữ lớn hơn 1.15× dùng shell cuộn chung, giữ HUD/navigation.
+16 dp như menu. Chữ lớn hơn 1.15× dùng shell cuộn chung, giữ thanh điều hướng cố định.
 
 Ảnh tham chiếu: [Pixel Detective Office — Mira’s New Clue](../../Pixel%20Detective%20Office_%20Mira%E2%80%99s%20New%20Clue.png).
 Ảnh do người dùng cung cấp; đường dẫn cần giữ cùng repo để xem lại tham chiếu.
@@ -275,7 +275,7 @@ Các công thức dưới đây mô tả quan hệ giữa khung, không xác nh�
 | Tương tác | F11 hoặc F10 + các F14; không cần vòng dưới chân hoặc hình bàn tay. |
 | Điều hướng | F15 + F16 theo mục đang chọn + F07 nếu cần thông báo. |
 
-Ở màn hình chính, chỉ HUD và control artwork giữ slot thiết kế. Panel nội
+Ở màn hình chính, các điều khiển artwork giữ slot thiết kế. Panel nội
 dung dùng chữ dp, xuống dòng và chừa chiều cao tương ứng; không thu nhỏ chữ
 để khớp artwork. Khoảng chạm thuộc layout runtime,
 có thể rộng hơn artwork. Chữ tiếng Việt dài/ngắn được bố trí riêng, không kéo
@@ -318,8 +318,7 @@ màn hình cùng phong cách mà không phụ thuộc câu chuyện hoặc nhân
 ## 9. Quy ước spacing runtime mobile
 
 `GameSpacing` trong `lib/app/presentation/` là nguồn chung cho khoảng cách
-artwork của Home và menu. `GameChromeLayout` sở hữu neo HUD/navigation,
-`ArtworkProjection` bù scale cho viền/góc của HUD để khớp menu vẽ ở dp. Lưới cơ sở 10 đơn vị
+artwork của Home và menu. `GameChromeLayout` sở hữu neo điều hướng. Lưới cơ sở 10 đơn vị
 artwork tương đương khoảng 4 dp ở chiều ngắn 390 dp; dùng 1 bước cho khoảng
 icon–nhãn và padding nội dung, 2 bước (khoảng 8 dp) cho lề vùng an toàn,
 khoảng giữa panel và giữa nút hành động. Không cần bám khoảng cách ảnh gốc.
@@ -327,11 +326,9 @@ Viền common được tính riêng, không dùng độ dày viền làm khoản
 Các cụm trên được đặt tiếp nhau theo cạnh panel và gap, tránh tọa độ rời rạc.
 
 Footer dùng cùng khoảng 2 bước giữa hội thoại, hành động và điều hướng;
-cửa sổ thấp, hẹp không đủ chỗ đặt footer cạnh HUD dùng 1 bước. Các panel vẫn
+cửa sổ thấp, hẹp dùng 1 bước. Các panel vẫn
 cùng kích thước khi xoay. Nút compact có icon lớn căn giữa; thẻ nội dung hiện thêm tên qua `showLabel`. Icon trong suốt không viền riêng;
 viền kem bo mềm chỉ bao quanh nút; nhãn giữ trong
-tooltip/semantics, trạng thái chọn có dấu tick. Nút chữ giữ nhãn căn giữa,
+tooltip/semantics. Nền, viền và semantics biểu thị trạng thái chọn. Nút chữ giữ nhãn căn giữa,
 các ô điều hướng có padding và hàng nội dung giống nhau dù đang chọn hay chưa.
-Nút tiện ích căn giữa icon cả hai trục; counter và tab nhiệm vụ căn giữa cụm
-icon–chữ. Artwork có thể nhỏ hơn vùng chạm; nút thông tin hoạt động vẫn có
-vùng chạm ít nhất 48 dp. Không biến các placeholder thành chức năng gameplay.
+Biểu tượng Hộp thư căn giữa trong vùng chạm 48 × 48 dp trong suốt.

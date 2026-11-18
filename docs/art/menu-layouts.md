@@ -35,13 +35,13 @@ python3 tools/render_menu_layouts.py
 Script cần Pillow cho công cụ thiết kế, không phải dependency Flutter.
 Các PNG này là tài liệu bố cục, không đăng ký trong `pubspec.yaml`. App vẽ
 khung bằng `PixelFrame` và dùng icon atlas riêng. Chữ luôn là widget. Không dùng ảnh
-chụp toàn màn hình làm UI. Trên điện thoại, HUD/tab có thể xuống dòng,
+chụp toàn màn hình làm UI. Trên điện thoại, tab có thể xuống dòng,
 cửa hàng dùng hai cột hoặc một cột tùy chiều rộng để giữ chữ đọc được.
 Các panel cuộn phía trên thanh điều hướng cố định. Cài đặt
 xếp danh sách trên nội dung khi hẹp hoặc chữ lớn; chỉ chia hai cột 1:2 khi đủ
 600 × hệ số chữ dp. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
-Home là chuẩn runtime: menu dùng chính profile/tài nguyên của Home, cùng mẫu
-viền 2 dp/góc 8 dp và vị trí neo navigation. Tiêu đề và HUD cố định; chỉ cửa sổ ở giữa
+Home là chuẩn runtime: menu dùng cùng mẫu viền 2 dp/góc 8 dp và vị trí
+neo navigation. Tiêu đề cố định; chỉ cửa sổ ở giữa
 cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Vật phẩm và chỉ số dùng lưới ô đều.
 
 Runtime dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp); atlas khung chỉ
@@ -62,7 +62,6 @@ Thanh dưới nối Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
   khôi phục mặc định có xác nhận. Lựa chọn chỉ tồn tại khi ở màn hình này.
   Mục Thông tin có hộp thoại giới thiệu PixelRPG.
 
-Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. HUD menu dùng cùng placeholder `—` như Home;
-các số cấp độ và tiến trình trong nội dung là minh họa,
-không phải state game thật. HUD Trang chủ vẫn dùng dấu `—`.
+Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. Cấp độ và tiến trình
+trong Hồ sơ là dữ liệu minh họa.
 Chưa giới thiệu core, persistence hoặc mock API.

@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/presentation/game_spacing.dart';
-import '../../../app/presentation/player_hud.dart';
-import '../../../app/presentation/pixel/pixel_icon.dart';
 import '../../../app/presentation/village_backdrop.dart';
 import '../../../app/presentation/traveler_portrait.dart';
-import '../../../app/presentation/scaled_artwork.dart';
-import '../../../app/presentation/sample_detail_dialog.dart';
 import 'home_footer.dart';
 import 'home_layout.dart';
+import 'home_mail_button.dart';
 import 'home_navigation.dart';
 import 'home_reading_view.dart';
-import 'home_utilities.dart';
 
-/// Fixed-proportion game HUD over a scene that expands with the viewport.
+/// Fixed-proportion controls over a scene that expands with the viewport.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({this.onOpenBattle, this.onNavigate, super.key});
 
@@ -52,16 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
       onAction: _showDialogue,
       onOpenBattle: widget.onOpenBattle,
     );
-    HomeUtilities utilities(double scale) => HomeUtilities(
-      gap: GameSpacing.small * scale,
-      onInformation: () => _showInformation(context),
-    );
     if (MediaQuery.textScalerOf(context).scale(17) > 17 * 1.15) {
       final layout = HomeLayout(MediaQuery.sizeOf(context));
       return HomeReadingView(
         onNavigate: widget.onNavigate,
         dialogue: dialogue,
-        utilities: SizedBox(height: 48, child: utilities(layout.scale)),
         actions: SizedBox(
           height: layout.actionHeight,
           child: actions(layout.scale),
@@ -79,22 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
             return Stack(
               children: [
                 const Positioned.fill(child: VillageBackdrop()),
-                _place(
-                  'home-profile',
-                  layout.profile,
-                  layout.scale,
-                  const PlayerHud(),
-                ),
-                _place(
-                  'home-resources',
-                  layout.resources,
-                  layout.scale,
-                  const ResourceHud(),
-                ),
                 _placeControls(
-                  'home-utilities',
-                  layout.utilities,
-                  utilities(layout.scale),
+                  'home-mail',
+                  layout.mail,
+                  const HomeMailButton(),
                 ),
                 Positioned.fromRect(
                   rect: layout.character,
@@ -127,19 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SizedBox(key: ValueKey(key), child: child),
       );
 
-  Widget _place(String key, Rect rect, double scale, Widget child) =>
-      Positioned.fromRect(
-        rect: rect,
-        child: SizedBox(
-          key: ValueKey(key),
-          child: ScaledArtwork(
-            scale: scale,
-            size: Size(rect.width / scale, rect.height / scale),
-            child: child,
-          ),
-        ),
-      );
-
   Widget _placeContent(String key, Rect rect, Widget child) =>
       Positioned.fromRect(
         rect: rect,
@@ -148,15 +113,4 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SizedBox(key: ValueKey(key), width: rect.width, child: child),
         ),
       );
-
-  void _showInformation(BuildContext context) => showSampleDetail(
-    context,
-    'Chào mừng đến với Pixel RPG',
-    'Cảnh làng và nhà lữ hành là hình minh họa tĩnh.\n\n'
-        'Thanh dưới mở Cửa hàng, Hồ sơ và Cài đặt. '
-        'Nói chuyện, Quan sát và Tìm kiếm cập nhật ô hội thoại. Nút Trận chiến mở đấu trường. '
-        'Mở Hộp thư bằng biểu tượng phong bì.',
-    icon: PixelIconKind.info,
-    closeLabel: 'Đã hiểu',
-  );
 }
