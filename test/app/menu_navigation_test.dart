@@ -58,7 +58,7 @@ void main() {
     expect(find.text('Tiến độ chương · 0 / 5'), findsOneWidget);
   });
 
-  testWidgets('profile and quests open the two previews through real routes', (
+  testWidgets('home, beasts and quests open battle through real routes', (
     tester,
   ) async {
     await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
@@ -72,6 +72,11 @@ void main() {
       await tester.tap(control);
       await tester.pumpAndSettle();
     }
+
+    await tap('Trận chiến');
+    expect(find.byType(BattleScreen), findsOneWidget);
+    await tap('Quay lại');
+    expect(find.byTooltip('Trận chiến').hitTestable(), findsOneWidget);
 
     await tap('Hồ sơ');
     await tap('Mở danh sách yêu thú');
@@ -221,7 +226,6 @@ void main() {
         'quests',
         'episode',
         'beasts',
-        'battle',
       ]) {
         testWidgets(
           '$screen fits $size at text scale $scale and keeps navigation visible',
@@ -237,7 +241,6 @@ void main() {
               'quests' => QuestScreen(onBack: () {}),
               'episode' => StoryEpisodeScreen(onBack: () {}),
               'beasts' => BeastScreen(onNavigate: (_) {}, onBattle: () {}),
-              'battle' => BattleScreen(onNavigate: (_) {}, onBack: () {}),
               _ => SettingsScreen(onNavigate: (_) {}),
             };
             await tester.pumpWidget(

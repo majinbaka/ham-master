@@ -63,10 +63,16 @@ class HomeDialogue extends StatelessWidget {
 }
 
 class HomeActions extends StatelessWidget {
-  const HomeActions({required this.scale, required this.onAction, super.key});
+  const HomeActions({
+    required this.scale,
+    required this.onAction,
+    this.onOpenBattle,
+    super.key,
+  });
 
   final double scale;
   final ValueChanged<HomeAction> onAction;
+  final VoidCallback? onOpenBattle;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -80,6 +86,16 @@ class HomeActions extends StatelessWidget {
             skin: action.skin,
             artworkScale: 2 * scale,
             onPressed: () => onAction(action),
+          ),
+        ),
+      if (onOpenBattle != null)
+        Expanded(
+          child: MenuButton(
+            label: 'Trận chiến',
+            icon: PixelIconKind.battle,
+            skin: PixelFrameSkin.selected,
+            artworkScale: 2 * scale,
+            onPressed: onOpenBattle,
           ),
         ),
     ],

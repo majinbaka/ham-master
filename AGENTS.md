@@ -3,8 +3,8 @@
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. Runtime behavior is a three-second
 NDAS loading screen followed by a pixel-styled home UI with a static daylight village scene
-and a code-drawn pixel traveler portrait. Home opens quest previews and a mail
-dialog. Scene actions update the dialogue panel.
+and a code-drawn pixel traveler portrait. Home opens quest previews, a mail
+dialog and the full-screen battle preview. Scene actions update the dialogue panel.
 Story, quests, shop, profile, settings, beasts and battle are presentation-only previews.
 Do not implement gameplay unless requested.
 
@@ -57,7 +57,7 @@ Do not implement gameplay unless requested.
 - `lib/features/quests/presentation/`: quest categories, chapter status and sample objectives/rewards.
 - `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.
 - `lib/features/beasts/presentation/`: sample roster, collection, filters and details.
-- `lib/features/battle/presentation/`: illustrated encounter and sample battle controls.
+- `lib/features/battle/presentation/`: full-screen arena, sample HP, and manual attack previews.
 - `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
   spacing, navigation, menu shell, panels, buttons, grids, preview and progress.
 - `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork;

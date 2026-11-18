@@ -21,8 +21,8 @@ advancing progress; shop filters sample items and shows details; profile switche
 collection/badge tabs; settings controls change ephemeral local widget selections
 and offer a confirmation dialog to reset them.
 Profile opens `/home/beasts`, an illustrative roster with collection, filters,
-sorting, favorites and details. Beasts and the main quest open `/home/battle`,
-an illustrated encounter with fixed HP and local preview selection and controls.
+sorting, favorites and details. Home, Beasts and the main quest open
+`/home/battle`, a full-screen encounter with fixed HP and manual attack previews.
 No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`

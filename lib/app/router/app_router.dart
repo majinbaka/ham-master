@@ -34,6 +34,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             'quests',
             queryParameters: {'tab': QuestCategory.daily.name},
           ),
+          onOpenBattle: () => context.pushNamed('battle'),
           onNavigate: context.goNamed,
         ),
         routes: [
@@ -85,7 +86,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: 'battle',
             name: 'battle',
             builder: (context, state) => BattleScreen(
-              onNavigate: context.goNamed,
               onBack: () {
                 if (context.canPop()) {
                   context.pop();

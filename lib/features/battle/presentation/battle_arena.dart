@@ -1,88 +1,118 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/presentation/battle_move.dart';
 import '../../../app/presentation/beast_sprite.dart';
 import '../../../app/presentation/pixel/pixel_frame.dart';
+import '../../../app/presentation/pixel/pixel_progress.dart';
+import '../../../app/theme/game_typography.dart';
 import '../../../app/theme/pixel_ui_colors.dart';
+import '../../beasts/presentation/beast_preview_data.dart';
 
-/// Illustrates the two sides of the encounter and the selected target.
+/// Places the fighters and their HP directly over the encounter artwork.
 class BattleArena extends StatelessWidget {
   const BattleArena({
+    required this.move,
+    required this.cast,
+    required this.showEffect,
     required this.onTarget,
-    required this.targetSelected,
     super.key,
   });
 
-  final VoidCallback? onTarget;
-  final bool targetSelected;
+  final BattleMove move;
+  final int cast;
+  final bool showEffect;
+  final VoidCallback onTarget;
 
   @override
-  Widget build(BuildContext context) => PixelFrame(
-    padding: EdgeInsets.zero,
-    child: SizedBox(
-      height: 232,
-      child: ClipRect(
-        child: Stack(
-          fit: StackFit.expand,
+  Widget build(BuildContext context) => Stack(
+    fit: StackFit.expand,
+    children: [
+      Align(
+        alignment: const Alignment(-.48, .62),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/scenes/forest-arena.png',
-              fit: BoxFit.cover,
-              filterQuality: FilterQuality.none,
-              excludeFromSemantics: true,
-            ),
-            Align(
-              alignment: const Alignment(.13, -.8),
-              child: Tooltip(
-                message: 'Chọn Sói Bóng Đêm làm mục tiêu',
-                excludeFromSemantics: true,
-                child: Semantics(
-                  label: 'Chọn Sói Bóng Đêm làm mục tiêu',
-                  button: true,
-                  selected: targetSelected,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: InkWell(
-                      onTap: onTarget,
-                      child: Stack(
-                        children: [
-                          BeastSprite.shadowWolf.artwork(90),
-                          if (targetSelected)
-                            const Positioned(
-                              top: 0,
-                              right: 0,
-                              child: Icon(
-                                Icons.adjust,
-                                color: PixelUiColors.paper,
-                                shadows: [
-                                  Shadow(
-                                    color: PixelUiColors.coral,
-                                    blurRadius: 6,
-                                  ),
-                                ],
-                              ),
+            BeastSprite.fireFoxBack.artwork(96),
+            _Health(hp: BeastPreview.fireFox.stats.$1),
+          ],
+        ),
+      ),
+      Align(
+        alignment: const Alignment(.48, -.55),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _Health(hp: BeastPreview.shadowWolf.stats.$1, enemy: true),
+            Tooltip(
+              message: 'Đánh đối thủ',
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: onTarget,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      BeastSprite.shadowWolf.artwork(104),
+                      if (showEffect)
+                        Semantics(
+                          liveRegion: true,
+                          label: '${move.label} trúng mục tiêu',
+                          child: TweenAnimationBuilder<double>(
+                            key: ValueKey(cast),
+                            tween: Tween(begin: 1, end: 0),
+                            duration: MediaQuery.disableAnimationsOf(context)
+                                ? Duration.zero
+                                : const Duration(milliseconds: 650),
+                            builder: (context, opacity, child) => Opacity(
+                              opacity: MediaQuery.disableAnimationsOf(context)
+                                  ? 1
+                                  : opacity,
+                              child: child,
                             ),
-                        ],
-                      ),
-                    ),
+                            child: move.artwork,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
             ),
-            const Align(
-              alignment: Alignment(.04, .03),
-              child: Icon(
-                Icons.keyboard_double_arrow_up,
-                color: PixelUiColors.paper,
-                shadows: [Shadow(color: PixelUiColors.amber, blurRadius: 5)],
-                size: 38,
-              ),
-            ),
-            Align(
-              alignment: const Alignment(-.12, .84),
-              child: BeastSprite.fireFoxBack.artwork(86),
-            ),
           ],
         ),
+      ),
+    ],
+  );
+}
+
+class _Health extends StatelessWidget {
+  const _Health({required this.hp, this.enemy = false});
+
+  final int hp;
+  final bool enemy;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    label: enemy ? 'Máu đối thủ' : 'Máu đồng đội',
+    value: '$hp / $hp',
+    excludeSemantics: true,
+    child: PixelFrame(
+      skin: enemy ? PixelFrameSkin.selected : PixelFrameSkin.cool,
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 2,
+        children: [
+          Text('HP $hp / $hp', style: GameTypography.caption),
+          SizedBox(
+            width: 80,
+            child: PixelProgress(
+              value: 1,
+              height: 8,
+              label: 'HP',
+              fillColor: enemy ? PixelUiColors.coral : PixelUiColors.teal,
+            ),
+          ),
+        ],
       ),
     ),
   );

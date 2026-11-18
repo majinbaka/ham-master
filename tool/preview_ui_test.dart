@@ -55,6 +55,7 @@ void main() {
           onOpenQuests: () {},
           onOpenSideQuests: () {},
           onOpenDailyQuests: () {},
+          onOpenBattle: () {},
         );
         final screens = <String, Widget>{
           'home': home,
@@ -64,7 +65,7 @@ void main() {
           'quests': QuestScreen(onBack: () {}, onBattle: () {}),
           'shop': ShopScreen(onNavigate: (_) {}),
           'beasts': BeastScreen(onNavigate: (_) {}, onBattle: () {}),
-          'battle': BattleScreen(onNavigate: (_) {}, onBack: () {}),
+          'battle': BattleScreen(onBack: () {}),
           'profile': ProfileScreen(onNavigate: (_) {}),
           'settings': SettingsScreen(onNavigate: (_) {}),
           'launch': LaunchScreen(onComplete: () {}),

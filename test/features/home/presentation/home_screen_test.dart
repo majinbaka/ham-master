@@ -28,7 +28,7 @@ void main() {
               ).copyWith(textScaler: TextScaler.linear(scale)),
               child: child!,
             ),
-            home: const HomeScreen(),
+            home: HomeScreen(onOpenBattle: () {}),
           ),
         );
         expect(tester.takeException(), isNull);
@@ -41,6 +41,11 @@ void main() {
           find.byKey(const ValueKey('character-placeholder')).hitTestable(),
           findsOneWidget,
         );
+        final battle = find.byTooltip('Trận chiến');
+        await tester.ensureVisible(battle);
+        await tester.pumpAndSettle();
+        expect(battle.hitTestable(), findsOneWidget);
+        expect(tester.getSize(battle).shortestSide, greaterThanOrEqualTo(48));
         await tester.ensureVisible(find.byTooltip('Trang chủ'));
         await tester.pumpAndSettle();
         expect(find.byTooltip('Trang chủ').hitTestable(), findsOneWidget);

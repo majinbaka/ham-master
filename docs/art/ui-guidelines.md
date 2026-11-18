@@ -26,7 +26,8 @@ Không nhân viền/góc theo cỡ icon. Chữ nội dung Home/menu vẫn dùng 
 Cảnh làng ban ngày dùng xanh lá, xanh trời, mái ngói đất nung và hoa nhiều màu.
 Khung dùng nền kem, bạc hà và xanh trời nhạt với chữ xanh đậm. Vàng mật ong
 dành cho tiêu đề và tiến độ, cam đào cùng viền nâu san hô dành cho mục đang chọn.
-Ba nút hành động Home và các khay tài nguyên dùng vàng, xanh trời, bạc hà.
+Các nút hội thoại Home và khay tài nguyên dùng vàng, xanh trời, bạc hà.
+Nút Trận chiến dùng nền cam đào.
 Dành các màu đậm cho viền, chữ và điểm nhấn nhỏ để nền rộng dịu mắt.
 Giấy kem dành cho nội dung đọc. Chỉ dùng `PixelUiColors`, `GameSurfaceStyle`
 và theme chung; không tự chọn radius/BorderSide hoặc tạo viền trang trí riêng
@@ -111,9 +112,9 @@ panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas gi
 suốt và không có lớp nền/viền bọc riêng; các nút icon compact không hiện chữ, vẫn có
 tooltip và semantics. Thẻ chương/đoạn truyện hiển thị tên và trạng thái khóa,
 không bắt người chơi đoán nội dung từ icon.
-Home dùng ba nút hành động icon lớn, không có nhãn; phần chữ nội dung không
+Home dùng bốn nút hành động icon lớn với tên trong tooltip; phần chữ nội dung không
 phụ thuộc hệ số artwork. Nói chuyện, Quan sát và Tìm kiếm thay nội dung ô hội
-thoại trên Home. Bố cục chữ lớn cuộn tới nội dung mới. Chữ dài trong nội
+thoại trên Home. Trận chiến mở đấu trường. Bố cục chữ lớn cuộn tới nội dung mới. Chữ dài trong nội
 dung và nút xuống dòng, tăng chiều cao và cuộn được.
 Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn HUD compact trong slot cố định; không fit tiêu đề
 panel hoặc nội dung đọc. Test đo cỡ chữ sau transform, không chỉ so font family.
@@ -129,7 +130,7 @@ từ 320 dp, độc lập tỷ lệ sprite. Không chỉ dùng màu để biểu
 
 Dialog dùng nền giấy kem, chữ xanh đậm và nội dung cuộn. Hộp thoại chi tiết
 dùng icon atlas và có nút đóng. Khôi phục cài đặt mẫu có hai nút Hủy và Khôi phục. Các
-màn luôn ghi rõ dữ liệu mẫu, không lưu thay đổi; nội dung mẫu không biến
+menu luôn ghi rõ dữ liệu mẫu, không lưu thay đổi; nội dung mẫu không biến
 thành chỉ số thật trên HUD. Launch giữ nhận diện NDAS ba giây.
 
 ## Ảnh runtime để đối chiếu
@@ -198,12 +199,13 @@ Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trư
 
 Yêu thú dùng cùng `MenuColumns` cho danh sách và chi tiết. Chạm một thẻ
 đưa phần chi tiết vào vùng nhìn ở điện thoại. Chỉ số và chiêu dùng `MenuGrid`.
-Hồ sơ mở Yêu thú, còn Yêu thú và Nhiệm vụ chính mở Trận chiến.
+Hồ sơ mở Yêu thú. Trang chủ, Yêu thú và Nhiệm vụ chính đều mở Trận chiến.
 
-Trận chiến giữ shell chung với HUD và navigation cố định. Phần cuộn xếp HP
-đối thủ, cảnh rừng và hai sprite, HP đồng đội rồi lưới chiêu thức. Dùng lại
-`PixelProgress` với màu nhấn khác nhau và giá trị HP bằng chữ. Chọn chiêu,
-mục tiêu và các thông số là thao tác xem thử với dữ liệu mẫu.
+Trận chiến dùng cảnh rừng phủ toàn màn hình. Nút quay lại neo góc trên trái
+và ba nút chiêu đánh neo giữa đáy trong vùng an toàn. Hai sprite có HP mẫu
+đặt cạnh bằng `PixelProgress`, với màu nhấn theo hai phía và số HP bằng chữ.
+Chọn biểu tượng chiêu rồi chạm đối thủ để xem hiệu ứng. Đấu trường dùng
+cùng kiểu khung và nút với Home, với toàn bộ điều khiển hiện trong khung nhìn.
 
 Cài đặt mở nhóm Âm thanh để tránh trộn mọi điều khiển vào một trang dài.
 Âm lượng có tên bên trái, phần trăm màu nâu hổ phách bên phải và track 8 dp. Công tắc

@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
     this.onOpenQuests,
     this.onOpenSideQuests,
     this.onOpenDailyQuests,
+    this.onOpenBattle,
     this.onNavigate,
     super.key,
   });
@@ -26,6 +27,7 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback? onOpenQuests;
   final VoidCallback? onOpenSideQuests;
   final VoidCallback? onOpenDailyQuests;
+  final VoidCallback? onOpenBattle;
   final ValueChanged<String>? onNavigate;
 
   @override
@@ -59,6 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
       onOpenSide: widget.onOpenSideQuests,
     );
     final dialogue = HomeDialogue(key: _dialogueKey, action: _action);
+    HomeActions actions(double scale) => HomeActions(
+      scale: scale,
+      onAction: _showDialogue,
+      onOpenBattle: widget.onOpenBattle,
+    );
     HomeUtilities utilities(double scale) => HomeUtilities(
       gap: GameSpacing.small * scale,
       onDailyQuests: widget.onOpenDailyQuests,
@@ -73,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
         utilities: SizedBox(height: 48, child: utilities(layout.scale)),
         actions: SizedBox(
           height: layout.actionHeight,
-          child: HomeActions(scale: layout.scale, onAction: _showDialogue),
+          child: actions(layout.scale),
         ),
       );
     }
@@ -116,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _placeControls(
                   'home-actions',
                   layout.actions,
-                  HomeActions(scale: layout.scale, onAction: _showDialogue),
+                  actions(layout.scale),
                 ),
                 _placeControls(
                   'home-navigation',
@@ -164,7 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
     'Chào mừng đến với Pixel RPG',
     'Cảnh làng và nhà lữ hành là hình minh họa tĩnh.\n\n'
         'Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt. '
-        'Ba nút hành động cập nhật ô hội thoại trên Trang chủ. Cụm tiện ích có Hộp thư và lối tắt nhiệm vụ hằng ngày.',
+        'Nói chuyện, Quan sát và Tìm kiếm cập nhật ô hội thoại. Nút Trận chiến mở đấu trường. '
+        'Cụm tiện ích có Hộp thư và lối tắt nhiệm vụ hằng ngày.',
     icon: PixelIconKind.info,
     closeLabel: 'Đã hiểu',
   );

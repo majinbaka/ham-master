@@ -85,7 +85,7 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Màn hình chính dùng khung sáng chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
   panel nhiệm vụ, lời chào và thanh chức năng. Cảnh làng pixel ban ngày, nhân vật minh họa đội mũ
   vàng. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
-  tài nguyên và tiện ích neo phải; hội thoại, ba nút hành động và thanh sáu mục
+  tài nguyên và tiện ích neo phải; hội thoại, bốn nút hành động và thanh sáu mục
   một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
   chỉ thay vị trí neo và mở rộng tranh nền ở cỡ chữ thường. Nội dung chữ
   xuống dòng theo chỗ trống.
@@ -131,10 +131,10 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Hồ sơ mở **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm
   Sói Bóng Đêm, bộ lọc theo hệ/yêu thích, sắp xếp theo cấp và thẻ chi tiết
   có chỉ số, chiêu thức và các thao tác xem thử.
-- Từ Yêu thú hoặc Nhiệm vụ chính, chọn **Xem thử trận chiến** để mở cảnh
-  Hỏa Hổ đối đầu Sói Bóng Đêm. Có thể chọn chiêu và mục tiêu, bật/tắt
-  tự động, đổi tốc độ và tạm dừng trong giao diện mẫu. Thanh HP hiển thị
-  giá trị minh họa cố định. Nút quay lại trở về màn đã mở trận.
+- Chọn **Trận chiến** trên Trang chủ để mở đấu trường rừng toàn màn hình.
+  Hai yêu thú có thanh HP mẫu đặt cạnh sprite. Chọn một trong ba chiêu đánh
+  rồi chạm đối thủ để xem hiệu ứng. Lối tắt từ Yêu thú và Nhiệm vụ chính
+  cũng mở đấu trường. Nút quay lại trở về màn đã mở trận.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
   chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
