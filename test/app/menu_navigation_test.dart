@@ -8,16 +8,12 @@ import 'package:pixel_rpg/app/presentation/menu_shell.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 import 'package:pixel_rpg/features/battle/presentation/battle_screen.dart';
 import 'package:pixel_rpg/features/beasts/presentation/beast_screen.dart';
-import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
-import 'package:pixel_rpg/features/story/presentation/story_screen.dart';
 
 void main() {
-  testWidgets('menus navigate through real routes and preview an episode', (
-    tester,
-  ) async {
+  testWidgets('remaining menus navigate through real routes', (tester) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -29,11 +25,9 @@ void main() {
       tester.element(find.byType(PixelRpgApp)),
     ).read(appRouterProvider);
     for (final (label, path) in [
-      ('Cốt truyện', 'story'),
       ('Cửa hàng', 'shop'),
       ('Hồ sơ', 'profile'),
       ('Cài đặt', 'settings'),
-      ('Nhiệm vụ', 'quests'),
       ('Trang chủ', ''),
     ]) {
       await tester.tap(find.byTooltip(label).last);
@@ -44,21 +38,12 @@ void main() {
       );
       expect(tester.takeException(), isNull);
     }
-    await tester.tap(find.byTooltip('Cốt truyện'));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Bắt đầu xem thử'));
-    await tester.tap(find.text('Bắt đầu xem thử'));
-    await tester.pumpAndSettle();
-    expect(
-      router.routeInformationProvider.value.uri.path,
-      '/home/story/episode',
-    );
-    await tester.tap(find.byTooltip('Về Cốt truyện'));
-    await tester.pumpAndSettle();
-    expect(find.text('Tiến độ chương · 0 / 5'), findsOneWidget);
+    for (final path in ['/home/story', '/home/story/episode', '/home/quests']) {
+      expect(router.configuration.findMatch(Uri.parse(path)).isError, isTrue);
+    }
   });
 
-  testWidgets('home, beasts and quests open battle through real routes', (
+  testWidgets('home and beasts open battle through real routes', (
     tester,
   ) async {
     await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
@@ -88,12 +73,6 @@ void main() {
     expect(find.text('Hồ Băng'), findsOneWidget);
     await tap('Về Hồ sơ');
     expect(find.byType(ProfileScreen), findsOneWidget);
-
-    await tap('Nhiệm vụ');
-    await tap('Xem thử trận chiến');
-    expect(find.byType(BattleScreen), findsOneWidget);
-    await tap('Quay lại');
-    expect(find.byType(QuestScreen), findsOneWidget);
 
     final router = ProviderScope.containerOf(
       tester.element(find.byType(PixelRpgApp)),
@@ -127,19 +106,42 @@ void main() {
     expect(find.byType(AlertDialog), findsNothing);
   });
 
-  testWidgets('settings change only preview controls and switch category', (
+  testWidgets('settings show only account, general and information tabs', (
     tester,
   ) async {
     await tester.pumpWidget(
       MaterialApp(home: SettingsScreen(onNavigate: (_) {})),
     );
+    final tabs = find.descendant(
+      of: find.byType(MenuColumns),
+      matching: find.byType(MenuButton),
+    );
+    expect(tester.widgetList<MenuButton>(tabs).map((button) => button.label), [
+      'Tài khoản',
+      'Chung',
+      'Thông tin',
+    ]);
+    expect(tester.widget<MenuButton>(tabs.first).selected, isTrue);
+    expect(find.textContaining('Chế độ xem trước offline'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(MenuButton, 'Thông tin'));
+    await tester.pumpAndSettle();
+    expect(
+      find.widgetWithText(MenuButton, 'Giới thiệu PixelRPG'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.widgetWithText(MenuButton, 'Chung'));
+    await tester.pumpAndSettle();
     final slider = find.byType(Slider).first;
+    await tester.ensureVisible(slider);
     await tester.drag(slider, const Offset(-70, 0));
     await tester.pumpAndSettle();
     expect(tester.widget<Slider>(slider).value, lessThan(80));
-    await tester.tap(find.widgetWithText(MenuButton, 'Điều khiển'));
-    await tester.pumpAndSettle();
-    final toggle = find.byType(Switch).first;
+    final toggle = find.descendant(
+      of: find.widgetWithText(SwitchListTile, 'Hiện vùng tương tác'),
+      matching: find.byType(Switch),
+    );
     expect(tester.widget<Switch>(toggle).value, isTrue);
     await tester.ensureVisible(toggle);
     await tester.tap(toggle);
@@ -158,12 +160,10 @@ void main() {
         home: SettingsScreen(onNavigate: (_) {}),
       ),
     );
-    await tester.tap(find.text('Điều khiển'));
+    await tester.tap(find.widgetWithText(MenuButton, 'Chung'));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('D-Pad'));
     await tester.tap(find.text('D-Pad'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Chung'));
     await tester.pumpAndSettle();
 
     for (final action in ['Hủy', 'Khôi phục']) {
@@ -218,15 +218,7 @@ void main() {
     const Size(1440, 900),
   ]) {
     for (final scale in [1.0, 2.0]) {
-      for (final screen in [
-        'story',
-        'shop',
-        'profile',
-        'settings',
-        'quests',
-        'episode',
-        'beasts',
-      ]) {
+      for (final screen in ['shop', 'profile', 'settings', 'beasts']) {
         testWidgets(
           '$screen fits $size at text scale $scale and keeps navigation visible',
           (tester) async {
@@ -235,11 +227,8 @@ void main() {
             addTearDown(tester.view.resetPhysicalSize);
             addTearDown(tester.view.resetDevicePixelRatio);
             final child = switch (screen) {
-              'story' => StoryScreen(onNavigate: (_) {}, onStart: () {}),
               'shop' => ShopScreen(onNavigate: (_) {}),
               'profile' => ProfileScreen(onNavigate: (_) {}),
-              'quests' => QuestScreen(onBack: () {}),
-              'episode' => StoryEpisodeScreen(onBack: () {}),
               'beasts' => BeastScreen(onNavigate: (_) {}, onBattle: () {}),
               _ => SettingsScreen(onNavigate: (_) {}),
             };

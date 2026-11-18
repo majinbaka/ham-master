@@ -32,7 +32,17 @@ void main() {
           ),
         );
         expect(tester.takeException(), isNull);
-        expect(find.text('Chưa có nhiệm vụ'), findsOneWidget);
+        for (final label in [
+          'Cốt truyện',
+          'Nhiệm vụ',
+          'Mở Nhiệm vụ',
+          'Mở Nhiệm vụ phụ',
+          'Nhiệm vụ hàng ngày',
+        ]) {
+          expect(find.byTooltip(label), findsNothing);
+        }
+        expect(find.text('Nhiệm vụ chính'), findsNothing);
+        expect(find.text('Nhiệm vụ phụ'), findsNothing);
         await tester.ensureVisible(
           find.byKey(const ValueKey('character-placeholder')),
         );
@@ -53,6 +63,7 @@ void main() {
           of: find.byType(PixelNavigation),
           matching: find.byType(TextButton),
         );
+        expect(controls, findsNWidgets(4));
         for (final control in controls.evaluate()) {
           final target = tester.getSize(find.byWidget(control.widget));
           expect(target.width, greaterThanOrEqualTo(48));

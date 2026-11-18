@@ -7,7 +7,6 @@ import '../../../app/presentation/village_backdrop.dart';
 /// Large text reflows in the shared scrolling content window instead of shrinking.
 class HomeReadingView extends StatelessWidget {
   const HomeReadingView({
-    required this.quests,
     required this.dialogue,
     required this.utilities,
     required this.actions,
@@ -15,7 +14,6 @@ class HomeReadingView extends StatelessWidget {
     super.key,
   });
 
-  final Widget quests;
   final Widget dialogue;
   final Widget utilities;
   final Widget actions;
@@ -31,7 +29,6 @@ class HomeReadingView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8,
       children: [
-        quests,
         const SizedBox(
           height: 96,
           child: Stack(

@@ -1,4 +1,4 @@
-# Layout Cốt truyện, Cửa hàng, Hồ sơ và Cài đặt
+# Tư liệu bố cục menu
 
 Bốn ảnh khung **1024 × 1536 (2:3)** giữ tỷ lệ ảnh người dùng cung cấp.
 Chỉ tham khảo vị trí và vai trò các vùng. Các ảnh giữ màu và viền của
@@ -33,40 +33,34 @@ python3 tools/render_menu_layouts.py
 ```
 
 Script cần Pillow cho công cụ thiết kế, không phải dependency Flutter.
-Các PNG này là tài liệu bố cục, không đăng ký trong `pubspec.yaml`. App ghép
-atlas thật bằng `PixelFrame` và icon rời; chữ luôn là widget. Không dùng ảnh
+Các PNG này là tài liệu bố cục, không đăng ký trong `pubspec.yaml`. App vẽ
+khung bằng `PixelFrame` và dùng icon atlas riêng. Chữ luôn là widget. Không dùng ảnh
 chụp toàn màn hình làm UI. Trên điện thoại, HUD/tab có thể xuống dòng,
 cửa hàng dùng hai cột hoặc một cột tùy chiều rộng để giữ chữ đọc được.
-Các panel cuộn phía trên thanh điều hướng cố định. Cốt truyện và Cài đặt
+Các panel cuộn phía trên thanh điều hướng cố định. Cài đặt
 xếp danh sách trên nội dung khi hẹp hoặc chữ lớn; chỉ chia hai cột 1:2 khi đủ
 600 × hệ số chữ dp. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
 Home là chuẩn runtime: menu dùng chính profile/tài nguyên của Home, cùng mẫu
 viền 2 dp/góc 8 dp và vị trí neo navigation. Tiêu đề và HUD cố định; chỉ cửa sổ ở giữa
-cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Chương/vật phẩm dùng
-lưới ô đều thay vì danh sách nút kéo dài. Hội thoại dùng cùng shell.
+cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Vật phẩm và chỉ số dùng lưới ô đều.
 
 Runtime dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp); atlas khung chỉ
 phục vụ các ảnh concept ở trên. Các skin không thay đổi hình học.
 
 ## Luồng mẫu trong app
 
-Thanh dưới nối Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ, Cài đặt.
+Thanh dưới nối Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
 `lib/app/presentation/` sở hữu shell/component menu dùng chung;
 `lib/app/router/` sở hữu route. Từng feature chỉ sở hữu presentation.
 
-- `/home/story`: chương 1 được chọn; chương sau và bước sau ghi rõ đã khóa.
-  Chạm mục khóa để xem điều kiện. Bắt đầu xem thử mở `/home/story/episode`.
-  Quay lại vẫn thấy tiến độ mẫu 0/5.
 - `/home/shop`: đổi danh mục, mở chi tiết vật phẩm/gói mẫu, đóng hộp thoại.
   Không có thao tác mua, thanh toán hoặc trừ tài nguyên.
-- `/home/profile`: xem thông tin, bốn chỉ số, đổi tab sổ sưu tầm/huy hiệu,
+- `/home/profile`: xem thông tin, ba chỉ số, đổi tab sổ sưu tầm/huy hiệu,
   mở chi tiết mẫu hoặc chuyển Cài đặt.
-- `/home/settings`: đổi nhóm cài đặt, kéo âm lượng, đổi lựa chọn đồ họa/
-  điều khiển và bật/tắt tùy chọn. Đây là state giao diện tạm trong widget,
-  mất khi rời màn hình. Nhóm Chung có xác nhận khôi phục mặc định.
-  Nhóm Thông tin có hộp thoại giới thiệu PixelRPG.
-- `/home/quests`: bốn tab nhiệm vụ, thông tin chương khóa và chi tiết phần
-  thưởng mẫu. Lối tắt Home chọn tab qua `?tab=side` hoặc `?tab=daily`.
+- `/home/settings` mở mặc định ở Tài khoản và có thêm tab Chung và Thông tin.
+  Mục Chung chứa các tùy chọn thử cho âm lượng, đồ họa, điều khiển và nút
+  khôi phục mặc định có xác nhận. Lựa chọn chỉ tồn tại khi ở màn hình này.
+  Mục Thông tin có hộp thoại giới thiệu PixelRPG.
 
 Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. HUD menu dùng cùng placeholder `—` như Home;
 các số cấp độ và tiến trình trong nội dung là minh họa,

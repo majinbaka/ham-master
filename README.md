@@ -74,8 +74,7 @@ Android application ID: `com.jinshu.pixel_rpg`.
 
 - Flutter một package; Android, iOS và web scaffolds tạo mới.
 - Riverpod cho state/DI; go_router với `/` (launch), `/home` (màn hình chính)
-  và `/home/quests` (bản xem trước Nhiệm vụ); các màn mẫu `/home/story`,
-  `/home/shop`, `/home/profile`, `/home/settings`, `/home/story/episode`,
+  và các màn mẫu `/home/shop`, `/home/profile`, `/home/settings`,
   `/home/beasts` và `/home/battle`.
 - Loading nền kem chuyển xanh trời, logo NDAS và thanh vàng đào tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
@@ -83,15 +82,14 @@ Android application ID: `com.jinshu.pixel_rpg`.
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
 - Màn hình chính dùng khung sáng chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
-  panel nhiệm vụ, lời chào và thanh chức năng. Cảnh làng pixel ban ngày, nhân vật minh họa đội mũ
-  vàng. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
-  tài nguyên và tiện ích neo phải; hội thoại, bốn nút hành động và thanh sáu mục
-  một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
+  ô hội thoại và thanh chức năng. Cảnh làng pixel ban ngày có nhà lữ hành đội mũ
+  vàng. Hồ sơ neo trái, tài nguyên và tiện ích neo phải. Hội thoại, bốn nút
+  hành động và thanh điều hướng bốn mục trên một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
   chỉ thay vị trí neo và mở rộng tranh nền ở cỡ chữ thường. Nội dung chữ
   xuống dòng theo chỗ trống.
   Kích thước chuẩn tương ứng chiều ngắn 390 dp; thiết bị nhỏ hơn dùng một hệ số
   chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
-  lớn artwork. Chữ nhiệm vụ và hội thoại Home dùng `MenuPanel`
+  lớn artwork. Hội thoại Home dùng `MenuPanel`
   với cùng cỡ nội dung 17 dp/tiêu đề panel 16 dp như menu, không bị thu
   nhỏ theo artwork. Chữ hệ thống lớn hơn 1.15× chuyển Home sang vùng nội
   dung cuộn chung; HUD và navigation vẫn cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
@@ -108,33 +106,27 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Sáu skin chỉ đổi màu; atlas khung cũ giữ làm tư liệu, không đóng gói runtime. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt. Khung dùng nền ngà, kem, bạc hà và xanh trời nhạt với chữ xanh đậm.
   Mục điều hướng đang chọn có nền cam đào, viền nâu san hô và dấu tick.
-  Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt.
-  Cụm tiện ích mở Hộp thư, Nhiệm vụ hàng ngày và Thông tin màn hình.
+  Thanh dưới có Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
+  Cụm tiện ích mở Hộp thư và Thông tin màn hình.
   Nói chuyện, Quan sát và Tìm kiếm cập nhật nội dung ô hội thoại.
   Chỉ số Trang chủ chưa có dùng dấu `—`.
-- Chọn **Xem nhiệm vụ** trong khung Nhiệm vụ chính để mở màn hình mẫu.
-  Tab tự xuống hàng; chương và chi tiết xếp dọc trên màn hẹp/chữ lớn,
-  chia hai cột khi đủ chỗ; nội dung cuộn bên trên
-  thanh điều hướng. Nút quay lại và mục Trang chủ đều về màn hình chính.
-  Bốn tab gồm Chính truyện, Phụ, Hàng ngày và Thành tựu. Home có lối tắt
-  tới tab Phụ và Hàng ngày. Chương khóa mở hộp thoại điều kiện. Mục tiêu và
-  phần thưởng hiển thị dữ liệu minh họa cố định.
-- Cốt truyện mở hội thoại xem thử; Cửa hàng lọc danh mục và xem chi tiết;
-  Hồ sơ đổi tab sưu tầm/huy hiệu; Cài đặt đổi nhóm và thao tác thử slider,
-  switch, lựa chọn và xác nhận khôi phục mặc định của bản xem trước.
+- Cửa hàng lọc danh mục và xem chi tiết. Hồ sơ đổi tab sưu tầm và huy hiệu.
+  Cài đặt có ba mục Tài khoản, Chung và
+  Thông tin, mở mặc định ở Tài khoản. Mục Chung chứa các tùy chọn thử và
+  nút khôi phục mặc định.
   Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
   tiến trình hoặc lưu cấu hình. HUD dùng lại chính profile/tài nguyên của Home
   và vẫn neo cố định khi cuộn.
   Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
-  Chương/vật phẩm/chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
+  Vật phẩm và chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
 - Hồ sơ mở **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm
   Sói Bóng Đêm, bộ lọc theo hệ/yêu thích, sắp xếp theo cấp và thẻ chi tiết
   có chỉ số, chiêu thức và các thao tác xem thử.
 - Chọn **Trận chiến** trên Trang chủ để mở đấu trường rừng toàn màn hình.
   Hai yêu thú có thanh HP mẫu đặt cạnh sprite. Chọn một trong ba chiêu đánh
-  rồi chạm đối thủ để xem hiệu ứng. Lối tắt từ Yêu thú và Nhiệm vụ chính
-  cũng mở đấu trường. Nút quay lại trở về màn đã mở trận.
+  rồi chạm đối thủ để xem hiệu ứng. Lối tắt từ Yêu thú cũng mở đấu trường.
+  Nút quay lại trở về màn đã mở trận.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
   chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
@@ -154,9 +146,8 @@ lib/
     router/app_router.dart
     theme/app_theme.dart
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
-  features/home/presentation/ # scene, quest panels, dialogue and actions
-  features/quests/presentation/ # read-only quest preview
-  features/{story,shop,profile,settings,beasts,battle}/presentation/ # interactive UI previews
+  features/home/presentation/ # scene, dialogue and actions
+  features/{shop,profile,settings,beasts,battle}/presentation/ # interactive UI previews
   app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ frame and icon widgets
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
@@ -169,7 +160,7 @@ application, domain, infrastructure khi có code thực tế cần sở hữu.
 
 [Quy chuẩn UI runtime](docs/art/ui-guidelines.md) là quy tắc bắt buộc cho mọi
 màn hiện tại và về sau: palette, kiểu chữ, spacing, shell, navigation, breakpoint,
-trạng thái và điều kiện kiểm tra. Menu/hội thoại dùng chung shell, nội dung
+trạng thái và điều kiện kiểm tra. Các menu dùng chung shell, nội dung
 thích ứng theo chiều rộng và cỡ chữ. Home là mẫu chuẩn: HUD, hệ số artwork,
 viền, vị trí navigation và spacing được dùng lại, không tự dựng một bộ khung
 lớn hơn cho menu. Component dùng chung nằm tại `lib/app/presentation/`,
@@ -184,13 +175,8 @@ qua `PixelFrame`, với metadata và prompt trong
 [assets/ui/README.md](assets/ui/README.md). Nhân vật minh họa được vẽ bằng code; tranh làng và đấu trường rừng nằm trong `assets/scenes/`. Sprite yêu thú và chiêu thức trong `assets/sprites/` là ảnh tĩnh. Các component chưa dùng vẫn
 là đề xuất cho các lần triển khai sau.
 
-[Khung layout Nhiệm vụ](docs/art/quest-layout.md) có ảnh dọc 853 × 1280,
-ghép từ atlas khung gốc để tham chiếu bố cục tab, danh sách chương và
-panel chi tiết. App dựng các vùng này bằng widget và mẫu viền code chung.
-
-[Bốn layout menu](docs/art/menu-layouts.md) có ảnh khung 1024 × 1536 cho
-Cốt truyện, Cửa hàng, Hồ sơ và Cài đặt, cùng cách tái tạo ảnh từ atlas khung gốc
-và mô tả các luồng xem thử trong app.
+[Layout menu](docs/art/menu-layouts.md) ghi lại các ảnh concept, cách tái tạo
+ảnh từ atlas khung gốc và các luồng xem thử hiện có trong app.
 
 ## Skills kế thừa
 

@@ -3,9 +3,9 @@
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. Runtime behavior is a three-second
 NDAS loading screen followed by a pixel-styled home UI with a static daylight village scene
-and a code-drawn pixel traveler portrait. Home opens quest previews, a mail
-dialog and the full-screen battle preview. Scene actions update the dialogue panel.
-Story, quests, shop, profile, settings, beasts and battle are presentation-only previews.
+and a code-drawn pixel traveler portrait. Home opens a mail dialog and
+the full-screen battle preview. Scene actions update the dialogue panel.
+Shop, profile, settings, beasts and battle are presentation-only previews.
 Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
@@ -52,14 +52,13 @@ Do not implement gameplay unless requested.
 - `lib/app/`: app composition, router and theme.
 - `lib/features/launch/presentation/`: three-second NDAS loading screen.
 - `lib/features/home/presentation/`: home scene with anchored artwork, shared
-  logical-size quest and dialogue panels, interactive utilities and large-text reflow.
+  logical-size dialogue panel, interactive utilities and large-text reflow.
 - `lib/app/presentation/pixel/`: shared code frames, atlas icons, labels and EXP tracks.
-- `lib/features/quests/presentation/`: quest categories, chapter status and sample objectives/rewards.
-- `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.
+- `lib/features/{shop,profile,settings}/presentation/`: interactive menu previews.
 - `lib/features/beasts/presentation/`: sample roster, collection, filters and details.
 - `lib/features/battle/presentation/`: full-screen arena, sample HP, and manual attack previews.
 - `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
-  spacing, navigation, menu shell, panels, buttons, grids, preview and progress.
+  spacing, navigation, menu shell, panels, buttons, grids and progress.
 - `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork;
   village and forest arena in `scenes/`; static beast and move sprites in
   `sprites/`; empty tileset, map and audio folders; bundled Roboto fonts and license in `assets/fonts/`.

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/pixel_rpg_app.dart';
 import 'package:pixel_rpg/app/router/app_router.dart';
-import 'package:pixel_rpg/app/presentation/menu_button.dart';
 import 'package:pixel_rpg/features/home/presentation/home_footer.dart';
 
 Future<void> _tap(WidgetTester tester, Finder target) async {
@@ -70,49 +69,8 @@ void main() {
         expect(find.byType(AlertDialog), findsNothing);
         expect(uri.value.uri.path, '/home');
 
-        for (final (label, tab, emptyMessage) in [
-          ('Mở Nhiệm vụ phụ', 'side', 'Chưa có nhiệm vụ phụ.'),
-          ('Nhiệm vụ hàng ngày', 'daily', 'Chưa có nhiệm vụ hàng ngày.'),
-        ]) {
-          await _tap(tester, find.byTooltip(label));
-          expect(uri.value.uri.toString(), '/home/quests?tab=$tab');
-          expect(find.text(emptyMessage), findsOneWidget);
-          await _tap(tester, find.byTooltip('Quay lại'));
-        }
-
-        await _tap(tester, find.byTooltip('Nhiệm vụ'));
-        await _tap(tester, find.widgetWithText(MenuButton, 'Thành tựu'));
-        await _tap(tester, find.text('Bước chân đầu'));
-        expect(find.byType(AlertDialog), findsOneWidget);
-        await _tap(tester, find.text('Đóng'));
-        await _tap(tester, find.widgetWithText(MenuButton, 'Chính truyện'));
-        await _tap(tester, find.text('3 chương đã khóa'));
-        await _tap(tester, find.text('Chương 2\nBên kia đồi\nĐã khóa'));
-        expect(
-          find.textContaining('Hoàn thành nhiệm vụ chương 1'),
-          findsOneWidget,
-        );
-        await _tap(tester, find.text('Đóng'));
-        await _tap(tester, find.text('Vàng\n100'));
-        expect(find.textContaining('Phần thưởng mẫu: 100'), findsOneWidget);
-        await _tap(tester, find.text('Đóng'));
-        expect(find.text('Mục tiêu · 1 / 3'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
   }
-
-  testWidgets('locked story explains its requirement and stays locked', (
-    tester,
-  ) async {
-    await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
-    await tester.pump(const Duration(seconds: 3));
-    await tester.pumpAndSettle();
-    await _tap(tester, find.byTooltip('Cốt truyện'));
-    await _tap(tester, find.text('2. Dấu vết bên đường · Đã khóa'));
-    expect(find.textContaining('Xem xong đoạn truyện 1'), findsOneWidget);
-    await _tap(tester, find.text('Đóng'));
-    expect(find.text('2. Dấu vết bên đường · Đã khóa'), findsOneWidget);
-    expect(find.text('Tiến độ chương · 0 / 5'), findsOneWidget);
-  });
 }

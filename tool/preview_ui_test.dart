@@ -14,10 +14,8 @@ import 'package:pixel_rpg/features/beasts/presentation/beast_screen.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 import 'package:pixel_rpg/features/launch/presentation/launch_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
-import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
-import 'package:pixel_rpg/features/story/presentation/story_screen.dart';
 
 import 'preview_modal_cases.dart';
 
@@ -51,18 +49,10 @@ void main() {
     ]) {
       tester.view.physicalSize = size;
       for (final scale in [1.0, if (extended) 2.0]) {
-        final home = HomeScreen(
-          onOpenQuests: () {},
-          onOpenSideQuests: () {},
-          onOpenDailyQuests: () {},
-          onOpenBattle: () {},
-        );
+        final home = HomeScreen(onOpenBattle: () {}, onNavigate: (_) {});
         final screens = <String, Widget>{
           'home': home,
           'home-talk': home,
-          'story': StoryScreen(onNavigate: (_) {}, onStart: () {}),
-          'episode': StoryEpisodeScreen(onBack: () {}),
-          'quests': QuestScreen(onBack: () {}, onBattle: () {}),
           'shop': ShopScreen(onNavigate: (_) {}),
           'beasts': BeastScreen(onNavigate: (_) {}, onBattle: () {}),
           'battle': BattleScreen(onBack: () {}),

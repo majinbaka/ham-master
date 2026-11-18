@@ -46,12 +46,11 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `pixel/PixelIcon`, `PixelLabel` | Icon giữ ô vuông kể cả khi cha stretch, nhãn HUD trong slot artwork cố định; không dùng cho nội dung/panel title, không bake chữ vào bitmap. Nhãn đầy đủ vẫn có semantics. |
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo profile, tài nguyên, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud`, `ResourceHud`, `ScaledArtwork` | Chính các cụm HUD của Home; cùng kích thước, tỷ lệ và placeholder `—` trên mọi màn. |
-| `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và dấu tick. |
+| `PixelNavigation` | Bốn mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và dấu tick. |
 | `MenuShell` | HUD trên, navigation dưới và một khung giấy kem ở giữa. Tiêu đề và nút quay lại nằm ở mép trên của khung. Chỉ nội dung dưới tiêu đề cuộn. |
 | `MenuPanel` | Thân `cool` xanh bạc hà với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
 | `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn HUD/hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và dấu tick; mục khóa giữ icon khóa. |
-| `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô; bốn chỉ số tránh bố cục 3+1. |
-| `MenuPreview` | Cửa sổ làng ban ngày cao 96 dp, phủ kem nhạt và icon 48 dp; không tạo banner lớn chỉ để lấp chỗ. |
+| `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô. |
 | `PixelProgress` | Thanh EXP cùng mẫu viền 2 dp/góc 8 dp, nền xanh đậm và phần đã đạt mặc định màu vàng mật ong. Thanh HP dùng màu theo hai phía của trận chiến. |
 
 Không sao chép shell/HUD/frame vào feature mới. Nếu thiếu một biến thể thực
@@ -63,8 +62,7 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 - Áp dụng `SafeArea`. Profile neo trái, tài nguyên neo phải, navigation neo
   giữa đáy theo cùng `GameChromeLayout` ở cả Home và menu. Desktop không
   phóng lớn HUD. Home dùng HUD phủ tranh làng pixel tĩnh với nhà lữ hành đội mũ vàng. Panel Home chừa
-  chiều cao cho chữ dp; hội thoại thu bề rộng trên điện thoại nhỏ để không
-  đè panel bên khi xoay ngang. Khi hệ số chữ vượt 1.15, Home dùng cửa sổ
+  chiều cao cho chữ dp; hội thoại thu bề rộng trên điện thoại nhỏ. Khi hệ số chữ vượt 1.15, Home dùng cửa sổ
   nội dung cuộn của shell chung, giữ HUD/navigation tại cùng neo.
 - Menu đặt nội dung dưới HUD và trên navigation, khoảng cách lấy từ
   `GameSpacing`: 10 đơn vị ≈ 4 dp, lề/gap 20 đơn vị ≈ 8 dp ở điện thoại 390.
@@ -76,12 +74,8 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
   Giữ HUD cố định, dùng một vùng cuộn dọc và chừa khoảng cách với navigation.
 - `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
   (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
-- Chương hiện tại của Cốt truyện/Nhiệm vụ luôn hiện; các chương khóa nằm
-  trong mục mở rộng với `MenuGrid` mặc định: ô tối thiểu
-  `140 × hệ số chữ` dp (đo tại 13 dp), tối đa hai cột. Tránh một cột năm
-  nút cao đẩy chi tiết ra quá xa. Hàng có nhãn khác số dòng vẫn căn đều.
 - Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ dùng ô tối thiểu
-  `120 × hệ số chữ` dp, tối đa bốn cột; tab và nhóm cài đặt dùng `Wrap`.
+  `120 × hệ số chữ` dp, tối đa ba cột; tab và nhóm cài đặt dùng `Wrap`.
 - Tab lọc và lựa chọn cài đặt dùng `MenuButton.tab` với padding ngang 6 dp,
   dọc 4 dp và khung cao tối thiểu 40 dp. Vùng chạm tối thiểu 48 × 48 dp.
   Khung tăng chiều cao khi nhãn xuống dòng hoặc chữ được phóng to.
@@ -95,7 +89,7 @@ Toàn app dùng font `GameRoboto` đóng gói tại `assets/fonts/` (Roboto regu
 medium và bold, kèm giấy phép), kể cả offline trên Android/web. `GameTypography`
 và `appTheme` sở hữu cỡ chữ, độ đậm và line height; feature chỉ chọn vai trò
 body/heading/value/panelTitle, không tự đặt font riêng. `PixelLabel` chỉ dùng
-cho HUD compact (giống nhau trên mọi màn), không dùng cho nhiệm vụ/hội thoại Home.
+cho HUD compact (giống nhau trên mọi màn), không dùng cho hội thoại Home.
 Nội dung Home và menu đều 17 dp; tiêu đề panel đều 16 dp semibold.
 Tiêu đề panel xuống tối đa hai dòng và tăng chiều cao theo text scale, không
 co chữ bằng `FittedBox`. Launch giữ bố cục NDAS ba giây, dùng nền kem chuyển xanh trời và thanh tiến độ vàng đào.
@@ -120,12 +114,10 @@ Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn HUD compact tron
 panel hoặc nội dung đọc. Test đo cỡ chữ sau transform, không chỉ so font family.
 Widget test nạp đúng font GameRoboto đóng gói để kiểm tra wrap theo runtime.
 
-Navigation luôn có thứ tự: Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ,
-Cài đặt. Mục đang chọn có semantics, nền cam đào, viền nâu san hô và dấu tick. Màn hội thoại
-`/home/story/episode` thuộc Cốt truyện.
-Nút quay lại menu về Home, hội thoại về danh sách chương, Yêu thú về Hồ sơ
-và Trận chiến về màn đã mở bản xem thử. Vùng neo navigation
-cao ít nhất 60 dp; nút hoạt động có vùng chạm ít nhất 48 × 48 dp ở màn hình
+Navigation theo thứ tự Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
+Mục đang chọn có semantics, nền cam đào, viền nâu san hô và dấu tick.
+Nút quay lại menu về Home, Yêu thú về Hồ sơ và Trận chiến về màn đã
+mở bản xem thử. Vùng neo navigation cao ít nhất 60 dp; nút hoạt động có vùng chạm ít nhất 48 × 48 dp ở màn hình
 từ 320 dp, độc lập tỷ lệ sprite. Không chỉ dùng màu để biểu thị khóa/chọn.
 
 Dialog dùng nền giấy kem, chữ xanh đậm và nội dung cuộn. Hộp thoại chi tiết
@@ -145,12 +137,9 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 | Khởi động NDAS | [launch.png](runtime-preview/launch.png) |
 | Home — mẫu chuẩn | [home.png](runtime-preview/home.png) |
 | Home sau khi bấm Nói chuyện | [home-talk.png](runtime-preview/home-talk.png) |
-| Cốt truyện | [story.png](runtime-preview/story.png) |
-| Nhiệm vụ | [quests.png](runtime-preview/quests.png) |
 | Cửa hàng | [shop.png](runtime-preview/shop.png) |
 | Hồ sơ | [profile.png](runtime-preview/profile.png) |
 | Cài đặt | [settings.png](runtime-preview/settings.png) |
-| Hội thoại | [episode.png](runtime-preview/episode.png) |
 | Danh sách yêu thú | [beasts.png](runtime-preview/beasts.png) |
 | Trận chiến | [battle.png](runtime-preview/battle.png) |
 
@@ -178,18 +167,6 @@ Menu dùng cùng tranh với lớp kem có độ đục 56%. Những vùng chứ
 viền 2 dp, góc 8 dp và HUD/navigation giữ cùng vị trí neo. Chạy `flutter test tool/preview_ui_test.dart` để cập nhật
 ảnh; thêm `--dart-define=EXTENDED=true` để rà đủ kích thước/chữ lớn.
 
-Cốt truyện dùng thẻ icon kèm tên chương/đoạn, khóa hiển thị cả chữ và icon.
-Thanh tiến độ đặt dưới mô tả chương; cảnh minh họa nhỏ dùng lại tranh Home.
-
-Ở Cốt truyện, chương hiện tại luôn hiện; các chương khóa nằm trong mục mở rộng
-để không đẩy mô tả và nút bắt đầu quá xa trên điện thoại.
-
-Hội thoại tách cảnh minh họa, giấy lời thoại có tab tên người nói và ghi chú
-xem trước. Nút về danh sách chương nằm sau lời thoại, giữ đường quay lại trên header.
-
-Nhiệm vụ ưu tiên chương hiện tại, các chương khóa thu gọn. Mục tiêu mẫu có
-tiến độ 1/3, checkbox lớn và phần thưởng kèm tên/số lượng trong lưới hai cột.
-
 Cửa hàng dùng giấy kem cho lời chào, thẻ vật phẩm hiện icon + tên + giá mẫu +
 nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ lọc đi thẳng vào hàng
 đang chọn; các gói khác dùng cùng lưới thẻ có tên. Không có mua/thanh toán.
@@ -199,7 +176,7 @@ Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trư
 
 Yêu thú dùng cùng `MenuColumns` cho danh sách và chi tiết. Chạm một thẻ
 đưa phần chi tiết vào vùng nhìn ở điện thoại. Chỉ số và chiêu dùng `MenuGrid`.
-Hồ sơ mở Yêu thú. Trang chủ, Yêu thú và Nhiệm vụ chính đều mở Trận chiến.
+Hồ sơ mở Yêu thú. Trang chủ và Yêu thú đều mở Trận chiến.
 
 Trận chiến dùng cảnh rừng phủ toàn màn hình. Nút quay lại neo góc trên trái
 và ba nút chiêu đánh neo giữa đáy trong vùng an toàn. Hai sprite có HP mẫu
@@ -207,8 +184,9 @@ và ba nút chiêu đánh neo giữa đáy trong vùng an toàn. Hai sprite có 
 Chọn biểu tượng chiêu rồi chạm đối thủ để xem hiệu ứng. Đấu trường dùng
 cùng kiểu khung và nút với Home, với toàn bộ điều khiển hiện trong khung nhìn.
 
-Cài đặt mở nhóm Âm thanh để tránh trộn mọi điều khiển vào một trang dài.
-Âm lượng có tên bên trái, phần trăm màu nâu hổ phách bên phải và track 8 dp. Công tắc
+Cài đặt có ba tab Tài khoản, Chung và Thông tin, mở mặc định ở Tài khoản.
+Trong tab Chung, âm lượng có tên bên trái, phần trăm màu nâu hổ phách bên phải
+và track 8 dp. Công tắc
 dùng cả hàng nhãn làm vùng chạm; chữ được xuống dòng theo text scale.
 
 Portrait trong HUD dùng cùng nhà lữ hành với Home/Hồ sơ; kích thước slot HUD
@@ -218,8 +196,8 @@ Thông báo đầu vùng cuộn rút gọn thành “Dữ liệu mẫu · Không
 nhường chỗ đọc khi chữ lớn. Caption thương hiệu và loading giữ một dòng,
 fit trong cụm NDAS; nội dung đọc của các menu vẫn tăng theo text scale.
 
-[Ảnh tổng hợp mười màn](runtime-preview/overview.jpg) giữ lưới bốn cột
-của bản tham chiếu. [Ảnh tổng hợp 39 hộp thoại](runtime-preview/overview-modals.jpg)
+[Ảnh tổng hợp bảy màn](runtime-preview/overview.jpg) giữ lưới bốn cột
+của bản tham chiếu. [Ảnh tổng hợp 21 hộp thoại](runtime-preview/overview-modals.jpg)
 và [ảnh hộp thoại riêng](runtime-preview/modals/) được chụp bằng cách bấm
 các nút trong giao diện Flutter. Hộp thoại dùng khung 390 × 844 và cỡ chữ 1×.
 

@@ -1,4 +1,6 @@
-# Khung layout màn hình Nhiệm vụ
+# Tư liệu bố cục màn Nhiệm vụ
+
+Bản concept lưu trữ của màn Nhiệm vụ đã được gỡ khỏi app.
 
 [Mở ảnh khung 853 × 1280](quest-layout.png)
 
@@ -22,7 +24,7 @@ Runtime lấy Home làm chuẩn theo [Quy chuẩn UI](ui-guidelines.md): cùng H
 mật độ viền và neo navigation; tiêu đề cố định, nội dung cuộn trong cửa sổ giữa.
 Chương dùng lưới ô đều; tab tự xuống hàng;
 danh sách chương nằm trên chi tiết khi hẹp/chữ lớn, chia hai cột 1:2 khi đủ
-600 × hệ số chữ dp. Ảnh này không phải golden của màn hình hiện tại.
+600 × hệ số chữ dp. Các số đo bên dưới mô tả bản concept.
 
 Hai cột trong ảnh chiếm khoảng **38:62**, cách nhau 12 px. Các số đo dùng để
 dựng ảnh tham chiếu, không phải kích thước Flutter cố định. Khi triển khai,
@@ -33,9 +35,3 @@ trên màn hình hẹp.
 9-slice: góc 56 px trong nguồn được thu còn 14 px trên canvas (giảm thêm
 đối với ô nhỏ), chỉ kéo phần cạnh và tâm bằng nearest-neighbor. Chữ, icon,
 tranh, trạng thái nhiệm vụ và dữ liệu thưởng sẽ là các lớp riêng.
-PNG này dùng để duyệt bố cục. Màn `/home/quests` dựng khung và nội dung mẫu
-bằng widget và mẫu viền code 2 dp/góc 8 dp chung. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
-Nhiệm vụ chính. Danh sách và chi tiết cuộn cùng nhau phía trên shell điều hướng dùng chung với
-[các menu mẫu khác](menu-layouts.md). Tab Chính truyện hiện mục tiêu và phần
-thưởng. Tab Phụ và Hàng ngày hiện trạng thái trống. Tab Thành tựu có huy hiệu
-mẫu để xem chi tiết. Các chương khóa hiện điều kiện khi chạm.

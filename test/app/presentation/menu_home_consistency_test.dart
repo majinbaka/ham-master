@@ -11,10 +11,8 @@ import 'package:pixel_rpg/app/theme/app_theme.dart';
 import 'package:pixel_rpg/app/theme/game_typography.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
-import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
-import 'package:pixel_rpg/features/story/presentation/story_screen.dart';
 
 double renderedFontSize(WidgetTester tester, Finder text) {
   final paragraph = tester.renderObject<RenderParagraph>(
@@ -68,7 +66,7 @@ void main() {
           );
           final homeTitleSize = renderedFontSize(
             tester,
-            find.text('Nhiệm vụ chính'),
+            find.text('Pixel RPG'),
           );
           expect(homeBodySize, closeTo(17 * textScale, 0.001));
           expect(homeTitleSize, closeTo(16 * textScale, 0.001));
@@ -76,12 +74,9 @@ void main() {
           final profile = tester.getRect(find.byType(PlayerHud));
           final resources = tester.getRect(find.byType(ResourceHud));
           for (final (name, screen) in <(String, Widget)>[
-            ('story', StoryScreen(onNavigate: (_) {}, onStart: () {})),
             ('shop', ShopScreen(onNavigate: (_) {})),
             ('profile', ProfileScreen(onNavigate: (_) {})),
             ('settings', SettingsScreen(onNavigate: (_) {})),
-            ('quests', QuestScreen(onBack: () {})),
-            ('episode', StoryEpisodeScreen(onBack: () {})),
           ]) {
             await show(screen, name);
             expect(
@@ -99,11 +94,7 @@ void main() {
               rectMoreOrLessEquals(nav, epsilon: 0.000001),
               reason: name,
             );
-            final menuText = name == 'quests'
-                ? find.text(
-                    'Ghé trại và tìm đường tới cổng làng. (Dữ liệu mẫu)',
-                  )
-                : name == 'profile'
+            final menuText = name == 'profile'
                 ? find.text('ID mẫu: 1004527')
                 : find
                       .descendant(

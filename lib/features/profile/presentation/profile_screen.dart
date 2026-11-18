@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     (
       'Bước chân đầu',
       PixelIconKind.coin,
-      'Huy hiệu dành cho nhà lữ hành hoàn thành nhiệm vụ đầu tiên.',
+      'Huy hiệu dành cho nhà lữ hành lần đầu ghé thăm làng.',
     ),
     (
       'Người khám phá',
@@ -105,10 +105,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: 'Tiến trình hành trình',
           child: MenuGrid(
             minItemWidth: 120,
-            maxColumns: 4,
+            maxColumns: 3,
             children: [
               _Stat(PixelIconKind.beasts, 'Yêu thú đã gặp', '28 / 150'),
-              _Stat(PixelIconKind.quest, 'Nhiệm vụ hoàn thành', '42'),
               _Stat(PixelIconKind.compass, 'Khu vực khám phá', '3 / 8'),
               _Stat(PixelIconKind.coin, 'Huy hiệu', '5'),
             ],

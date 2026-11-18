@@ -17,10 +17,8 @@ class HomeLayout extends GameChromeLayout {
   static const _edge = GameSpacing.edge;
   static const _gap = GameSpacing.gap;
 
-  Rect get quests =>
-      _rect(_edge, profile.bottom / scale + _gap, 440, 210 / scale);
   Rect get utilities {
-    final width = 144 + 2 * GameSpacing.small * scale;
+    final width = 96 + GameSpacing.small * scale;
     return Rect.fromLTWH(
       viewport.width - _edge * scale - width,
       resources.bottom + _gap * scale,
@@ -54,7 +52,7 @@ class HomeLayout extends GameChromeLayout {
   );
 
   Rect get character {
-    final top = _width > _height ? 20.0 : quests.bottom / scale + _gap / 2;
+    final top = _width > _height ? 20.0 : profile.bottom / scale + _gap;
     final bottom = dialogue.top / scale;
     final centerY = math.min((top + bottom) / 2, bottom - 64 - _gap / 2);
     return _rect((_width - 72) / 2, centerY - 64, 72, 128);

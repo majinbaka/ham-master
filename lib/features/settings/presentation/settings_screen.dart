@@ -16,7 +16,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  var _category = 'Âm thanh';
+  static const _categories = ['Tài khoản', 'Chung', 'Thông tin'];
+
+  var _category = _categories.first;
   static const _defaultVolumes = <String, double>{
     'Nhạc nền': 80,
     'Hiệu ứng âm thanh': 80,
@@ -46,15 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         spacing: 4,
         runSpacing: 4,
         children: [
-          for (final category in [
-            'Âm thanh',
-            'Điều khiển',
-            'Đồ họa',
-            'Chung',
-            'Ngôn ngữ',
-            'Tài khoản',
-            'Thông tin',
-          ])
+          for (final category in _categories)
             MenuButton.tab(
               label: category,
               selected: category == _category,
@@ -66,90 +60,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ),
   );
 
-  Widget _content(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    spacing: 12,
-    children: [
-      if (_category == 'Chung' || _category == 'Âm thanh') ...[
-        const Text('Âm thanh · Điều chỉnh thử, chưa phát âm thanh'),
-        for (final entry in _volumes.entries) ...[
-          Row(
-            spacing: 8,
-            children: [
-              Expanded(child: Text(entry.key)),
-              Text(
-                '${entry.value.round()}%',
-                style: GameTypography.value.copyWith(
-                  color: PixelUiColors.amber,
-                ),
-              ),
-            ],
-          ),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              trackHeight: 8,
-              activeTrackColor: PixelUiColors.gold,
-              inactiveTrackColor: PixelUiColors.teal,
-              thumbColor: PixelUiColors.amber,
-            ),
-            child: Slider(
-              semanticFormatterCallback: (value) =>
-                  '${value.round()} phần trăm',
-              value: entry.value,
-              min: 0,
-              max: 100,
-              divisions: 10,
-              label: '${entry.value.round()}%',
-              onChanged: (value) => setState(() => _volumes[entry.key] = value),
-            ),
-          ),
-        ],
-      ],
-      if (_category == 'Chung' || _category == 'Đồ họa') ...[
-        const Text('Chất lượng đồ họa · Lựa chọn mẫu'),
-        Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          children: [
-            for (final quality in ['Thấp', 'Vừa', 'Cao'])
-              MenuButton.tab(
-                label: quality,
-                selected: quality == _quality,
-                onPressed: () => setState(() => _quality = quality),
-              ),
-          ],
-        ),
-        _toggle('Hiệu ứng hình ảnh'),
-      ],
-      if (_category == 'Chung' || _category == 'Điều khiển') ...[
-        const Text('Kiểu di chuyển · Lựa chọn mẫu'),
-        Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          children: [
-            for (final controls in ['Chạm', 'D-Pad'])
-              MenuButton.tab(
-                label: controls,
-                selected: controls == _controls,
-                onPressed: () => setState(() => _controls = controls),
-              ),
-          ],
-        ),
-        _toggle('Hiện vùng tương tác'),
-        _toggle('Bỏ qua hội thoại đã xem'),
-        _toggle('Xác nhận vật phẩm quan trọng'),
-      ],
-      if (_category == 'Chung')
-        MenuButton(label: 'Khôi phục mặc định', onPressed: _confirmReset),
-      if (_category == 'Ngôn ngữ')
-        const Text(
-          'Tiếng Việt\nBản dựng hiện dùng tiếng Việt; chưa có bản dịch khác.',
-        ),
-      if (_category == 'Tài khoản')
-        const Text(
-          'Chế độ xem trước offline. Chưa có tài khoản, đăng nhập hoặc mã quà.',
-        ),
-      if (_category == 'Thông tin') ...[
+  Widget _content(BuildContext context) => switch (_category) {
+    'Tài khoản' => const Text(
+      'Chế độ xem trước offline. Chưa có tài khoản, đăng nhập hoặc mã quà.',
+    ),
+    'Chung' => _generalSettings(context),
+    _ => Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 12,
+      children: [
         const Text('PixelRPG · Bản giao diện mẫu'),
         MenuButton(
           label: 'Giới thiệu PixelRPG',
@@ -165,6 +84,74 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onPressed: () => widget.onNavigate('profile'),
         ),
       ],
+    ),
+  };
+
+  Widget _generalSettings(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    spacing: 12,
+    children: [
+      const Text('Âm thanh · Điều chỉnh thử, chưa phát âm thanh'),
+      for (final entry in _volumes.entries) ...[
+        Row(
+          spacing: 8,
+          children: [
+            Expanded(child: Text(entry.key)),
+            Text(
+              '${entry.value.round()}%',
+              style: GameTypography.value.copyWith(color: PixelUiColors.amber),
+            ),
+          ],
+        ),
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            trackHeight: 8,
+            activeTrackColor: PixelUiColors.gold,
+            inactiveTrackColor: PixelUiColors.teal,
+            thumbColor: PixelUiColors.amber,
+          ),
+          child: Slider(
+            semanticFormatterCallback: (value) => '${value.round()} phần trăm',
+            value: entry.value,
+            min: 0,
+            max: 100,
+            divisions: 10,
+            label: '${entry.value.round()}%',
+            onChanged: (value) => setState(() => _volumes[entry.key] = value),
+          ),
+        ),
+      ],
+      const Text('Chất lượng đồ họa · Lựa chọn mẫu'),
+      Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: [
+          for (final quality in ['Thấp', 'Vừa', 'Cao'])
+            MenuButton.tab(
+              label: quality,
+              selected: quality == _quality,
+              onPressed: () => setState(() => _quality = quality),
+            ),
+        ],
+      ),
+      _toggle('Hiệu ứng hình ảnh'),
+      const Text('Kiểu di chuyển · Lựa chọn mẫu'),
+      Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: [
+          for (final controls in ['Chạm', 'D-Pad'])
+            MenuButton.tab(
+              label: controls,
+              selected: controls == _controls,
+              onPressed: () => setState(() => _controls = controls),
+            ),
+        ],
+      ),
+      _toggle('Hiện vùng tương tác'),
+      _toggle('Bỏ qua hội thoại đã xem'),
+      _toggle('Xác nhận vật phẩm quan trọng'),
+      MenuButton(label: 'Khôi phục mặc định', onPressed: _confirmReset),
     ],
   );
 

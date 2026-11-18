@@ -10,23 +10,13 @@ import '../../../app/presentation/sample_detail_dialog.dart';
 import 'home_footer.dart';
 import 'home_layout.dart';
 import 'home_navigation.dart';
-import 'home_overview.dart';
 import 'home_reading_view.dart';
+import 'home_utilities.dart';
 
 /// Fixed-proportion game HUD over a scene that expands with the viewport.
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    this.onOpenQuests,
-    this.onOpenSideQuests,
-    this.onOpenDailyQuests,
-    this.onOpenBattle,
-    this.onNavigate,
-    super.key,
-  });
+  const HomeScreen({this.onOpenBattle, this.onNavigate, super.key});
 
-  final VoidCallback? onOpenQuests;
-  final VoidCallback? onOpenSideQuests;
-  final VoidCallback? onOpenDailyQuests;
   final VoidCallback? onOpenBattle;
   final ValueChanged<String>? onNavigate;
 
@@ -56,10 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final quests = HomeQuests(
-      onOpen: widget.onOpenQuests,
-      onOpenSide: widget.onOpenSideQuests,
-    );
     final dialogue = HomeDialogue(key: _dialogueKey, action: _action);
     HomeActions actions(double scale) => HomeActions(
       scale: scale,
@@ -68,14 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     HomeUtilities utilities(double scale) => HomeUtilities(
       gap: GameSpacing.small * scale,
-      onDailyQuests: widget.onOpenDailyQuests,
       onInformation: () => _showInformation(context),
     );
     if (MediaQuery.textScalerOf(context).scale(17) > 17 * 1.15) {
       final layout = HomeLayout(MediaQuery.sizeOf(context));
       return HomeReadingView(
         onNavigate: widget.onNavigate,
-        quests: quests,
         dialogue: dialogue,
         utilities: SizedBox(height: 48, child: utilities(layout.scale)),
         actions: SizedBox(
@@ -107,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   layout.scale,
                   const ResourceHud(),
                 ),
-                _placeContent('home-quests', layout.quests, quests),
                 _placeControls(
                   'home-utilities',
                   layout.utilities,
@@ -170,9 +153,9 @@ class _HomeScreenState extends State<HomeScreen> {
     context,
     'Chào mừng đến với Pixel RPG',
     'Cảnh làng và nhà lữ hành là hình minh họa tĩnh.\n\n'
-        'Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt. '
+        'Thanh dưới mở Cửa hàng, Hồ sơ và Cài đặt. '
         'Nói chuyện, Quan sát và Tìm kiếm cập nhật ô hội thoại. Nút Trận chiến mở đấu trường. '
-        'Cụm tiện ích có Hộp thư và lối tắt nhiệm vụ hằng ngày.',
+        'Mở Hộp thư bằng biểu tượng phong bì.',
     icon: PixelIconKind.info,
     closeLabel: 'Đã hiểu',
   );

@@ -9,19 +9,16 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
 The app contains a three-second NDAS loading screen at `/`, a main screen
-at `/home` with shared code frames, HUD, quest shortcuts, a static daylight village, a code-drawn
-pixel traveler portrait, welcome panel and navigation to sample menus.
-Home opens the read-only `/home/quests` preview and can preselect Side or Daily via
-`tab`. Quest categories switch between sample objectives, empty states and an
-achievement. Mail opens a preview dialog,
-and the scene actions update the Home dialogue panel.
-Story, shop, profile and settings previews live at `/home/story`, `/home/shop`,
-`/home/profile` and `/home/settings`. Story opens `/home/story/episode` without
-advancing progress; shop filters sample items and shows details; profile switches
-collection/badge tabs; settings controls change ephemeral local widget selections
-and offer a confirmation dialog to reset them.
+at `/home` with shared code frames, HUD, a static daylight village, a code-drawn
+pixel traveler portrait, dialogue and navigation to sample menus. Mail opens a
+preview dialog, and scene actions update the Home dialogue panel.
+Shop, profile and settings previews live at `/home/shop`, `/home/profile`
+and `/home/settings`. Shop filters sample items and shows details. Profile
+has collection and badge tabs. Settings opens on Account, with General and Information
+as the other tabs. General controls change local widget selections and offer a
+confirmation dialog to reset them.
 Profile opens `/home/beasts`, an illustrative roster with collection, filters,
-sorting, favorites and details. Home, Beasts and the main quest open
+sorting, favorites and details. Home and Beasts open
 `/home/battle`, a full-screen encounter with fixed HP and manual attack previews.
 No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
@@ -34,11 +31,11 @@ Only the middle framed content scrolls; headers and navigation stay fixed.
 MenuPanel uses a dark body/floating gold title tab, with paper for reading;
 MenuGrid aligns card rows and PixelProgress uses the common border shape.
 Shared widgets live in lib/app/presentation/, shared frames and icons in pixel/.
-Master/detail columns stack below 600 times text scale. Story episodes reuse
-the menu shell. HUD counters use the same unavailable placeholders as Home. Four blank 2:3
+Master/detail columns stack below 600 times text scale.
+HUD counters use the same unavailable placeholders as Home. Four blank 2:3
 design images and the atlas composition script are documented in `docs/art/menu-layouts.md`.
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
-when rotating: profile/stacked quests anchor left, resources/utilities anchor right,
+when rotating: profile anchors left, resources/utilities anchor right,
 and dialogue/actions/single-row navigation anchor bottom-center. Only the village
 scene expands at normal text scale. Content copy wraps at logical sizes;
 large text uses the shared scrolling shell. One device scale accommodates
@@ -72,7 +69,7 @@ Font `GameRoboto` được đóng gói cùng app (regular/medium/bold và giấy
 không phụ thuộc font hệ điều hành hoặc mạng. `GameTypography`/`appTheme` sở hữu
 kiểu chữ và shape nút chung; Home action dùng `MenuButton` như các menu.
 
-Home quest and dialogue panels use MenuPanel at logical sizes: body 17 dp,
+Home dialogue uses MenuPanel at logical sizes: body 17 dp,
 panel title 16 dp, matching menus after transforms. ScaledArtwork is limited
 to the shared compact HUD; panel titles never fit down.
 HomeReadingView reflows Home in the shared scrolling shell above 1.15 text

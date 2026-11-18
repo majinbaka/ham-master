@@ -16,8 +16,8 @@ void main() {
       MaterialApp(
         theme: appTheme,
         home: MenuShell(
-          title: 'Nhiệm vụ',
-          selected: 'quests',
+          title: 'Cửa hàng',
+          selected: 'shop',
           onNavigate: (value) => destination = value,
           child: const SizedBox(
             height: 1000,
@@ -29,7 +29,7 @@ void main() {
 
     expect(find.byTooltip('Quay lại'), findsOneWidget);
     final back = find.widgetWithIcon(IconButton, Icons.arrow_back);
-    final title = find.text('Nhiệm vụ');
+    final title = find.text('Cửa hàng');
     final content = find.byKey(const ValueKey('menu-content'));
     final backRect = tester.getRect(back);
     final titleRect = tester.getRect(title);
