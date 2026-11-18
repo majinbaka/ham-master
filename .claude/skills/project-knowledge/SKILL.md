@@ -20,6 +20,9 @@ Story, shop, profile and settings previews live at `/home/story`, `/home/shop`,
 advancing progress; shop filters sample items and shows details; profile switches
 collection/badge tabs; settings controls change ephemeral local widget selections
 and offer a confirmation dialog to reset them.
+Profile opens `/home/beasts`, an illustrative roster with collection, filters,
+sorting, favorites and details. Beasts and the main quest open `/home/battle`,
+an illustrated encounter with fixed HP and local preview selection and controls.
 No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
@@ -48,7 +51,7 @@ Text/icons remain separate widgets; selected controls use a gold border and chec
 GameSpacing defines a roughly 4 dp grid at a 390 dp short side, with 8 dp outer
 gutters/group gaps and compact footer gaps on short windows. Button content is
 centered, with identical content padding for selected/unselected navigation slots.
-Sprite, tileset, map and audio folders remain empty. Separate implemented behavior from future ideas. There is no gameplay, game engine, save system, backend,
+Static beast and move sprites live in `assets/sprites/`. Tileset, map and audio folders remain empty. Separate implemented behavior from future ideas. There is no gameplay, game engine, save system, backend,
 Widgetbook, Patrol or localization. Do not reuse FlashKids product history as
 facts about this repository. Cite current files when answering.
 

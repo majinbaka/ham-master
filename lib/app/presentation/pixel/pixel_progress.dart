@@ -10,10 +10,12 @@ class PixelProgress extends StatelessWidget {
     required this.value,
     required this.label,
     this.height = 10,
+    this.fillColor = PixelUiColors.gold,
     super.key,
   });
   final double? value;
   final double height;
+  final Color fillColor;
   final String label;
 
   @override
@@ -41,9 +43,9 @@ class PixelProgress extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: FractionallySizedBox(
               widthFactor: (value ?? 0).clamp(0, 1),
-              child: const ColoredBox(
-                color: PixelUiColors.gold,
-                child: SizedBox.expand(),
+              child: ColoredBox(
+                color: fillColor,
+                child: const SizedBox.expand(),
               ),
             ),
           ),

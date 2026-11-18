@@ -14,6 +14,7 @@ class MenuButton extends StatelessWidget {
     this.selected = false,
     this.skin = PixelFrameSkin.cream,
     this.icon,
+    this.artwork,
     this.artworkScale = 1,
     this.showLabel = false,
     super.key,
@@ -28,6 +29,7 @@ class MenuButton extends StatelessWidget {
   }) : _isTab = true,
        skin = PixelFrameSkin.cream,
        icon = null,
+       artwork = null,
        artworkScale = 1,
        showLabel = false;
 
@@ -36,6 +38,7 @@ class MenuButton extends StatelessWidget {
   final bool selected;
   final PixelFrameSkin skin;
   final PixelIconKind? icon;
+  final Widget? artwork;
   final bool _isTab;
 
   /// Content cards show names; compact HUD actions keep tooltip-only labels.
@@ -46,12 +49,15 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final visual =
+        artwork ??
+        (icon == null ? null : PixelIcon(icon!, size: 36 * artworkScale));
     final frame = selected ? PixelFrameSkin.selected : skin;
     return Tooltip(
       message: label,
       excludeFromSemantics: true,
       child: Semantics(
-        label: icon == null || showLabel ? null : label,
+        label: visual == null || showLabel ? null : label,
         selected: selected,
         child: TextButton(
           style: TextButton.styleFrom(
@@ -66,7 +72,7 @@ class MenuButton extends StatelessWidget {
             disabledBackgroundColor: frame.background,
             padding: _isTab
                 ? const EdgeInsets.symmetric(horizontal: 6, vertical: 4)
-                : EdgeInsets.all(icon == null ? 8 : 6),
+                : EdgeInsets.all(visual == null ? 8 : 6),
             shape: GameSurfaceStyle.shape(
               color: frame.border,
               projection: ArtworkProjection.of(context),
@@ -74,7 +80,7 @@ class MenuButton extends StatelessWidget {
             textStyle: Theme.of(context).textTheme.labelLarge,
           ),
           onPressed: onPressed,
-          child: icon == null
+          child: visual == null
               ? Text(label, textAlign: TextAlign.center)
               : Column(
                   mainAxisSize: MainAxisSize.min,
@@ -83,7 +89,7 @@ class MenuButton extends StatelessWidget {
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        PixelIcon(icon!, size: 36 * artworkScale),
+                        visual,
                         if (selected)
                           const Positioned(
                             right: 0,

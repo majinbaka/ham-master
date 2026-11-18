@@ -5,7 +5,7 @@ structure and development skills of FlashKids. Runtime behavior is a three-secon
 NDAS loading screen followed by a pixel-styled home UI with a static daylight village scene
 and a code-drawn pixel traveler portrait. Home opens quest previews and a mail
 dialog. Scene actions update the dialogue panel.
-Story, quests, shop, profile and settings remain presentation-only previews.
+Story, quests, shop, profile, settings, beasts and battle are presentation-only previews.
 Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
@@ -56,10 +56,13 @@ Do not implement gameplay unless requested.
 - `lib/app/presentation/pixel/`: shared code frames, atlas icons, labels and EXP tracks.
 - `lib/features/quests/presentation/`: quest categories, chapter status and sample objectives/rewards.
 - `lib/features/{story,shop,profile,settings}/presentation/`: interactive menu previews.
+- `lib/features/beasts/presentation/`: sample roster, collection, filters and details.
+- `lib/features/battle/presentation/`: illustrated encounter and sample battle controls.
 - `lib/app/presentation/`: shared Home/menu HUD, chrome anchors, artwork projection,
   spacing, navigation, menu shell, panels, buttons, grids, preview and progress.
-- `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork; static village illustration in `scenes/`; empty character sprite, tileset,
-  map and audio folders; bundled Roboto fonts and license in `assets/fonts/`.
+- `assets/`: NDAS branding and `ui/` icon atlas plus archived frame artwork;
+  village and forest arena in `scenes/`; static beast and move sprites in
+  `sprites/`; empty tileset, map and audio folders; bundled Roboto fonts and license in `assets/fonts/`.
 - `test/`: Flutter tests; mirror feature paths as behavior is introduced.
 - `android/`, `web/`: platform scaffolds with NDAS launcher/web icons.
 - `ios/`: unchanged platform scaffold.

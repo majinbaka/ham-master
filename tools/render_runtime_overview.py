@@ -5,7 +5,10 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-SCREEN_ORDER = ("home", "story", "episode", "quests", "shop", "profile", "settings", "launch")
+SCREEN_ORDER = (
+    "home", "story", "episode", "quests", "shop", "profile", "settings", "launch",
+    "beasts", "battle",
+)
 MODAL_GROUPS = ("home", "story", "quests", "shop", "profile", "settings")
 COLUMNS = 4
 WIDTH, HEIGHT = 390, 844

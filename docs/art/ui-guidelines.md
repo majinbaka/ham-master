@@ -48,10 +48,10 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `PixelNavigation` | Sáu mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và dấu tick. |
 | `MenuShell` | HUD trên, tiêu đề/quay lại/thông báo xem trước, cửa sổ nội dung giữa và navigation dưới. Chỉ nội dung giữa cuộn. |
 | `MenuPanel` | Thân `cool` xanh bạc hà với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
-| `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; có icon thì mặc định hiện icon 36 dp; thẻ nội dung dùng `showLabel` để hiện tên, còn HUD/hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và dấu tick; mục khóa giữ icon khóa. |
+| `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn HUD/hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và dấu tick; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô; bốn chỉ số tránh bố cục 3+1. |
 | `MenuPreview` | Cửa sổ làng ban ngày cao 96 dp, phủ kem nhạt và icon 48 dp; không tạo banner lớn chỉ để lấp chỗ. |
-| `PixelProgress` | Thanh EXP cùng mẫu viền 2 dp/góc 8 dp, nền xanh đậm và phần đã đạt màu vàng mật ong như HUD. |
+| `PixelProgress` | Thanh EXP cùng mẫu viền 2 dp/góc 8 dp, nền xanh đậm và phần đã đạt mặc định màu vàng mật ong. Thanh HP dùng màu theo hai phía của trận chiến. |
 
 Không sao chép shell/HUD/frame vào feature mới. Nếu thiếu một biến thể thực
 sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm tra lại các màn
@@ -122,7 +122,8 @@ Widget test nạp đúng font GameRoboto đóng gói để kiểm tra wrap theo 
 Navigation luôn có thứ tự: Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ,
 Cài đặt. Mục đang chọn có semantics, nền cam đào, viền nâu san hô và dấu tick. Màn hội thoại
 `/home/story/episode` thuộc Cốt truyện.
-Nút quay lại menu về Home, hội thoại về danh sách chương. Vùng neo navigation
+Nút quay lại menu về Home, hội thoại về danh sách chương, Yêu thú về Hồ sơ
+và Trận chiến về màn đã mở bản xem thử. Vùng neo navigation
 cao ít nhất 60 dp; nút hoạt động có vùng chạm ít nhất 48 × 48 dp ở màn hình
 từ 320 dp, độc lập tỷ lệ sprite. Không chỉ dùng màu để biểu thị khóa/chọn.
 
@@ -149,6 +150,8 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 | Hồ sơ | [profile.png](runtime-preview/profile.png) |
 | Cài đặt | [settings.png](runtime-preview/settings.png) |
 | Hội thoại | [episode.png](runtime-preview/episode.png) |
+| Danh sách yêu thú | [beasts.png](runtime-preview/beasts.png) |
+| Trận chiến | [battle.png](runtime-preview/battle.png) |
 
 ## Điều kiện duyệt
 
@@ -193,6 +196,15 @@ nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ l
 Hồ sơ dùng thẻ giấy kem với portrait nhà lữ hành cùng Home, tên/ID mẫu và EXP.
 Các mục sưu tầm/huy hiệu dùng lưới có tên để nhận biết trước khi chạm.
 
+Yêu thú dùng cùng `MenuColumns` cho danh sách và chi tiết. Chạm một thẻ
+đưa phần chi tiết vào vùng nhìn ở điện thoại. Chỉ số và chiêu dùng `MenuGrid`.
+Hồ sơ mở Yêu thú, còn Yêu thú và Nhiệm vụ chính mở Trận chiến.
+
+Trận chiến giữ shell chung với HUD và navigation cố định. Phần cuộn xếp HP
+đối thủ, cảnh rừng và hai sprite, HP đồng đội rồi lưới chiêu thức. Dùng lại
+`PixelProgress` với màu nhấn khác nhau và giá trị HP bằng chữ. Chọn chiêu,
+mục tiêu và các thông số là thao tác xem thử với dữ liệu mẫu.
+
 Cài đặt mở nhóm Âm thanh để tránh trộn mọi điều khiển vào một trang dài.
 Âm lượng có tên bên trái, phần trăm màu nâu hổ phách bên phải và track 8 dp. Công tắc
 dùng cả hàng nhãn làm vùng chạm; chữ được xuống dòng theo text scale.
@@ -204,7 +216,7 @@ Thông báo đầu vùng cuộn rút gọn thành “Dữ liệu mẫu · Không
 nhường chỗ đọc khi chữ lớn. Caption thương hiệu và loading giữ một dòng,
 fit trong cụm NDAS; nội dung đọc của các menu vẫn tăng theo text scale.
 
-[Ảnh tổng hợp tám màn](runtime-preview/overview.jpg) giữ lưới bốn cột
+[Ảnh tổng hợp mười màn](runtime-preview/overview.jpg) giữ lưới bốn cột
 của bản tham chiếu. [Ảnh tổng hợp 39 hộp thoại](runtime-preview/overview-modals.jpg)
 và [ảnh hộp thoại riêng](runtime-preview/modals/) được chụp bằng cách bấm
 các nút trong giao diện Flutter. Hộp thoại dùng khung 390 × 844 và cỡ chữ 1×.

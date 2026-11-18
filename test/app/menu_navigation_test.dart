@@ -6,6 +6,8 @@ import 'package:pixel_rpg/app/router/app_router.dart';
 import 'package:pixel_rpg/app/presentation/menu_components.dart';
 import 'package:pixel_rpg/app/presentation/menu_shell.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
+import 'package:pixel_rpg/features/battle/presentation/battle_screen.dart';
+import 'package:pixel_rpg/features/beasts/presentation/beast_screen.dart';
 import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
@@ -54,6 +56,48 @@ void main() {
     await tester.tap(find.byTooltip('Về Cốt truyện'));
     await tester.pumpAndSettle();
     expect(find.text('Tiến độ chương · 0 / 5'), findsOneWidget);
+  });
+
+  testWidgets('profile and quests open the two previews through real routes', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const ProviderScope(child: PixelRpgApp()));
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    Future<void> tap(String label) async {
+      final control = find.byTooltip(label);
+      await tester.ensureVisible(control);
+      await tester.pumpAndSettle();
+      await tester.tap(control);
+      await tester.pumpAndSettle();
+    }
+
+    await tap('Hồ sơ');
+    await tap('Mở danh sách yêu thú');
+    expect(find.byType(BeastScreen), findsOneWidget);
+    await tap('Hồ Băng\nCấp 10');
+    await tap('Xem thử trận chiến');
+    expect(find.byType(BattleScreen), findsOneWidget);
+    await tap('Quay lại');
+    expect(find.text('Hồ Băng'), findsOneWidget);
+    await tap('Về Hồ sơ');
+    expect(find.byType(ProfileScreen), findsOneWidget);
+
+    await tap('Nhiệm vụ');
+    await tap('Xem thử trận chiến');
+    expect(find.byType(BattleScreen), findsOneWidget);
+    await tap('Quay lại');
+    expect(find.byType(QuestScreen), findsOneWidget);
+
+    final router = ProviderScope.containerOf(
+      tester.element(find.byType(PixelRpgApp)),
+    ).read(appRouterProvider);
+    router.go('/home/battle');
+    await tester.pumpAndSettle();
+    expect(find.byType(BattleScreen), findsOneWidget);
+    await tap('Quay lại');
+    expect(router.routeInformationProvider.value.uri.path, '/home');
   });
 
   testWidgets('shop filters and opens details without purchasing', (
@@ -176,6 +220,8 @@ void main() {
         'settings',
         'quests',
         'episode',
+        'beasts',
+        'battle',
       ]) {
         testWidgets(
           '$screen fits $size at text scale $scale and keeps navigation visible',
@@ -190,6 +236,8 @@ void main() {
               'profile' => ProfileScreen(onNavigate: (_) {}),
               'quests' => QuestScreen(onBack: () {}),
               'episode' => StoryEpisodeScreen(onBack: () {}),
+              'beasts' => BeastScreen(onNavigate: (_) {}, onBattle: () {}),
+              'battle' => BattleScreen(onNavigate: (_) {}, onBack: () {}),
               _ => SettingsScreen(onNavigate: (_) {}),
             };
             await tester.pumpWidget(

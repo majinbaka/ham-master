@@ -95,6 +95,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
+        MenuButton(
+          label: 'Mở danh sách yêu thú',
+          icon: PixelIconKind.beasts,
+          showLabel: true,
+          onPressed: () => widget.onNavigate('beasts'),
+        ),
         const MenuPanel(
           title: 'Tiến trình hành trình',
           child: MenuGrid(

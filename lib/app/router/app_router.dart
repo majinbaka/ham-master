@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/battle/presentation/battle_screen.dart';
+import '../../features/beasts/presentation/beast_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/launch/presentation/launch_screen.dart';
 import '../../features/quests/presentation/quest_screen.dart';
@@ -72,6 +74,28 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 SettingsScreen(onNavigate: context.goNamed),
           ),
           GoRoute(
+            path: 'beasts',
+            name: 'beasts',
+            builder: (context, state) => BeastScreen(
+              onNavigate: context.goNamed,
+              onBattle: () => context.pushNamed('battle'),
+            ),
+          ),
+          GoRoute(
+            path: 'battle',
+            name: 'battle',
+            builder: (context, state) => BattleScreen(
+              onNavigate: context.goNamed,
+              onBack: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.goNamed('home');
+                }
+              },
+            ),
+          ),
+          GoRoute(
             path: 'quests',
             name: 'quests',
             builder: (context, state) {
@@ -82,6 +106,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return QuestScreen(
                 key: ValueKey(category),
                 initialCategory: category,
+                onBattle: () => context.pushNamed('battle'),
                 onBack: () => context.goNamed('home'),
                 onNavigate: context.goNamed,
               );

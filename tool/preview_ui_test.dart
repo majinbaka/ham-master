@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/presentation/menu_button.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
+import 'package:pixel_rpg/features/battle/presentation/battle_screen.dart';
+import 'package:pixel_rpg/features/beasts/presentation/beast_screen.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 import 'package:pixel_rpg/features/launch/presentation/launch_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
@@ -33,6 +35,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     const screen = String.fromEnvironment('SCREEN');
+    final selectedScreens = screen.split(',');
     const extended = bool.fromEnvironment('EXTENDED');
     const output = String.fromEnvironment(
       'OUTPUT',
@@ -58,8 +61,10 @@ void main() {
           'home-talk': home,
           'story': StoryScreen(onNavigate: (_) {}, onStart: () {}),
           'episode': StoryEpisodeScreen(onBack: () {}),
-          'quests': QuestScreen(onBack: () {}),
+          'quests': QuestScreen(onBack: () {}, onBattle: () {}),
           'shop': ShopScreen(onNavigate: (_) {}),
+          'beasts': BeastScreen(onNavigate: (_) {}, onBattle: () {}),
+          'battle': BattleScreen(onNavigate: (_) {}, onBack: () {}),
           'profile': ProfileScreen(onNavigate: (_) {}),
           'settings': SettingsScreen(onNavigate: (_) {}),
           'launch': LaunchScreen(onComplete: () {}),
@@ -77,7 +82,7 @@ void main() {
                   modal.value,
                 ),
         ]) {
-          if (screen.isNotEmpty && screen != name) continue;
+          if (screen.isNotEmpty && !selectedScreens.contains(name)) continue;
           final key = GlobalKey();
           await tester.pumpWidget(
             RepaintBoundary(

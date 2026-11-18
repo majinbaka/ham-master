@@ -23,6 +23,8 @@ flutter:
     - assets/branding/ndas-logo.png
     - assets/ui/icon-atlas.png
     - assets/scenes/daylight-village.png
+    - assets/scenes/forest-arena.png
+    - assets/sprites/
   fonts:
     - family: GameRoboto
       fonts:

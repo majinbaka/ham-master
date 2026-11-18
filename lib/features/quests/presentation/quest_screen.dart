@@ -21,11 +21,13 @@ class QuestScreen extends StatefulWidget {
   const QuestScreen({
     required this.onBack,
     this.onNavigate,
+    this.onBattle,
     this.initialCategory = QuestCategory.main,
     super.key,
   });
 
   final VoidCallback onBack;
+  final VoidCallback? onBattle;
   final ValueChanged<String>? onNavigate;
   final QuestCategory initialCategory;
 
@@ -59,9 +61,22 @@ class _QuestScreenState extends State<QuestScreen> {
           ],
         ),
         switch (_category) {
-          QuestCategory.main => const MenuColumns(
-            leading: _ChapterList(),
-            detail: QuestDetail(),
+          QuestCategory.main => MenuColumns(
+            leading: const _ChapterList(),
+            detail: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 8,
+              children: [
+                const QuestDetail(),
+                if (widget.onBattle != null)
+                  MenuButton(
+                    label: 'Xem thử trận chiến',
+                    icon: PixelIconKind.battle,
+                    showLabel: true,
+                    onPressed: widget.onBattle,
+                  ),
+              ],
+            ),
           ),
           QuestCategory.side => const MenuPanel(
             title: 'Nhiệm vụ phụ',

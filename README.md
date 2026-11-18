@@ -75,7 +75,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Flutter một package; Android, iOS và web scaffolds tạo mới.
 - Riverpod cho state/DI; go_router với `/` (launch), `/home` (màn hình chính)
   và `/home/quests` (bản xem trước Nhiệm vụ); các màn mẫu `/home/story`,
-  `/home/shop`, `/home/profile`, `/home/settings` và `/home/story/episode`.
+  `/home/shop`, `/home/profile`, `/home/settings`, `/home/story/episode`,
+  `/home/beasts` và `/home/battle`.
 - Loading nền kem chuyển xanh trời, logo NDAS và thanh vàng đào tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
@@ -127,6 +128,13 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
   Chương/vật phẩm/chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
+- Hồ sơ mở **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm
+  Sói Bóng Đêm, bộ lọc theo hệ/yêu thích, sắp xếp theo cấp và thẻ chi tiết
+  có chỉ số, chiêu thức và các thao tác xem thử.
+- Từ Yêu thú hoặc Nhiệm vụ chính, chọn **Xem thử trận chiến** để mở cảnh
+  Hỏa Hổ đối đầu Sói Bóng Đêm. Có thể chọn chiêu và mục tiêu, bật/tắt
+  tự động, đổi tốc độ và tạm dừng trong giao diện mẫu. Thanh HP hiển thị
+  giá trị minh họa cố định. Nút quay lại trở về màn đã mở trận.
 - Logo nền trong suốt trong `assets/branding/`, icon Android và favicon/PWA web.
 - Widget test kiểm tra khởi động, thời gian loading, chuyển route, màn hình
   chính, hộp thông tin, bố cục nhỏ/chữ lớn và kích thước/neo không đổi khi xoay.
@@ -134,7 +142,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
   skin, kích thước hoặc projection.
 - Font Roboto được đóng gói trong `assets/fonts/` với giấy phép; mọi màn dùng
   `GameTypography`/`appTheme`, icon atlas và nút common, kể cả khi offline.
-- Các thư mục sprites, tilesets, maps, audio vẫn trống.
+- Sprite yêu thú, icon chiêu thức và cảnh rừng được đóng gói để xem offline.
+  Các thư mục tilesets, maps và audio vẫn trống.
 - CI format/analyze/test, hướng dẫn agent, skills và Dart format hook.
 
 ```text
@@ -147,7 +156,7 @@ lib/
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
   features/home/presentation/ # scene, quest panels, dialogue and actions
   features/quests/presentation/ # read-only quest preview
-  features/{story,shop,profile,settings}/presentation/ # interactive UI previews
+  features/{story,shop,profile,settings,beasts,battle}/presentation/ # interactive UI previews
   app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ frame and icon widgets
 assets/{branding,ui,sprites,tilesets,maps,audio,fonts}/
 test/widget_test.dart
@@ -172,7 +181,7 @@ phân tích ảnh mẫu do người dùng cung cấp, tách các khung/panel/nú
 component và cung cấp prompt để generate từng phần về sau. Đây là tài liệu
 định hướng hình ảnh; màn hình chính dùng khung code với sáu skin màu chung
 qua `PixelFrame`, với metadata và prompt trong
-[assets/ui/README.md](assets/ui/README.md). Nhân vật minh họa được vẽ bằng code; tranh làng pixel tĩnh nằm trong `assets/scenes/`. Chưa có sprite chuyển động hoặc quái. Các component chưa dùng vẫn
+[assets/ui/README.md](assets/ui/README.md). Nhân vật minh họa được vẽ bằng code; tranh làng và đấu trường rừng nằm trong `assets/scenes/`. Sprite yêu thú và chiêu thức trong `assets/sprites/` là ảnh tĩnh. Các component chưa dùng vẫn
 là đề xuất cho các lần triển khai sau.
 
 [Khung layout Nhiệm vụ](docs/art/quest-layout.md) có ảnh dọc 853 × 1280,
