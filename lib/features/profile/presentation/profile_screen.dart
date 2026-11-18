@@ -18,6 +18,41 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   var _tab = 0;
 
+  static const _collection = [
+    (
+      'Bạn đồng hành',
+      PixelIconKind.beasts,
+      'Ghi chép về người bạn đang đợi ở trại khởi hành.',
+    ),
+    (
+      'Dấu chân nhỏ',
+      PixelIconKind.search,
+      'Dấu chân được ghi lại trên lối đá gần cổng làng.',
+    ),
+    (
+      'Người dẫn đường',
+      PixelIconKind.compass,
+      'Ghi chép về người gác làng và lời chỉ đường đầu tiên.',
+    ),
+    (
+      'Trang sách mới',
+      PixelIconKind.story,
+      'Trang mở đầu trong sổ ghi chép hành trình.',
+    ),
+  ];
+  static const _badges = [
+    (
+      'Bước chân đầu',
+      PixelIconKind.coin,
+      'Huy hiệu dành cho nhà lữ hành hoàn thành nhiệm vụ đầu tiên.',
+    ),
+    (
+      'Người khám phá',
+      PixelIconKind.compass,
+      'Huy hiệu minh họa cho việc ghé thăm các địa điểm trong làng.',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) => MenuShell(
     title: 'Hồ sơ Nhà lữ hành',
@@ -50,7 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () => showSampleDetail(
                         context,
                         'Hồ sơ minh họa',
-                        'Tên, ID, kinh nghiệm và nhật ký đều là dữ liệu trình bày.',
+                        'Nhà lữ hành · ID 1004527. Cấp 12 với 2.340 / 3.600 EXP trong thẻ minh họa.',
+                        icon: PixelIconKind.info,
                       ),
                     ),
                   ],
@@ -101,27 +137,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ][_tab],
           child: MenuGrid(
             children: [
-              for (final (name, icon)
-                  in (_tab == 2
-                      ? const [
-                          ('Bước chân đầu', PixelIconKind.coin),
-                          ('Người khám phá', PixelIconKind.compass),
-                        ]
-                      : const [
-                          ('Bạn đồng hành', PixelIconKind.beasts),
-                          ('Dấu chân nhỏ', PixelIconKind.search),
-                          ('Người dẫn đường', PixelIconKind.compass),
-                          ('Trang sách mới', PixelIconKind.story),
-                        ]))
+              for (final (name, icon, detail) in switch (_tab) {
+                1 => _collection,
+                2 => _badges,
+                _ => _collection.take(2),
+              })
                 MenuButton(
                   label: name,
                   icon: icon,
                   showLabel: true,
-                  onPressed: () => showSampleDetail(
-                    context,
-                    name,
-                    'Một mục trong nhật ký mẫu của nhà lữ hành.',
-                  ),
+                  onPressed: () =>
+                      showSampleDetail(context, name, detail, icon: icon),
                 ),
             ],
           ),

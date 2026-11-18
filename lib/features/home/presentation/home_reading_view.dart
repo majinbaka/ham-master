@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/presentation/menu_shell.dart';
-import '../../../app/presentation/menu_button.dart';
-import '../../../app/presentation/pixel/pixel_icon.dart';
-import '../../../app/presentation/scaled_artwork.dart';
-import '../../../app/presentation/game_chrome_layout.dart';
 import '../../../app/presentation/traveler_portrait.dart';
 import '../../../app/presentation/village_backdrop.dart';
-import 'home_footer.dart';
-import 'home_overview.dart';
 
 /// Large text reflows in the shared scrolling content window instead of shrinking.
 class HomeReadingView extends StatelessWidget {
   const HomeReadingView({
-    required this.onInformation,
-    this.onOpenQuests,
+    required this.quests,
+    required this.dialogue,
+    required this.utilities,
+    required this.actions,
     this.onNavigate,
     super.key,
   });
-  final VoidCallback onInformation;
-  final VoidCallback? onOpenQuests;
+
+  final Widget quests;
+  final Widget dialogue;
+  final Widget utilities;
+  final Widget actions;
   final ValueChanged<String>? onNavigate;
 
   @override
@@ -27,12 +26,12 @@ class HomeReadingView extends StatelessWidget {
     title: 'Trang chủ',
     selected: 'home',
     onNavigate: onNavigate ?? (_) {},
+    showBack: false,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8,
       children: [
-        HomeQuests(onOpen: onOpenQuests),
-        const HomeMinimap(),
+        quests,
         const SizedBox(
           height: 96,
           child: Stack(
@@ -47,19 +46,9 @@ class HomeReadingView extends StatelessWidget {
             ],
           ),
         ),
-        const HomeDialogue(),
-        MenuButton(
-          label: 'Thông tin màn hình',
-          icon: PixelIconKind.info,
-          onPressed: onInformation,
-        ),
-        Center(
-          child: ScaledArtwork(
-            size: const Size(840, 120),
-            scale: GameChromeLayout(MediaQuery.sizeOf(context)).scale,
-            child: const HomeActions(),
-          ),
-        ),
+        dialogue,
+        utilities,
+        actions,
       ],
     ),
   );

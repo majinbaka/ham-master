@@ -5,52 +5,71 @@ import '../../../app/presentation/menu_button.dart';
 import '../../../app/presentation/menu_panel.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
 
+enum HomeAction {
+  talk(
+    PixelIconKind.talk,
+    'Nói chuyện',
+    'Người gác làng: Hãy ghé trại gần cổng làng.',
+  ),
+  observe(
+    PixelIconKind.observe,
+    'Quan sát',
+    'Ánh đèn ven đường dẫn về phía cổng làng.',
+  ),
+  search(PixelIconKind.search, 'Tìm kiếm', 'Chưa thấy vật phẩm quanh trại.');
+
+  const HomeAction(this.icon, this.label, this.message);
+
+  final PixelIconKind icon;
+  final String label;
+  final String message;
+}
+
 class HomeDialogue extends StatelessWidget {
-  const HomeDialogue({super.key});
+  const HomeDialogue({required this.action, super.key});
+
+  final HomeAction? action;
 
   @override
-  Widget build(BuildContext context) => const MenuPanel(
+  Widget build(BuildContext context) => MenuPanel(
     title: 'Pixel RPG',
     light: true,
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 8,
-      children: [
-        Text('Chào mừng, nhà lữ hành!'),
-        Text('Hành trình mới đang chờ bạn.'),
-      ],
+    child: Semantics(
+      liveRegion: true,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 8,
+        children: [
+          if (action case final interaction?)
+            Text(interaction.message)
+          else ...const [
+            Text('Chào mừng, nhà lữ hành!'),
+            Text('Hành trình mới đang chờ bạn.'),
+          ],
+        ],
+      ),
     ),
   );
 }
 
-/// Action placeholders preserve the three-button composition of the reference.
 class HomeActions extends StatelessWidget {
-  const HomeActions({super.key});
+  const HomeActions({required this.scale, required this.onAction, super.key});
+
+  final double scale;
+  final ValueChanged<HomeAction> onAction;
 
   @override
   Widget build(BuildContext context) => Row(
-    spacing: GameSpacing.gap,
+    spacing: GameSpacing.gap * scale,
     children: [
-      for (final item in const [
-        (PixelIconKind.talk, 'Nói chuyện'),
-        (PixelIconKind.observe, 'Quan sát'),
-        (PixelIconKind.search, 'Tìm kiếm'),
-      ])
+      for (final action in HomeAction.values)
         Expanded(
-          child: SizedBox(
-            height: 120,
-            child: Semantics(
-              enabled: false,
-              label: '${item.$2}, chưa mở',
-              excludeSemantics: true,
-              child: MenuButton(
-                label: item.$2,
-                icon: item.$1,
-                artworkScale: 2,
-                onPressed: null,
-              ),
-            ),
+          child: MenuButton(
+            label: action.label,
+            icon: action.icon,
+            artworkScale: 2 * scale,
+            onPressed: () => onAction(action),
           ),
         ),
     ],

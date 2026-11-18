@@ -9,14 +9,17 @@ Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
 The app contains a three-second neon NDAS loading screen at `/`, a main screen
-at `/home` with shared code frames, HUD, empty quests, a static twilight village, a code-drawn
+at `/home` with shared code frames, HUD, quest shortcuts, a static twilight village, a code-drawn
 pixel traveler portrait, welcome panel and navigation to sample menus.
-The main quest panel opens the read-only `/home/quests` preview, which reuses
-shared code frames and the icon atlas for tabs, chapters, sample objectives and rewards.
+Home opens the read-only `/home/quests` preview and can preselect Side or Daily via
+`tab`. Quest categories switch between sample objectives, empty states and an
+achievement. Mail opens a preview dialog,
+and the scene actions update the Home dialogue panel.
 Story, shop, profile and settings previews live at `/home/story`, `/home/shop`,
 `/home/profile` and `/home/settings`. Story opens `/home/story/episode` without
 advancing progress; shop filters sample items and shows details; profile switches
-collection/badge tabs; settings controls change ephemeral local widget selections.
+collection/badge tabs; settings controls change ephemeral local widget selections
+and offer a confirmation dialog to reset them.
 No purchase, game progress, audio/device configuration or persistence occurs.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
@@ -32,7 +35,7 @@ Master/detail columns stack below 600 times text scale. Story episodes reuse
 the menu shell. HUD counters use the same unavailable placeholders as Home. Four blank 2:3
 design images and the atlas composition script are documented in `docs/art/menu-layouts.md`.
 An information dialog explains this UI-only scope. UI groups keep fixed sizes
-when rotating: profile/stacked quests anchor left, resources/map anchor right,
+when rotating: profile/stacked quests anchor left, resources/utilities anchor right,
 and dialogue/actions/single-row navigation anchor bottom-center. Only the village
 scene expands at normal text scale. Content copy wraps at logical sizes;
 large text uses the shared scrolling shell. One device scale accommodates
@@ -66,9 +69,9 @@ Font `GameRoboto` được đóng gói cùng app (regular/medium/bold và giấy
 không phụ thuộc font hệ điều hành hoặc mạng. `GameTypography`/`appTheme` sở hữu
 kiểu chữ và shape nút chung; Home action dùng `MenuButton` như các menu.
 
-Home quest/minimap/dialogue use MenuPanel at logical sizes: body 17 dp,
+Home quest and dialogue panels use MenuPanel at logical sizes: body 17 dp,
 panel title 16 dp, matching menus after transforms. ScaledArtwork is limited
-to shared compact HUD and decorative controls; panel titles never fit down.
+to the shared compact HUD; panel titles never fit down.
 HomeReadingView reflows Home in the shared scrolling shell above 1.15 text
 scale so larger copy is readable without moving HUD/navigation anchors.
 Widget tests load bundled GameRoboto and compare rendered font sizes.

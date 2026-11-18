@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
+import '../../../app/presentation/pixel/pixel_icon.dart';
 import '../../../app/theme/game_typography.dart';
 import '../../../app/theme/pixel_ui_colors.dart';
 
@@ -16,19 +17,24 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   var _category = 'Âm thanh';
-  final _volumes = <String, double>{
+  static const _defaultVolumes = <String, double>{
     'Nhạc nền': 80,
     'Hiệu ứng âm thanh': 80,
     'Lồng tiếng': 70,
   };
-  final _toggles = <String, bool>{
+  static const _defaultToggles = <String, bool>{
     'Hiệu ứng hình ảnh': true,
     'Hiện vùng tương tác': true,
     'Bỏ qua hội thoại đã xem': false,
     'Xác nhận vật phẩm quan trọng': true,
   };
-  var _quality = 'Cao';
-  var _controls = 'Chạm';
+  static const _defaultQuality = 'Cao';
+  static const _defaultControls = 'Chạm';
+
+  final _volumes = {..._defaultVolumes};
+  final _toggles = {..._defaultToggles};
+  var _quality = _defaultQuality;
+  var _controls = _defaultControls;
 
   @override
   Widget build(BuildContext context) => MenuShell(
@@ -131,6 +137,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _toggle('Bỏ qua hội thoại đã xem'),
         _toggle('Xác nhận vật phẩm quan trọng'),
       ],
+      if (_category == 'Chung')
+        MenuButton(label: 'Khôi phục mặc định', onPressed: _confirmReset),
       if (_category == 'Ngôn ngữ')
         const Text(
           'Tiếng Việt\nBản dựng hiện dùng tiếng Việt; chưa có bản dịch khác.',
@@ -140,8 +148,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'Chế độ xem trước offline. Chưa có tài khoản, đăng nhập hoặc mã quà.',
         ),
       if (_category == 'Thông tin') ...[
-        const Text(
-          'PixelRPG · Bản giao diện mẫu\nAndroid và web\nChưa có gameplay, lưu dữ liệu hoặc âm thanh.',
+        const Text('PixelRPG · Bản giao diện mẫu'),
+        MenuButton(
+          label: 'Giới thiệu PixelRPG',
+          onPressed: () => showSampleDetail(
+            context,
+            'Giới thiệu PixelRPG',
+            'Bản xem trước giao diện dành cho Android và web. Khung cảnh và nội dung hành trình là dữ liệu minh họa.',
+            icon: PixelIconKind.info,
+          ),
         ),
         MenuButton(
           label: 'Về Hồ sơ',
@@ -150,6 +165,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ],
     ],
   );
+
+  Future<void> _confirmReset() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        scrollable: true,
+        title: const Text('Khôi phục mặc định?'),
+        content: const Text(
+          'Âm lượng, đồ họa và điều khiển mẫu sẽ trở về giá trị ban đầu.',
+        ),
+        actions: [
+          MenuButton(
+            label: 'Hủy',
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          MenuButton(
+            label: 'Khôi phục',
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    );
+    if (!mounted || confirmed != true) return;
+    setState(() {
+      _volumes.addAll(_defaultVolumes);
+      _toggles.addAll(_defaultToggles);
+      _quality = _defaultQuality;
+      _controls = _defaultControls;
+    });
+  }
 
   Widget _toggle(String label) => SwitchListTile(
     contentPadding: EdgeInsets.zero,

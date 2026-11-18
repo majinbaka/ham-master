@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,6 +24,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'home',
         builder: (context, state) => HomeScreen(
           onOpenQuests: () => context.goNamed('quests'),
+          onOpenSideQuests: () => context.goNamed(
+            'quests',
+            queryParameters: {'tab': QuestCategory.side.name},
+          ),
+          onOpenDailyQuests: () => context.goNamed(
+            'quests',
+            queryParameters: {'tab': QuestCategory.daily.name},
+          ),
           onNavigate: context.goNamed,
         ),
         routes: [
@@ -65,10 +74,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'quests',
             name: 'quests',
-            builder: (context, state) => QuestScreen(
-              onBack: () => context.goNamed('home'),
-              onNavigate: context.goNamed,
-            ),
+            builder: (context, state) {
+              final category =
+                  QuestCategory.values
+                      .asNameMap()[state.uri.queryParameters['tab']] ??
+                  QuestCategory.main;
+              return QuestScreen(
+                key: ValueKey(category),
+                initialCategory: category,
+                onBack: () => context.goNamed('home'),
+                onNavigate: context.goNamed,
+              );
+            },
           ),
         ],
       ),

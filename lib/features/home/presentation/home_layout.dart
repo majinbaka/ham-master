@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
 import '../../../app/presentation/game_chrome_layout.dart';
@@ -17,14 +19,15 @@ class HomeLayout extends GameChromeLayout {
 
   Rect get quests =>
       _rect(_edge, profile.bottom / scale + _gap, 440, 210 / scale);
-  Rect get utilities =>
-      _rect(_width - _edge - 280, resources.bottom / scale + _gap, 280, 80);
-  Rect get minimap => _rect(
-    _width - _edge - 320,
-    utilities.bottom / scale + _gap,
-    320,
-    112 / scale,
-  );
+  Rect get utilities {
+    final width = 144 + 2 * GameSpacing.small * scale;
+    return Rect.fromLTWH(
+      viewport.width - _edge * scale - width,
+      resources.bottom + _gap * scale,
+      width,
+      48,
+    );
+  }
 
   // Half-grid gaps keep the centered footer clear of side panels on short
   // landscape windows, without changing any component's size on rotation.
@@ -33,10 +36,12 @@ class HomeLayout extends GameChromeLayout {
 
   Rect get actions => _rect(
     (_width - 840) / 2,
-    navigation.top / scale - _footerGap - 120,
+    navigation.top / scale - _footerGap - actionHeight / scale,
     840,
-    120,
+    actionHeight / scale,
   );
+  double get actionHeight => math.max(48, 120 * scale);
+
   double get _dialogueWidth => scale < 390 / 940 ? 700 : 860;
 
   double get _dialogueHeight => scale < 390 / 940 ? 132 : 120;
@@ -49,13 +54,9 @@ class HomeLayout extends GameChromeLayout {
   );
 
   Rect get character {
-    final top = _width > _height
-        ? 20.0
-        : (quests.bottom > minimap.bottom ? quests.bottom : minimap.bottom) /
-                  scale +
-              _gap / 2;
+    final top = _width > _height ? 20.0 : quests.bottom / scale + _gap / 2;
     final bottom = dialogue.top / scale;
-    final centerY = (top + bottom) / 2;
+    final centerY = math.min((top + bottom) / 2, bottom - 64 - _gap / 2);
     return _rect((_width - 72) / 2, centerY - 64, 72, 128);
   }
 

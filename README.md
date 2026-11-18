@@ -84,13 +84,13 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Màn hình chính dùng khung tím than chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
   panel nhiệm vụ, lời chào và thanh chức năng. Cảnh làng pixel hoàng hôn, nhân vật minh họa đội mũ
   vàng. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
-  tài nguyên và minimap neo phải; hội thoại, ba nút hành động và thanh sáu mục
+  tài nguyên và tiện ích neo phải; hội thoại, ba nút hành động và thanh sáu mục
   một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
   chỉ thay vị trí neo và mở rộng tranh nền ở cỡ chữ thường. Nội dung chữ
   xuống dòng theo chỗ trống.
   Kích thước chuẩn tương ứng chiều ngắn 390 dp; thiết bị nhỏ hơn dùng một hệ số
   chung theo chiều ngắn của màn hình, độc lập hướng xoay. Desktop không phóng
-  lớn artwork. Chữ nhiệm vụ, bản đồ và hội thoại Home dùng `MenuPanel`
+  lớn artwork. Chữ nhiệm vụ và hội thoại Home dùng `MenuPanel`
   với cùng cỡ nội dung 17 dp/tiêu đề panel 16 dp như menu, không bị thu
   nhỏ theo artwork. Chữ hệ thống lớn hơn 1.15× chuyển Home sang vùng nội
   dung cuộn chung; HUD và navigation vẫn cố định. Thanh điều hướng dùng control chung với menu, cao ít nhất 60 dp
@@ -107,17 +107,21 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Sáu skin chỉ đổi màu; atlas khung cũ giữ làm tư liệu, không đóng gói runtime. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt, cùng palette với khung. Chỉ mục điều hướng
   đang chọn có tấm nền vàng, các mục còn lại nằm trên khay chung.
-  Nút thông tin giải thích phạm vi bản dựng; thanh dưới chuyển tới các màn
-  mẫu Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ, Cài đặt. Chỉ số Trang chủ
-  chưa có dùng dấu `—`.
+  Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt.
+  Cụm tiện ích mở Hộp thư, Nhiệm vụ hàng ngày và Thông tin màn hình.
+  Nói chuyện, Quan sát và Tìm kiếm cập nhật nội dung ô hội thoại.
+  Chỉ số Trang chủ chưa có dùng dấu `—`.
 - Chọn **Xem nhiệm vụ** trong khung Nhiệm vụ chính để mở màn hình mẫu.
   Tab tự xuống hàng; chương và chi tiết xếp dọc trên màn hẹp/chữ lớn,
   chia hai cột khi đủ chỗ; nội dung cuộn bên trên
   thanh điều hướng. Nút quay lại và mục Trang chủ đều về màn hình chính.
-  Chương, mục tiêu, tài nguyên và phần thưởng là dữ liệu minh họa cố định.
+  Bốn tab gồm Chính truyện, Phụ, Hàng ngày và Thành tựu. Home có lối tắt
+  tới tab Phụ và Hàng ngày. Chương khóa mở hộp thoại điều kiện. Mục tiêu và
+  phần thưởng hiển thị dữ liệu minh họa cố định.
 - Cốt truyện mở hội thoại xem thử; Cửa hàng lọc danh mục và xem chi tiết;
   Hồ sơ đổi tab sưu tầm/huy hiệu; Cài đặt đổi nhóm và thao tác thử slider,
-  switch, lựa chọn. Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
+  switch, lựa chọn và xác nhận khôi phục mặc định của bản xem trước.
+  Các màn ghi rõ dữ liệu mẫu, không giao dịch, không thay
   tiến trình hoặc lưu cấu hình. HUD dùng lại chính profile/tài nguyên của Home
   và vẫn neo cố định khi cuộn.
   Tiêu đề, quay lại và navigation nằm ngoài cửa sổ nội dung cuộn ở giữa.
@@ -141,7 +145,7 @@ lib/
     router/app_router.dart
     theme/app_theme.dart
   features/launch/presentation/{launch_screen,neon_progress_bar}.dart
-  features/home/presentation/ # scene, quest panels, minimap, dialogue and actions
+  features/home/presentation/ # scene, quest panels, dialogue and actions
   features/quests/presentation/ # read-only quest preview
   features/{story,shop,profile,settings}/presentation/ # interactive UI previews
   app/presentation/ # shared HUD, anchors, scale, menus, controls and pixel/ frame and icon widgets

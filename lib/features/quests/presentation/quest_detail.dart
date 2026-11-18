@@ -50,15 +50,15 @@ class QuestDetail extends StatelessWidget {
               (PixelIconKind.gem, 'Ngọc', '5'),
               (PixelIconKind.energy, 'Năng lượng', '2'),
             ])
-              Semantics(
-                label: '$label: $value',
-                excludeSemantics: true,
-                child: Column(
-                  children: [
-                    PixelIcon(icon, size: 36),
-                    Text(label, textAlign: TextAlign.center),
-                    Text(value, style: GameTypography.heading),
-                  ],
+              MenuButton(
+                label: '$label\n$value',
+                icon: icon,
+                showLabel: true,
+                onPressed: () => showSampleDetail(
+                  context,
+                  label,
+                  'Phần thưởng mẫu: $value. Hoàn thành các mục tiêu để đủ điều kiện nhận thưởng.',
+                  icon: icon,
                 ),
               ),
           ],

@@ -18,6 +18,7 @@ class MenuShell extends StatelessWidget {
     required this.onNavigate,
     required this.child,
     this.onBack,
+    this.showBack = true,
     this.backLabel = 'Quay lại',
     super.key,
   });
@@ -27,6 +28,7 @@ class MenuShell extends StatelessWidget {
   final ValueChanged<String> onNavigate;
   final Widget child;
   final VoidCallback? onBack;
+  final bool showBack;
   final String backLabel;
 
   @override
@@ -74,11 +76,12 @@ class MenuShell extends StatelessWidget {
                         Row(
                           spacing: 8,
                           children: [
-                            IconButton(
-                              tooltip: backLabel,
-                              onPressed: onBack ?? () => onNavigate('home'),
-                              icon: const Icon(Icons.arrow_back, size: 30),
-                            ),
+                            if (showBack)
+                              IconButton(
+                                tooltip: backLabel,
+                                onPressed: onBack ?? () => onNavigate('home'),
+                                icon: const Icon(Icons.arrow_back, size: 30),
+                              ),
                             Expanded(
                               child: PixelFrame(
                                 skin: PixelFrameSkin.gold,

@@ -95,9 +95,9 @@ Icon nội dung nổi bật dùng 48 dp, icon trong nút/phần thưởng/chỉ 
 HUD giữ kích thước theo hệ tọa độ artwork. Material icon chỉ dùng cho ký hiệu
 hệ thống (quay lại, trạng thái chọn/hoàn thành), không thay atlas trang trí.
 `GameSurfaceStyle` và theme sở hữu viền/góc bo của TextButton/IconButton,
-bao gồm nút đóng dialog. Ba nút hành động Home dùng chính `MenuButton` với
-`artworkScale: 2` cho icon trước khi chiếu; viền/góc bù theo
-`ArtworkProjection`, không nhân theo icon.
+bao gồm nút đóng dialog. Nút hành động và tiện ích Home dùng `MenuButton`
+trực tiếp ở logical pixel với vùng chạm tối thiểu 48 × 48 dp. Icon hành động
+giữ tỷ lệ với artwork, viền và góc giữ 2/8 dp.
 
 Nội dung menu 17 dp, line height 1.35; tiêu đề màn 22 dp đậm; tab tiêu đề
 panel 16 dp; nút chữ 17 dp. Navigation chỉ hiện icon 36 dp. Icon atlas giữ nền trong
@@ -105,18 +105,22 @@ suốt và không có lớp nền/viền bọc riêng; các nút icon compact kh
 tooltip và semantics. Thẻ chương/đoạn truyện hiển thị tên và trạng thái khóa,
 không bắt người chơi đoán nội dung từ icon.
 Home dùng ba nút hành động icon lớn, không có nhãn; phần chữ nội dung không
-phụ thuộc hệ số artwork. Chữ dài trong nội dung và nút xuống dòng, tăng chiều cao và cuộn được.
+phụ thuộc hệ số artwork. Nói chuyện, Quan sát và Tìm kiếm thay nội dung ô hội
+thoại trên Home. Bố cục chữ lớn cuộn tới nội dung mới. Chữ dài trong nội
+dung và nút xuống dòng, tăng chiều cao và cuộn được.
 Tôn trọng text scaling 1×/2×. `PixelLabel` chỉ fit nhãn HUD compact trong slot cố định; không fit tiêu đề
 panel hoặc nội dung đọc. Test đo cỡ chữ sau transform, không chỉ so font family.
 Widget test nạp đúng font GameRoboto đóng gói để kiểm tra wrap theo runtime.
 
 Navigation luôn có thứ tự: Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ,
-Cài đặt. Mục đang chọn có semantics, viền vàng và dấu tick; hội thoại thuộc Cốt truyện.
+Cài đặt. Mục đang chọn có semantics, viền vàng và dấu tick. Màn hội thoại
+`/home/story/episode` thuộc Cốt truyện.
 Nút quay lại menu về Home, hội thoại về danh sách chương. Vùng neo navigation
 cao ít nhất 60 dp; nút hoạt động có vùng chạm ít nhất 48 × 48 dp ở màn hình
 từ 320 dp, độc lập tỷ lệ sprite. Không chỉ dùng màu để biểu thị khóa/chọn.
 
-Dialog dùng theme tím than/chữ kem, nội dung cuộn và nút đóng rõ ràng. Các
+Dialog dùng theme tím than/chữ kem và nội dung cuộn. Hộp thoại chi tiết
+dùng icon atlas và có nút đóng. Khôi phục cài đặt mẫu có hai nút Hủy và Khôi phục. Các
 màn luôn ghi rõ dữ liệu mẫu, không lưu thay đổi; nội dung mẫu không biến
 thành chỉ số thật trên HUD. Launch giữ nhận diện NDAS/neon ba giây riêng.
 
@@ -131,6 +135,7 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 | --- | --- |
 | Khởi động NDAS | [launch.png](runtime-preview/launch.png) |
 | Home — mẫu chuẩn | [home.png](runtime-preview/home.png) |
+| Home sau khi bấm Nói chuyện | [home-talk.png](runtime-preview/home-talk.png) |
 | Cốt truyện | [story.png](runtime-preview/story.png) |
 | Nhiệm vụ | [quests.png](runtime-preview/quests.png) |
 | Cửa hàng | [shop.png](runtime-preview/shop.png) |
@@ -193,5 +198,14 @@ Thông báo đầu vùng cuộn rút gọn thành “Dữ liệu mẫu · Không
 nhường chỗ đọc khi chữ lớn. Caption thương hiệu và loading giữ một dòng,
 fit trong cụm NDAS; nội dung đọc của các menu vẫn tăng theo text scale.
 
-Ảnh tổng hợp tám màn: [overview.jpg](runtime-preview/overview.jpg).
+[Ảnh tổng hợp tám màn](runtime-preview/overview.jpg) giữ lưới bốn cột
+của bản tham chiếu. [Ảnh tổng hợp 39 hộp thoại](runtime-preview/overview-modals.jpg)
+và [ảnh hộp thoại riêng](runtime-preview/modals/) được chụp bằng cách bấm
+các nút trong giao diện Flutter. Hộp thoại dùng khung 390 × 844 và cỡ chữ 1×.
+
+```sh
+flutter test tool/preview_ui_test.dart
+python3 tools/render_runtime_overview.py
+```
+
 Kết quả kiểm tra đợt này: [cozy-ui-review.md](cozy-ui-review.md).

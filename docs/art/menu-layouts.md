@@ -55,15 +55,18 @@ Thanh dưới nối Trang chủ, Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ
 `lib/app/router/` sở hữu route. Từng feature chỉ sở hữu presentation.
 
 - `/home/story`: chương 1 được chọn; chương sau và bước sau ghi rõ đã khóa.
-  Bắt đầu xem thử mở `/home/story/episode`; quay lại không tăng tiến độ 0/5.
+  Chạm mục khóa để xem điều kiện. Bắt đầu xem thử mở `/home/story/episode`.
+  Quay lại vẫn thấy tiến độ mẫu 0/5.
 - `/home/shop`: đổi danh mục, mở chi tiết vật phẩm/gói mẫu, đóng hộp thoại.
   Không có thao tác mua, thanh toán hoặc trừ tài nguyên.
 - `/home/profile`: xem thông tin, bốn chỉ số, đổi tab sổ sưu tầm/huy hiệu,
   mở chi tiết mẫu hoặc chuyển Cài đặt.
 - `/home/settings`: đổi nhóm cài đặt, kéo âm lượng, đổi lựa chọn đồ họa/
   điều khiển và bật/tắt tùy chọn. Đây là state giao diện tạm trong widget,
-  mất khi rời màn hình; chưa áp dụng âm thanh, đồ họa hay cấu hình thiết bị.
-- `/home/quests`: giữ mục tiêu/phần thưởng mẫu, dùng chung shell điều hướng.
+  mất khi rời màn hình. Nhóm Chung có xác nhận khôi phục mặc định.
+  Nhóm Thông tin có hộp thoại giới thiệu PixelRPG.
+- `/home/quests`: bốn tab nhiệm vụ, thông tin chương khóa và chi tiết phần
+  thưởng mẫu. Lối tắt Home chọn tab qua `?tab=side` hoặc `?tab=daily`.
 
 Các màn ghi rõ dữ liệu mẫu và không lưu thay đổi. HUD menu dùng cùng placeholder `—` như Home;
 các số cấp độ và tiến trình trong nội dung là minh họa,

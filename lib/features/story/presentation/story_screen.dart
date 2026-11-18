@@ -30,7 +30,12 @@ class StoryScreen extends StatelessWidget {
             icon: PixelIconKind.story,
             showLabel: true,
             selected: true,
-            onPressed: () => onNavigate('story'),
+            onPressed: () => showSampleDetail(
+              context,
+              'Chương 1: Khởi hành',
+              'Chương mở đầu · 0 / 5 đoạn truyện.',
+              icon: PixelIconKind.story,
+            ),
           ),
           ExpansionTile(
             title: const Text('4 chương chưa mở'),
@@ -47,7 +52,12 @@ class StoryScreen extends StatelessWidget {
                       label: 'Chương ${index + 2}\n$title\nĐã khóa',
                       showLabel: true,
                       icon: PixelIconKind.lock,
-                      onPressed: null,
+                      onPressed: () => showSampleDetail(
+                        context,
+                        title,
+                        'Hoàn thành chương ${index + 1} để mở chương này.',
+                        icon: PixelIconKind.lock,
+                      ),
                     ),
                 ],
               ),
@@ -79,7 +89,14 @@ class StoryScreen extends StatelessWidget {
                 showLabel: true,
                 icon: index == 0 ? PixelIconKind.talk : PixelIconKind.lock,
                 selected: index == 0,
-                onPressed: index == 0 ? onStart : null,
+                onPressed: index == 0
+                    ? onStart
+                    : () => showSampleDetail(
+                        context,
+                        title,
+                        'Xem xong đoạn truyện $index để mở đoạn này.',
+                        icon: PixelIconKind.lock,
+                      ),
               ),
             MenuButton(
               label: 'Bắt đầu xem thử',

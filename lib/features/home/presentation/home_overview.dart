@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/presentation/menu_panel.dart';
-import '../../../app/presentation/game_spacing.dart';
-import '../../../app/presentation/pixel/pixel_frame.dart';
+import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
 
 /// Home and menus render copy at logical sizes, independently of artwork.
 class HomeQuests extends StatelessWidget {
-  const HomeQuests({this.onOpen, super.key});
+  const HomeQuests({this.onOpen, this.onOpenSide, super.key});
   final VoidCallback? onOpen;
+  final VoidCallback? onOpenSide;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -16,67 +15,87 @@ class HomeQuests extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.stretch,
     spacing: 8,
     children: [
-      Tooltip(
-        message: 'Mở Nhiệm vụ',
-        child: Semantics(
-          button: onOpen != null,
-          label: onOpen == null ? null : 'Mở Nhiệm vụ',
-          child: GestureDetector(
-            onTap: onOpen,
-            behavior: HitTestBehavior.opaque,
-            child: MenuPanel(
-              title: 'Nhiệm vụ chính',
-              child: Text(onOpen == null ? 'Chưa có nhiệm vụ' : 'Xem nhiệm vụ'),
-            ),
-          ),
-        ),
+      _QuestLink(
+        title: 'Nhiệm vụ chính',
+        label: 'Mở Nhiệm vụ',
+        detail: onOpen == null ? 'Chưa có nhiệm vụ' : 'Xem nhiệm vụ',
+        onOpen: onOpen,
       ),
-      const MenuPanel(
+      _QuestLink(
         title: 'Nhiệm vụ phụ',
-        child: Text('Chưa có nhiệm vụ phụ'),
+        label: 'Mở Nhiệm vụ phụ',
+        detail: onOpenSide == null
+            ? 'Chưa có nhiệm vụ phụ'
+            : 'Xem nhiệm vụ phụ',
+        onOpen: onOpenSide,
       ),
     ],
   );
 }
 
-class HomeMinimap extends StatelessWidget {
-  const HomeMinimap({super.key});
+class _QuestLink extends StatelessWidget {
+  const _QuestLink({
+    required this.title,
+    required this.detail,
+    required this.label,
+    required this.onOpen,
+  });
+
+  final String title;
+  final String detail;
+  final String label;
+  final VoidCallback? onOpen;
 
   @override
-  Widget build(BuildContext context) => MenuPanel(
-    title: 'BẢN ĐỒ',
-    child: SizedBox(
-      height: 48,
-      child: ColoredBox(
-        color: Colors.black,
-        child: Semantics(
-          label: 'Bản đồ chưa mở',
-          child: Center(child: PixelIcon(PixelIconKind.lock, size: 24)),
-        ),
+  Widget build(BuildContext context) {
+    final panel = MenuPanel(title: title, child: Text(detail));
+    if (onOpen == null) return panel;
+    return Tooltip(
+      message: label,
+      child: Semantics(
+        button: true,
+        child: InkWell(onTap: onOpen, child: panel),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class HomeUtilities extends StatelessWidget {
-  const HomeUtilities({super.key});
+  const HomeUtilities({
+    required this.gap,
+    required this.onInformation,
+    this.onDailyQuests,
+    super.key,
+  });
+
+  final double gap;
+  final VoidCallback onInformation;
+  final VoidCallback? onDailyQuests;
 
   @override
   Widget build(BuildContext context) => Row(
-    spacing: GameSpacing.small,
+    spacing: gap,
     children: [
-      for (final icon in const [
-        PixelIconKind.mail,
-        PixelIconKind.tasks,
-        PixelIconKind.info,
+      for (final (icon, label, onPressed) in [
+        (
+          PixelIconKind.mail,
+          'Hộp thư',
+          () => showSampleDetail(
+            context,
+            'Hộp thư',
+            'Chưa có thư. Thông báo hành trình sẽ xuất hiện tại đây.',
+            icon: PixelIconKind.mail,
+          ),
+        ),
+        (PixelIconKind.tasks, 'Nhiệm vụ hàng ngày', onDailyQuests),
+        (PixelIconKind.info, 'Thông tin màn hình', onInformation),
       ])
         Expanded(
-          child: ExcludeSemantics(
-            child: PixelFrame(
-              skin: PixelFrameSkin.cool,
-              padding: const EdgeInsets.all(GameSpacing.small),
-              child: Center(child: PixelIcon(icon, size: 40)),
-            ),
+          child: MenuButton(
+            label: label,
+            icon: icon,
+            artworkScale: 2 / 3,
+            onPressed: onPressed,
           ),
         ),
     ],

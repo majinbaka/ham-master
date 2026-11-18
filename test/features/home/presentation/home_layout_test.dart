@@ -6,7 +6,6 @@ import 'package:pixel_rpg/features/home/presentation/home_layout.dart';
 import 'package:pixel_rpg/app/presentation/game_spacing.dart';
 import 'package:pixel_rpg/features/home/presentation/home_footer.dart';
 import 'package:pixel_rpg/features/home/presentation/home_overview.dart';
-import 'package:pixel_rpg/app/presentation/pixel/pixel_frame.dart';
 import 'package:pixel_rpg/app/presentation/pixel/pixel_icon.dart';
 
 void main() {
@@ -21,7 +20,7 @@ void main() {
       MaterialApp(theme: appTheme, home: const HomeScreen()),
     );
 
-    expect(find.text('BẢN ĐỒ'), findsOneWidget);
+    expect(find.text('BẢN ĐỒ'), findsNothing);
     expect(find.byType(SingleChildScrollView), findsNothing);
     final home = tester.getCenter(find.byTooltip('Trang chủ'));
     final story = tester.getCenter(find.byTooltip('Cốt truyện'));
@@ -63,8 +62,9 @@ void main() {
     expect(rects[2].left - rects[1].right, closeTo(gap, 0.01));
     final utilities = find.descendant(
       of: find.byType(HomeUtilities),
-      matching: find.byType(PixelFrame),
+      matching: find.byType(TextButton),
     );
+    expect(utilities, findsNWidgets(3));
     for (final frame in utilities.evaluate()) {
       final finder = find.byWidget(frame.widget);
       final icon = find.descendant(
@@ -72,6 +72,7 @@ void main() {
         matching: find.byType(PixelIcon),
       );
       expect(tester.getCenter(icon), tester.getCenter(finder));
+      expect(tester.getSize(finder).shortestSide, greaterThanOrEqualTo(48));
     }
     expect(tester.takeException(), isNull);
   });
@@ -88,7 +89,6 @@ void main() {
         'home-resources',
         'home-quests',
         'home-utilities',
-        'home-minimap',
         'home-dialogue',
         'home-actions',
         'home-navigation',
@@ -126,7 +126,6 @@ void main() {
             before[id] = rect;
           }
         }
-        final map = tester.getRect(find.byKey(const ValueKey('home-minimap')));
         final quests = tester.getRect(
           find.byKey(const ValueKey('home-quests')),
         );
@@ -139,12 +138,9 @@ void main() {
         final navigation = tester.getRect(
           find.byKey(const ValueKey('home-navigation')),
         );
-        expect(quests.overlaps(map), isFalse);
         expect(quests.overlaps(dialogue), isFalse);
-        expect(map.overlaps(dialogue), isFalse);
         expect(character.overlaps(dialogue), isFalse);
         expect(character.overlaps(quests), isFalse);
-        expect(character.overlaps(map), isFalse);
         expect(navigation.center.dx, closeTo(viewport.width / 2, 0.01));
         expect(dialogue.center.dx, closeTo(viewport.width / 2, 0.01));
         expect(character.center.dx, closeTo(viewport.width / 2, 0.01));
@@ -169,7 +165,7 @@ void main() {
       'home-profile',
       'home-quests',
       'home-resources',
-      'home-minimap',
+      'home-utilities',
       'home-dialogue',
       'home-actions',
       'home-navigation',
@@ -187,7 +183,7 @@ void main() {
           expect(rect.height, closeTo(before[id]!.height, 0.0001), reason: id);
           if (id == 'home-profile' || id == 'home-quests') {
             expect(rect.left, before[id]!.left);
-          } else if (id == 'home-resources' || id == 'home-minimap') {
+          } else if (id == 'home-resources' || id == 'home-utilities') {
             expect(width - rect.right, closeTo(390 - before[id]!.right, 0.01));
           } else {
             expect(rect.center.dx, width / 2);

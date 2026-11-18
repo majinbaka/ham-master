@@ -36,4 +36,6 @@ tranh, trạng thái nhiệm vụ và dữ liệu thưởng sẽ là các lớp 
 PNG này dùng để duyệt bố cục. Màn `/home/quests` dựng khung và nội dung mẫu
 bằng widget và mẫu viền code 2 dp/góc 8 dp chung. Từ Trang chủ, chọn **Xem nhiệm vụ** trong khung
 Nhiệm vụ chính. Danh sách và chi tiết cuộn cùng nhau phía trên shell điều hướng dùng chung với
-[các menu mẫu khác](menu-layouts.md); thanh dưới nối sáu màn hình.
+[các menu mẫu khác](menu-layouts.md). Tab Chính truyện hiện mục tiêu và phần
+thưởng. Tab Phụ và Hàng ngày hiện trạng thái trống. Tab Thành tựu có huy hiệu
+mẫu để xem chi tiết. Các chương khóa hiện điều kiện khi chạm.

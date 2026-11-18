@@ -24,9 +24,8 @@ chưa triển khai toàn bộ silhouette riêng của F01–F16. Các prompt bê
 vẫn là định hướng cho những component chi tiết chưa tạo.
 
 Ở cỡ chữ thường, Trang chủ giữ vị trí các cụm theo ảnh mẫu: hồ sơ/nhiệm vụ
-neo trái, tài nguyên/minimap neo phải, hội thoại/nút hành động/thanh dưới neo
-ở giữa. Nhiệm vụ luôn xếp dọc; minimap luôn hiện; sáu mục điều hướng luôn trên
-một hàng. Khi xoay ngang, các cụm dịch sang cạnh hoặc giữ trục giữa, không
+neo trái, tài nguyên/tiện ích neo phải, hội thoại/nút hành động/thanh dưới neo
+ở giữa. Nhiệm vụ luôn xếp dọc và sáu mục điều hướng luôn trên một hàng. Khi xoay ngang, các cụm dịch sang cạnh hoặc giữ trục giữa, không
 kéo giãn hay thu nhỏ theo chiều cao. Tranh làng nhận phần không gian dư.
 `HomeLayout` mở rộng `GameChromeLayout` dùng đơn vị thiết kế theo chiều rộng ảnh mẫu 940; hệ số chung
 được chặn ở 390/940 và chỉ giảm theo chiều ngắn thiết bị nhỏ hơn 390 dp.

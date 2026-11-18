@@ -102,6 +102,66 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('settings reset can be canceled or confirmed', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: appTheme,
+        home: SettingsScreen(onNavigate: (_) {}),
+      ),
+    );
+    await tester.tap(find.text('Điều khiển'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('D-Pad'));
+    await tester.tap(find.text('D-Pad'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Chung'));
+    await tester.pumpAndSettle();
+
+    for (final action in ['Hủy', 'Khôi phục']) {
+      final reset = find.text('Khôi phục mặc định');
+      await tester.ensureVisible(reset);
+      await tester.pumpAndSettle();
+      await tester.tap(reset);
+      await tester.pumpAndSettle();
+      expect(find.text('Khôi phục mặc định?'), findsOneWidget);
+      await tester.tap(find.text(action));
+      await tester.pumpAndSettle();
+      final touch = tester.widget<MenuButton>(
+        find.widgetWithText(MenuButton, 'Chạm'),
+      );
+      expect(touch.selected, action == 'Khôi phục');
+    }
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('profile tabs open collection and badge descriptions', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: appTheme,
+        home: ProfileScreen(onNavigate: (_) {}),
+      ),
+    );
+    expect(find.text('Trang sách mới'), findsNothing);
+    for (final (tab, item, description) in [
+      ('Sổ sưu tầm', 'Trang sách mới', 'Trang mở đầu'),
+      ('Huy hiệu', 'Người khám phá', 'ghé thăm các địa điểm'),
+    ]) {
+      final tabButton = find.widgetWithText(MenuButton, tab);
+      await tester.ensureVisible(tabButton);
+      await tester.tap(tabButton);
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text(item));
+      await tester.tap(find.text(item));
+      await tester.pumpAndSettle();
+      expect(find.textContaining(description), findsOneWidget);
+      await tester.tap(find.text('Đóng'));
+      await tester.pumpAndSettle();
+    }
+    expect(tester.takeException(), isNull);
+  });
+
   for (final size in [
     const Size(320, 568),
     const Size(390, 844),

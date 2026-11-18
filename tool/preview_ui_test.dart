@@ -1,4 +1,4 @@
-// Run: flutter test tool/preview_ui_test.dart --update-goldens
+// Run: flutter test tool/preview_ui_test.dart
 // Review PNGs, not golden assertions: these are portable layout references.
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pixel_rpg/app/presentation/menu_button.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 import 'package:pixel_rpg/features/home/presentation/home_screen.dart';
 import 'package:pixel_rpg/features/launch/presentation/launch_screen.dart';
@@ -15,6 +16,8 @@ import 'package:pixel_rpg/features/quests/presentation/quest_screen.dart';
 import 'package:pixel_rpg/features/settings/presentation/settings_screen.dart';
 import 'package:pixel_rpg/features/shop/presentation/shop_screen.dart';
 import 'package:pixel_rpg/features/story/presentation/story_screen.dart';
+
+import 'preview_modal_cases.dart';
 
 void main() {
   testWidgets('render UI review references', (tester) async {
@@ -45,8 +48,14 @@ void main() {
     ]) {
       tester.view.physicalSize = size;
       for (final scale in [1.0, if (extended) 2.0]) {
-        for (final entry in <String, Widget>{
-          'home': HomeScreen(onOpenQuests: () {}),
+        final home = HomeScreen(
+          onOpenQuests: () {},
+          onOpenSideQuests: () {},
+          onOpenDailyQuests: () {},
+        );
+        final screens = <String, Widget>{
+          'home': home,
+          'home-talk': home,
           'story': StoryScreen(onNavigate: (_) {}, onStart: () {}),
           'episode': StoryEpisodeScreen(onBack: () {}),
           'quests': QuestScreen(onBack: () {}),
@@ -54,19 +63,36 @@ void main() {
           'profile': ProfileScreen(onNavigate: (_) {}),
           'settings': SettingsScreen(onNavigate: (_) {}),
           'launch': LaunchScreen(onComplete: () {}),
-        }.entries) {
-          if (screen.isNotEmpty && screen != entry.key) continue;
+        };
+        final captureModals = size == const Size(390, 844) && scale == 1;
+        for (final (name, widget, steps) in [
+          for (final entry in screens.entries)
+            (entry.key, entry.value, const <String>[]),
+          if (captureModals)
+            for (final group in previewModalCases.entries)
+              for (final modal in group.value.entries)
+                (
+                  'modals/${group.key}-${modal.key}',
+                  screens[group.key]!,
+                  modal.value,
+                ),
+        ]) {
+          if (screen.isNotEmpty && screen != name) continue;
           final key = GlobalKey();
           await tester.pumpWidget(
-            MaterialApp(
-              theme: appTheme,
-              builder: (context, child) => MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: TextScaler.linear(scale)),
-                child: child!,
+            RepaintBoundary(
+              key: key,
+              child: MaterialApp(
+                theme: appTheme,
+                debugShowCheckedModeBanner: false,
+                builder: (context, child) => MediaQuery(
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(textScaler: TextScaler.linear(scale)),
+                  child: child!,
+                ),
+                home: widget,
               ),
-              home: RepaintBoundary(key: key, child: entry.value),
             ),
           );
           await tester.pump(const Duration(milliseconds: 1500));
@@ -81,6 +107,41 @@ void main() {
             }
           });
           await tester.pump();
+          for (final step in steps) {
+            final button = find.widgetWithText(MenuButton, step);
+            final text = find.text(step);
+            final control = button.evaluate().isNotEmpty
+                ? button
+                : text.evaluate().isNotEmpty
+                ? text
+                : find.byTooltip(step);
+            await tester.ensureVisible(control);
+            await tester.pumpAndSettle();
+            expect(
+              control.hitTestable(),
+              findsOneWidget,
+              reason: '$name · $step',
+            );
+            await tester.tap(control);
+            await tester.pumpAndSettle();
+          }
+          if (steps.isNotEmpty) {
+            expect(find.byType(AlertDialog), findsOneWidget, reason: name);
+          }
+          if (name == 'home-talk') {
+            final talk = find.byTooltip('Nói chuyện');
+            await tester.ensureVisible(talk);
+            await tester.pumpAndSettle();
+            await tester.tap(talk);
+            await tester.pumpAndSettle();
+            expect(
+              find
+                  .text('Người gác làng: Hãy ghé trại gần cổng làng.')
+                  .hitTestable(),
+              findsOneWidget,
+            );
+            expect(find.byType(AlertDialog), findsNothing);
+          }
           expect(tester.takeException(), isNull);
           final boundary =
               key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
@@ -92,7 +153,7 @@ void main() {
             final bytes = await image.toByteData(
               format: ui.ImageByteFormat.png,
             );
-            final file = File('$output/${entry.key}$suffix.png');
+            final file = File('$output/$name$suffix.png');
             await file.parent.create(recursive: true);
             await file.writeAsBytes(bytes!.buffer.asUint8List());
             image.dispose();

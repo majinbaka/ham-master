@@ -17,12 +17,48 @@ class _ShopScreenState extends State<ShopScreen> {
   var _category = 0;
   static const _tabs = ['Đề cử', 'Vật phẩm', 'Trang bị', 'Đá nâng cấp', 'Khác'];
   static const _items = [
-    ('Thuốc hồi phục', PixelIconKind.energy, '120 ngọc', 1),
-    ('Vé hành trình', PixelIconKind.bookmark, '90 ngọc', 1),
-    ('Kiếm tập luyện', PixelIconKind.battle, '300 vàng', 2),
-    ('Đá ánh sáng', PixelIconKind.gem, '160 ngọc', 3),
-    ('Túi tiếp tế', PixelIconKind.backpack, '500 vàng', 4),
-    ('Sổ khám phá', PixelIconKind.story, '200 vàng', 4),
+    (
+      'Thuốc hồi phục',
+      PixelIconKind.energy,
+      '120 ngọc',
+      1,
+      'Bình thuốc dùng trong hành trình, giúp phục hồi thể lực.',
+    ),
+    (
+      'Vé hành trình',
+      PixelIconKind.bookmark,
+      '90 ngọc',
+      1,
+      'Tấm vé dành cho một chuyến xe qua vùng đồi.',
+    ),
+    (
+      'Kiếm tập luyện',
+      PixelIconKind.battle,
+      '300 vàng',
+      2,
+      'Thanh kiếm gỗ dành cho người mới tập kiếm ở trại.',
+    ),
+    (
+      'Đá ánh sáng',
+      PixelIconKind.gem,
+      '160 ngọc',
+      3,
+      'Viên đá phát sáng dùng để minh họa nguyên liệu nâng cấp.',
+    ),
+    (
+      'Túi tiếp tế',
+      PixelIconKind.backpack,
+      '500 vàng',
+      4,
+      'Một túi nhỏ đựng đồ dùng mang theo khi rời làng.',
+    ),
+    (
+      'Sổ khám phá',
+      PixelIconKind.story,
+      '200 vàng',
+      4,
+      'Quyển sổ ghi lại địa điểm và những cuộc gặp trên đường.',
+    ),
   ];
 
   @override
@@ -76,7 +112,8 @@ class _ShopScreenState extends State<ShopScreen> {
                         onPressed: () => showSampleDetail(
                           context,
                           'Gói khởi hành',
-                          'Gói minh họa gồm tài nguyên và vật phẩm khởi hành.',
+                          '300 ngọc, 30.000 vàng và 10 vật phẩm. Chưa thực hiện giao dịch trong bản xem trước.',
+                          icon: PixelIconKind.backpack,
                         ),
                       ),
                     ],
@@ -89,7 +126,7 @@ class _ShopScreenState extends State<ShopScreen> {
           title: 'Vật phẩm · ${_tabs[_category]}',
           child: MenuGrid(
             children: [
-              for (final (name, icon, price, category) in _items)
+              for (final (name, icon, price, category, detail) in _items)
                 if (_category == 0 || category == _category)
                   MenuButton(
                     label: '$name\n$price\nXem chi tiết',
@@ -98,7 +135,8 @@ class _ShopScreenState extends State<ShopScreen> {
                     onPressed: () => showSampleDetail(
                       context,
                       name,
-                      'Giá minh họa: $price. Vật phẩm chuẩn bị cho hành trình.',
+                      '$detail\n\nGiá minh họa $price. Chưa thực hiện giao dịch trong bản xem trước.',
+                      icon: icon,
                     ),
                   ),
             ],
@@ -108,10 +146,13 @@ class _ShopScreenState extends State<ShopScreen> {
           title: 'Gói đặc biệt',
           child: MenuGrid(
             children: [
-              for (final name in [
-                'Gói sưu tầm',
-                'Gói huấn luyện',
-                'Gói phiêu lưu',
+              for (final (name, detail) in const [
+                ('Gói sưu tầm', 'Sổ khám phá và vật phẩm dành cho bộ sưu tầm.'),
+                ('Gói huấn luyện', 'Kiếm tập luyện và đồ dùng mang đến trại.'),
+                (
+                  'Gói phiêu lưu',
+                  'Túi tiếp tế và vé cho chuyến đi qua vùng đồi.',
+                ),
               ])
                 MenuButton(
                   label: name,
@@ -120,7 +161,8 @@ class _ShopScreenState extends State<ShopScreen> {
                   onPressed: () => showSampleDetail(
                     context,
                     name,
-                    'Bản xem trước gói vật phẩm. Chưa có giá bán hoặc thanh toán.',
+                    '$detail Chưa có giá bán mẫu cho gói này.',
+                    icon: PixelIconKind.backpack,
                   ),
                 ),
             ],
