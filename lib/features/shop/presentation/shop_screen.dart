@@ -86,7 +86,7 @@ class _ShopScreenState extends State<ShopScreen> {
           runSpacing: 4,
           children: [
             for (final (index, tab) in _tabs.indexed)
-              MenuButton(
+              MenuButton.tab(
                 label: tab,
                 selected: index == _category,
                 onPressed: () => setState(() => _category = index),

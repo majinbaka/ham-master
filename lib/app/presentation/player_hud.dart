@@ -77,27 +77,40 @@ class ResourceHud extends StatelessWidget {
       const Row(
         children: [
           Expanded(
-            child: _Counter(icon: PixelIconKind.coin, label: 'Vàng'),
+            child: _Counter(
+              icon: PixelIconKind.coin,
+              skin: PixelFrameSkin.gold,
+              label: 'Vàng',
+            ),
           ),
           SizedBox(width: GameSpacing.small),
           Expanded(
-            child: _Counter(icon: PixelIconKind.gem, label: 'Ngọc'),
+            child: _Counter(
+              icon: PixelIconKind.gem,
+              skin: PixelFrameSkin.cyan,
+              label: 'Ngọc',
+            ),
           ),
         ],
       ),
       const SizedBox(height: GameSpacing.gap),
       const SizedBox(
         width: 250,
-        child: _Counter(icon: PixelIconKind.energy, label: 'Năng lượng'),
+        child: _Counter(
+          icon: PixelIconKind.energy,
+          skin: PixelFrameSkin.cool,
+          label: 'Năng lượng',
+        ),
       ),
     ],
   );
 }
 
 class _Counter extends StatelessWidget {
-  const _Counter({required this.icon, required this.label});
+  const _Counter({required this.icon, required this.skin, required this.label});
 
   final PixelIconKind icon;
+  final PixelFrameSkin skin;
   final String label;
 
   @override
@@ -107,7 +120,7 @@ class _Counter extends StatelessWidget {
     child: SizedBox(
       height: 50,
       child: PixelFrame(
-        skin: PixelFrameSkin.cool,
+        skin: skin,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

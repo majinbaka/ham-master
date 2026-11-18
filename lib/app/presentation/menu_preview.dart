@@ -18,7 +18,7 @@ class MenuPreview extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            const VillageBackdrop(dimmed: true),
+            const VillageBackdrop(softened: true),
             Center(child: PixelIcon(icon, size: 48)),
           ],
         ),

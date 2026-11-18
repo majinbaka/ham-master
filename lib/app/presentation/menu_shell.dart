@@ -33,7 +33,6 @@ class MenuShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: Colors.black,
     body: SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -44,7 +43,7 @@ class MenuShell extends StatelessWidget {
           final gap = GameSpacing.gap * layout.scale;
           return Stack(
             children: [
-              const Positioned.fill(child: VillageBackdrop(dimmed: true)),
+              const Positioned.fill(child: VillageBackdrop(softened: true)),
               Positioned.fromRect(
                 rect: layout.profile,
                 child: ScaledArtwork(
@@ -94,7 +93,7 @@ class MenuShell extends StatelessWidget {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: GameTypography.title.copyWith(
-                                    color: PixelUiColors.gold,
+                                    color: PixelUiColors.outline,
                                   ),
                                 ),
                               ),
@@ -103,7 +102,7 @@ class MenuShell extends StatelessWidget {
                         ),
                         Expanded(
                           child: PixelFrame(
-                            skin: PixelFrameSkin.cool,
+                            skin: PixelFrameSkin.cream,
                             padding: const EdgeInsets.all(8),
                             child: SingleChildScrollView(
                               key: const ValueKey('menu-content'),
@@ -115,7 +114,7 @@ class MenuShell extends StatelessWidget {
                                     'Dữ liệu mẫu · Không lưu thay đổi',
                                     textAlign: TextAlign.center,
                                     style: GameTypography.caption.copyWith(
-                                      color: PixelUiColors.cool,
+                                      color: PixelUiColors.mutedInk,
                                     ),
                                   ),
                                   child,

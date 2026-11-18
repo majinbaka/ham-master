@@ -27,8 +27,26 @@ textures; choose the logical resolution and tile size with the first game slice.
 
 - `scenes/twilight-village.png`: 1024 × 1536 static background generated with
   built-in ImageGen for the cozy RPG UI refresh. No baked text or interactive
-  map data. Render with nearest-neighbor filtering and `BoxFit.cover`. Menus
-  use a dark plum overlay so the illustration does not compete with text.
+  map data. Archived as the source for the daylight edit.
   Prompt: cute twilight woodland village, plum-roof cream cottages, golden
   lanterns, cyan stream, lavender clearing, chunky crisp pixels; existing
   plum/cream/gold/cyan palette; no characters, text, UI or logos.
+
+- `scenes/daylight-village.png`: 1024 × 1536 static runtime background.
+  Built-in ImageGen edit of the twilight scene, using the following prompt.
+  Home renders it with nearest-neighbor filtering and `BoxFit.cover`.
+  Menus use a light cream overlay with opaque text panels.
+
+  > Edit target is the supplied vertical pixel-art RPG village. Change the
+  > lighting from twilight to gentle, cheerful late-morning daylight, keeping
+  > the whole portrait composition and large quiet central clearing, tiled
+  > cottages, distant arch, stepping stones, pond and waterfall, and crisp
+  > chunky pixel-art style in place. Colorful child-friendly storybook palette
+  > with clear blue sky, leafy spring green trees with sage shadows, soft grassy
+  > green clearing, warm cream cottage walls, one muted terracotta roof and one
+  > soft teal roof, turquoise stream, and small butter-yellow, coral-peach and
+  > sky-blue flowers. Keep highlights soft and the very large surfaces
+  > comfortable to look at. Use medium saturation and softly contrasted color
+  > ramps, without neon, heavy dark vignette or purple color cast. Preserve
+  > distinct readable forms at a phone scale. No text, lettering, characters,
+  > logos, UI, or framing. Portrait 2:3.

@@ -13,7 +13,7 @@ và prompt** cho các component tái sử dụng.
 Màn hình chính tại `lib/features/home/presentation/` dùng palette và bố cục
 Home với khung code chung: viền 2 dp, góc 8 dp từ `GameSurfaceStyle`.
 `ArtworkProjection` bù scale để HUD, panel, nút và dialog có cùng hình học.
-Sau loading 3 giây, app chuyển sang Home; cảnh làng hoàng hôn tĩnh, portrait nhà lữ hành vẽ bằng code,
+Sau loading 3 giây, app chuyển sang Home với cảnh làng ban ngày tĩnh, portrait nhà lữ hành vẽ bằng code,
 chưa có gameplay. Sáu skin chỉ đổi màu/nền. Chữ là widget riêng; 18 icon dùng
 atlas trong suốt `assets/ui/icon-atlas.png`. Atlas khung cũ giữ làm tư liệu art,
 không còn đóng gói runtime. Các quy tắc generate bên dưới là art direction,
@@ -46,7 +46,7 @@ chân dung, bản đồ, tranh khung cảnh, đồ nội thất hoặc đạo c�
 Icon minh họa như túi, kiếm, sách, tiền, kim cương cũng không nằm trong bộ này.
 Chữ, con số và nội dung icon sẽ được đặt độc lập khi dựng game.
 
-## 1. Phong cách rút ra từ ảnh mẫu
+## 1. Phong cách của ảnh mẫu gốc
 
 **Tinh thần:** pixel RPG thân thiện, ấm áp; khung đủ nổi bật trên nền nhiều
 chi tiết, có cảm giác vật thể nhỏ với viền sáng và bóng đổ gọn.

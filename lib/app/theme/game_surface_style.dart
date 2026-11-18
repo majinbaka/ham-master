@@ -8,7 +8,7 @@ abstract final class GameSurfaceStyle {
   static const cornerRadius = 8.0;
 
   static RoundedRectangleBorder shape({
-    Color color = PixelUiColors.cream,
+    Color color = PixelUiColors.frameBorder,
     double projection = 1,
   }) => RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(cornerRadius / projection),

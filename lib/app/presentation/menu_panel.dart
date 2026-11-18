@@ -27,7 +27,7 @@ class MenuPanel extends StatelessWidget {
       const inset = 2 * GameSurfaceStyle.borderWidth;
       final titleStyle = Theme.of(context).textTheme.labelLarge!
           .merge(GameTypography.panelTitle)
-          .copyWith(color: PixelUiColors.gold);
+          .copyWith(color: PixelUiColors.outline);
       final painter = TextPainter(
         text: TextSpan(text: title ?? '', style: titleStyle),
         textDirection: Directionality.of(context),
@@ -51,7 +51,7 @@ class MenuPanel extends StatelessWidget {
               ),
               child: DefaultTextStyle.merge(
                 style: GameTypography.body.copyWith(
-                  color: light ? PixelUiColors.outline : PixelUiColors.paper,
+                  color: PixelUiColors.outline,
                 ),
                 child: SizedBox(width: double.infinity, child: child),
               ),

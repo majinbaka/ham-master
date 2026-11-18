@@ -14,7 +14,7 @@ LABEL_HEIGHT = 28
 
 def assemble(paths: list[Path], output: Path) -> None:
     rows = (len(paths) + COLUMNS - 1) // COLUMNS
-    canvas = Image.new("RGB", (COLUMNS * WIDTH, rows * (HEIGHT + LABEL_HEIGHT)), "#211b2e")
+    canvas = Image.new("RGB", (COLUMNS * WIDTH, rows * (HEIGHT + LABEL_HEIGHT)), "#263d35")
     labels = ImageDraw.Draw(canvas)
     for index, path in enumerate(paths):
         left = index % COLUMNS * WIDTH

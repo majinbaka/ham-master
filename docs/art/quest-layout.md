@@ -5,7 +5,7 @@
 ![Khung màn hình Nhiệm vụ: HUD, bốn tab, danh sách chương bên trái, chi tiết bên phải và thanh điều hướng dưới cùng](quest-layout.png)
 
 Ảnh là bản thiết kế dọc theo tỷ lệ **853:1280** của ảnh mẫu Nhiệm vụ.
-Chỉ lấy vị trí, tỷ lệ và vai trò các vùng. Phong cách lấy từ
+Chỉ lấy vị trí, tỷ lệ và vai trò các vùng. Màu và viền của ảnh lấy từ
 [concept UI PixelRPG](reusable-ui-concept.md): nền tối, khung tím than
 viền bậc, vàng cho lựa chọn và nền kem cho nội dung dài.
 

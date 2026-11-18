@@ -51,7 +51,7 @@ class _QuestScreenState extends State<QuestScreen> {
           runSpacing: 4,
           children: [
             for (final category in QuestCategory.values)
-              MenuButton(
+              MenuButton.tab(
                 label: category.label,
                 selected: _category == category,
                 onPressed: () => setState(() => _category = category),

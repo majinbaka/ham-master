@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               'Sổ sưu tầm',
               'Huy hiệu',
             ].indexed)
-              MenuButton(
+              MenuButton.tab(
                 label: label,
                 selected: _tab == index,
                 onPressed: () => setState(() => _tab = index),

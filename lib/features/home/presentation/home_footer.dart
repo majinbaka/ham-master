@@ -3,24 +3,33 @@ import 'package:flutter/material.dart';
 import '../../../app/presentation/game_spacing.dart';
 import '../../../app/presentation/menu_button.dart';
 import '../../../app/presentation/menu_panel.dart';
+import '../../../app/presentation/pixel/pixel_frame_skin.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
 
 enum HomeAction {
   talk(
     PixelIconKind.talk,
+    PixelFrameSkin.gold,
     'Nói chuyện',
     'Người gác làng: Hãy ghé trại gần cổng làng.',
   ),
   observe(
     PixelIconKind.observe,
+    PixelFrameSkin.cyan,
     'Quan sát',
     'Ánh đèn ven đường dẫn về phía cổng làng.',
   ),
-  search(PixelIconKind.search, 'Tìm kiếm', 'Chưa thấy vật phẩm quanh trại.');
+  search(
+    PixelIconKind.search,
+    PixelFrameSkin.cool,
+    'Tìm kiếm',
+    'Chưa thấy vật phẩm quanh trại.',
+  );
 
-  const HomeAction(this.icon, this.label, this.message);
+  const HomeAction(this.icon, this.skin, this.label, this.message);
 
   final PixelIconKind icon;
+  final PixelFrameSkin skin;
   final String label;
   final String message;
 }
@@ -68,6 +77,7 @@ class HomeActions extends StatelessWidget {
           child: MenuButton(
             label: action.label,
             icon: action.icon,
+            skin: action.skin,
             artworkScale: 2 * scale,
             onPressed: () => onAction(action),
           ),

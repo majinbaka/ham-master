@@ -55,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             'Tài khoản',
             'Thông tin',
           ])
-            MenuButton(
+            MenuButton.tab(
               label: category,
               selected: category == _category,
               onPressed: () => setState(() => _category = category),
@@ -79,7 +79,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Expanded(child: Text(entry.key)),
               Text(
                 '${entry.value.round()}%',
-                style: GameTypography.value.copyWith(color: PixelUiColors.gold),
+                style: GameTypography.value.copyWith(
+                  color: PixelUiColors.amber,
+                ),
               ),
             ],
           ),
@@ -87,8 +89,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             data: SliderTheme.of(context).copyWith(
               trackHeight: 8,
               activeTrackColor: PixelUiColors.gold,
-              inactiveTrackColor: PixelUiColors.raised,
-              thumbColor: PixelUiColors.cream,
+              inactiveTrackColor: PixelUiColors.teal,
+              thumbColor: PixelUiColors.amber,
             ),
             child: Slider(
               semanticFormatterCallback: (value) =>
@@ -110,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           runSpacing: 4,
           children: [
             for (final quality in ['Thấp', 'Vừa', 'Cao'])
-              MenuButton(
+              MenuButton.tab(
                 label: quality,
                 selected: quality == _quality,
                 onPressed: () => setState(() => _quality = quality),
@@ -126,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           runSpacing: 4,
           children: [
             for (final controls in ['Chạm', 'D-Pad'])
-              MenuButton(
+              MenuButton.tab(
                 label: controls,
                 selected: controls == _controls,
                 onPressed: () => setState(() => _controls = controls),
@@ -200,7 +202,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     contentPadding: EdgeInsets.zero,
     title: Text(label),
     activeThumbColor: PixelUiColors.gold,
-    activeTrackColor: PixelUiColors.raised,
+    activeTrackColor: PixelUiColors.teal,
     value: _toggles[label]!,
     onChanged: (value) => setState(() => _toggles[label] = value),
   );

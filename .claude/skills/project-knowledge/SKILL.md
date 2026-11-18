@@ -8,8 +8,8 @@ description: Answer questions about the current PixelRPG foundation, architectur
 Read `README.md`, `AGENTS.md`, `pubspec.yaml` and
 `docs/adr/0001-flutter-foundation.md` and
 `docs/adr/0003-offline-game-core.md`, then inspect the relevant source.
-The app contains a three-second neon NDAS loading screen at `/`, a main screen
-at `/home` with shared code frames, HUD, quest shortcuts, a static twilight village, a code-drawn
+The app contains a three-second NDAS loading screen at `/`, a main screen
+at `/home` with shared code frames, HUD, quest shortcuts, a static daylight village, a code-drawn
 pixel traveler portrait, welcome panel and navigation to sample menus.
 Home opens the read-only `/home/quests` preview and can preselect Side or Daily via
 `tab`. Quest categories switch between sample objectives, empty states and an

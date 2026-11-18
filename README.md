@@ -76,13 +76,13 @@ Android application ID: `com.jinshu.pixel_rpg`.
 - Riverpod cho state/DI; go_router với `/` (launch), `/home` (màn hình chính)
   và `/home/quests` (bản xem trước Nhiệm vụ); các màn mẫu `/home/story`,
   `/home/shop`, `/home/profile`, `/home/settings` và `/home/story/episode`.
-- Loading nền đen với quầng tím than nhẹ, logo NDAS, thanh neon cam tăng từ 0 đến 100% trong
+- Loading nền kem chuyển xanh trời, logo NDAS và thanh vàng đào tăng từ 0 đến 100% trong
   khoảng 3 giây rồi thay route bằng màn hình chính phong cách pixel RPG.
   Cụm logo và loading cùng trục giữa, nằm gọn trong ô giữa của lưới 3×3
   vùng màn hình an toàn, tự thu nhỏ theo kích thước màn hình.
   Đây là hiệu ứng khởi động, chưa có dữ liệu gameplay cần nạp.
-- Màn hình chính dùng khung tím than chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
-  panel nhiệm vụ, lời chào và thanh chức năng. Cảnh làng pixel hoàng hôn, nhân vật minh họa đội mũ
+- Màn hình chính dùng khung sáng chung, viền 2 dp, bo góc 8 dp, HUD hồ sơ/tài nguyên,
+  panel nhiệm vụ, lời chào và thanh chức năng. Cảnh làng pixel ban ngày, nhân vật minh họa đội mũ
   vàng. UI dùng kích thước/tỉ lệ thiết kế cố định: hồ sơ và nhiệm vụ neo trái,
   tài nguyên và tiện ích neo phải; hội thoại, ba nút hành động và thanh sáu mục
   một hàng neo giữa phía dưới. Xoay màn hình giữ nguyên kích thước các cụm,
@@ -100,13 +100,13 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Khoảng cách dùng lưới chung `GameSpacing` khoảng 4 dp/bước: lề an toàn và
   khoảng giữa cụm khoảng 8 dp, footer cửa sổ thấp dùng khoảng 4 dp. Nội dung
   nút compact có icon lớn và tên qua tooltip/semantics; thẻ nội dung hiện
-  cả icon và tên bằng `showLabel`. Viền kem bo mềm thuộc nút, icon không có viền riêng. Nội dung menu 17 dp, tiêu đề 22 dp; padding các ô điều hướng đồng nhất. Xem
+  cả icon và tên bằng `showLabel`. Viền bo mềm thuộc nút, icon không có viền riêng. Nội dung menu 17 dp, tiêu đề 22 dp; padding các ô điều hướng đồng nhất. Xem
   [quy ước spacing](docs/art/reusable-ui-concept.md#9-quy-ước-spacing-runtime-mobile).
   Mọi khung/nút/dialog/EXP dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp).
   `ArtworkProjection` bù scale HUD để giữ cùng độ dày/độ cong trên màn hình.
   Sáu skin chỉ đổi màu; atlas khung cũ giữ làm tư liệu, không đóng gói runtime. Chữ là widget riêng; 18 icon dùng atlas pixel art
-  nền trong suốt, cùng palette với khung. Chỉ mục điều hướng
-  đang chọn có tấm nền vàng, các mục còn lại nằm trên khay chung.
+  nền trong suốt. Khung dùng nền ngà, kem, bạc hà và xanh trời nhạt với chữ xanh đậm.
+  Mục điều hướng đang chọn có nền cam đào, viền nâu san hô và dấu tick.
   Thanh dưới mở Cốt truyện, Nhiệm vụ, Cửa hàng, Hồ sơ và Cài đặt.
   Cụm tiện ích mở Hộp thư, Nhiệm vụ hàng ngày và Thông tin màn hình.
   Nói chuyện, Quan sát và Tìm kiếm cập nhật nội dung ô hội thoại.

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// A determinate, beveled neon bar inspired by the supplied loading artwork.
+import '../../../app/theme/pixel_ui_colors.dart';
+
+/// A determinate loading bar with the original beveled silhouette.
 class NeonProgressBar extends StatelessWidget {
   const NeonProgressBar({required this.progress, super.key});
 
@@ -40,11 +42,11 @@ class _NeonBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final rect = (Offset.zero & size).deflate(2);
     final outline = _bevel(rect);
-    canvas.drawPath(outline, Paint()..color = const Color(0xFF242229));
+    canvas.drawPath(outline, Paint()..color = PixelUiColors.outline);
     canvas.drawPath(
       outline,
       Paint()
-        ..color = const Color(0xFF9D94A4)
+        ..color = PixelUiColors.teal
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2,
     );
@@ -55,12 +57,6 @@ class _NeonBarPainter extends CustomPainter {
       rect.width * progress.clamp(0, 1),
       rect.height,
     );
-    canvas.drawRect(
-      fill,
-      Paint()
-        ..color = const Color(0xFFFF7900)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 9),
-    );
     canvas.save();
     canvas.clipPath(outline);
     canvas.clipRect(fill);
@@ -70,10 +66,11 @@ class _NeonBarPainter extends CustomPainter {
         ..shader = const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFFFFEB68), Color(0xFFFF9D00), Color(0xFFFF5C00)],
+          colors: [PixelUiColors.gold, PixelUiColors.peach],
         ).createShader(rect),
     );
-    final stripePaint = Paint()..color = const Color(0x88FFF18A);
+    final stripePaint = Paint()
+      ..color = PixelUiColors.paper.withValues(alpha: .4);
     for (var x = -size.height; x < size.width; x += 32) {
       canvas.drawPath(
         Path()
@@ -88,7 +85,7 @@ class _NeonBarPainter extends CustomPainter {
     canvas.drawPath(
       _bevel(rect.deflate(3)),
       Paint()
-        ..color = const Color(0xFFFFF5C8)
+        ..color = PixelUiColors.paper
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2,
     );

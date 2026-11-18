@@ -2,7 +2,7 @@
 
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. Runtime behavior is a three-second
-NDAS loading screen followed by a pixel-styled home UI with a static twilight village scene
+NDAS loading screen followed by a pixel-styled home UI with a static daylight village scene
 and a code-drawn pixel traveler portrait. Home opens quest previews and a mail
 dialog. Scene actions update the dialogue panel.
 Story, quests, shop, profile and settings remain presentation-only previews.
@@ -50,7 +50,7 @@ Do not implement gameplay unless requested.
 
 - `lib/main.dart`: bootstrap and `ProviderScope`.
 - `lib/app/`: app composition, router and theme.
-- `lib/features/launch/presentation/`: three-second neon loading screen.
+- `lib/features/launch/presentation/`: three-second NDAS loading screen.
 - `lib/features/home/presentation/`: home scene with anchored artwork, shared
   logical-size quest and dialogue panels, interactive utilities and large-text reflow.
 - `lib/app/presentation/pixel/`: shared code frames, atlas icons, labels and EXP tracks.

@@ -1,8 +1,8 @@
 # Layout Cốt truyện, Cửa hàng, Hồ sơ và Cài đặt
 
 Bốn ảnh khung **1024 × 1536 (2:3)** giữ tỷ lệ ảnh người dùng cung cấp.
-Chỉ tham khảo vị trí và vai trò các vùng; palette tím than, kem, vàng và
-viền bậc pixel dùng lại từ [concept hiện tại](reusable-ui-concept.md).
+Chỉ tham khảo vị trí và vai trò các vùng. Các ảnh giữ màu và viền của
+[concept gốc](reusable-ui-concept.md).
 Không lấy nhân vật, yêu thú, bối cảnh, chủ đề thám tử hoặc giá tiền từ ảnh.
 
 | Màn hình | Ảnh khung | Bố cục tham khảo |

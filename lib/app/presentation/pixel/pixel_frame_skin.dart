@@ -15,16 +15,20 @@ enum PixelFrameSkin {
 
   Color get background => switch (this) {
     paper => PixelUiColors.paper,
-    selected => PixelUiColors.raised,
-    _ => PixelUiColors.surface,
+    selected => PixelUiColors.peach,
+    cream => PixelUiColors.surface,
+    cool => PixelUiColors.mint,
+    gold => PixelUiColors.gold,
+    cyan => PixelUiColors.sky,
   };
 
   Color get border => switch (this) {
-    cool => PixelUiColors.cool,
-    gold || selected => PixelUiColors.gold,
-    cyan => PixelUiColors.cyan,
-    paper => PixelUiColors.outline,
-    cream => PixelUiColors.cream,
+    cool => PixelUiColors.teal,
+    gold => PixelUiColors.amber,
+    selected => PixelUiColors.coral,
+    cyan => PixelUiColors.blue,
+    paper => PixelUiColors.amber,
+    cream => PixelUiColors.frameBorder,
   };
 }
 

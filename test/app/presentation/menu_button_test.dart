@@ -5,6 +5,37 @@ import 'package:pixel_rpg/app/presentation/pixel/pixel_icon.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
 
 void main() {
+  testWidgets('tabs keep a 48 dp touch target around a compact frame', (
+    tester,
+  ) async {
+    var taps = 0;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: appTheme,
+        home: Scaffold(
+          body: Center(
+            child: MenuButton.tab(
+              label: 'Âm thanh',
+              selected: true,
+              onPressed: () => taps++,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final button = find.byType(TextButton);
+    final frame = find.descendant(of: button, matching: find.byType(Material));
+    expect(tester.getSize(frame).height, 40);
+    final target = tester.getRect(button);
+    expect(target.height, 48);
+    expect(target.width, greaterThanOrEqualTo(48));
+    final edge = target.topCenter + const Offset(0, 1);
+    expect(tester.getRect(frame).contains(edge), isFalse);
+    await tester.tapAt(edge);
+    expect(taps, 1);
+  });
+
   testWidgets('content cards expose their names before interaction', (
     tester,
   ) async {

@@ -4,7 +4,8 @@ Giữ palette tím than, kem, vàng và cyan; làm rõ nội dung trước khi c
 giảm khoảng trống ở Home và dùng chung portrait/cảnh làng trên toàn app.
 Tranh ImageGen là asset trang trí offline, chữ và control vẫn do Flutter dựng.
 
-[Ảnh tổng hợp tám màn](runtime-preview/overview.jpg).
+Xem [ảnh tổng hợp với palette hiện tại](runtime-preview/overview.jpg).
+Các ghi nhận bên dưới thuộc đợt rà soát ngày 17/11/2026.
 
 | Màn | Thay đổi chính | Commit riêng |
 | --- | --- | --- |

@@ -43,7 +43,7 @@ class PixelLabel extends StatelessWidget {
   const PixelLabel(
     this.text, {
     this.fontSize = 26,
-    this.color = PixelUiColors.paper,
+    this.color = PixelUiColors.outline,
     this.alignment = Alignment.center,
     super.key,
   });

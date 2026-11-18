@@ -7,14 +7,14 @@ import 'game_surface_style.dart';
 final appTheme = ThemeData(
   useMaterial3: true,
   fontFamily: GameTypography.family,
-  scaffoldBackgroundColor: Colors.black,
-  colorScheme: const ColorScheme.dark(
-    primary: PixelUiColors.gold,
-    onPrimary: PixelUiColors.outline,
-    secondary: PixelUiColors.cyan,
-    onSecondary: PixelUiColors.outline,
+  scaffoldBackgroundColor: PixelUiColors.mint,
+  colorScheme: const ColorScheme.light(
+    primary: PixelUiColors.teal,
+    onPrimary: PixelUiColors.surface,
+    secondary: PixelUiColors.coral,
+    onSecondary: PixelUiColors.paper,
     surface: PixelUiColors.surface,
-    onSurface: PixelUiColors.paper,
+    onSurface: PixelUiColors.outline,
   ),
   textTheme: const TextTheme(
     bodyMedium: GameTypography.body,
@@ -26,8 +26,8 @@ final appTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       minimumSize: const Size(48, 56),
-      foregroundColor: PixelUiColors.paper,
-      disabledForegroundColor: PixelUiColors.cool,
+      foregroundColor: PixelUiColors.outline,
+      disabledForegroundColor: PixelUiColors.mutedInk,
       backgroundColor: PixelUiColors.surface,
       shape: GameSurfaceStyle.shape(),
       textStyle: GameTypography.label,
@@ -36,13 +36,14 @@ final appTheme = ThemeData(
   iconButtonTheme: IconButtonThemeData(
     style: IconButton.styleFrom(
       minimumSize: const Size(48, 48),
-      foregroundColor: PixelUiColors.paper,
+      foregroundColor: PixelUiColors.outline,
       backgroundColor: PixelUiColors.surface,
       shape: GameSurfaceStyle.shape(),
     ),
   ),
   dialogTheme: DialogThemeData(
-    backgroundColor: PixelUiColors.surface,
-    shape: GameSurfaceStyle.shape(color: PixelUiColors.cool),
+    backgroundColor: PixelUiColors.paper,
+    surfaceTintColor: Colors.transparent,
+    shape: GameSurfaceStyle.shape(color: PixelUiColors.teal),
   ),
 );
