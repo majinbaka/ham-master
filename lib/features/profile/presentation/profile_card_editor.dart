@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/pixel/pixel_frame_skin.dart';
-import '../../../app/presentation/pixel/pixel_icon.dart';
 import '../../../app/theme/pixel_ui_colors.dart';
 import '../../beasts/presentation/beast_preview_data.dart';
 import '../domain/profile_card.dart';
@@ -25,22 +24,16 @@ class ProfileCardEditor extends StatefulWidget {
 class _ProfileCardEditorState extends State<ProfileCardEditor> {
   final _form = GlobalKey<FormState>();
   late final _name = TextEditingController(text: widget.card.name);
-  late final _title = TextEditingController(text: widget.card.title);
-  late final _bio = TextEditingController(text: widget.card.bio);
   late var _background = widget.card.background;
   late var _avatar = widget.card.avatar;
   late var _companion =
       profileCompanion(widget.card.companion)?.sprite.name ?? '';
-  late final _badges = widget.card.badges.toSet();
-  late var _showStats = widget.card.showStats;
   var _saving = false;
   var _saveFailed = false;
 
   @override
   void dispose() {
     _name.dispose();
-    _title.dispose();
-    _bio.dispose();
     super.dispose();
   }
 
@@ -54,13 +47,13 @@ class _ProfileCardEditorState extends State<ProfileCardEditor> {
       ProfileCard(
         friendCode: widget.card.friendCode,
         name: _name.text.trim(),
-        title: _title.text.trim(),
-        bio: _bio.text.trim(),
+        title: widget.card.title,
+        bio: widget.card.bio,
         background: _background,
         avatar: _avatar,
         companion: _companion.isEmpty ? null : _companion,
-        badges: _badges,
-        showStats: _showStats,
+        badges: widget.card.badges,
+        showStats: widget.card.showStats,
       ),
     );
     if (!mounted) return;
@@ -100,20 +93,6 @@ class _ProfileCardEditorState extends State<ProfileCardEditor> {
                     ? 'Nhập tên hiển thị.'
                     : null,
               ),
-              TextFormField(
-                controller: _title,
-                enabled: !_saving,
-                maxLength: 32,
-                decoration: const InputDecoration(labelText: 'Danh hiệu'),
-              ),
-              TextFormField(
-                controller: _bio,
-                enabled: !_saving,
-                maxLength: 100,
-                minLines: 1,
-                maxLines: 3,
-                decoration: const InputDecoration(labelText: 'Giới thiệu'),
-              ),
               _choice(
                 label: 'Ảnh nền',
                 value: _background,
@@ -149,31 +128,6 @@ class _ProfileCardEditorState extends State<ProfileCardEditor> {
                     (beast.sprite.name, beast.name, beast.sprite.artwork(32)),
                 ],
                 onChanged: (choice) => setState(() => _companion = choice),
-              ),
-              const Text('Huy hiệu trưng bày'),
-              for (final badge in ProfileBadge.values)
-                CheckboxListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(badge.label),
-                  secondary: PixelIcon(badge.icon, size: 28),
-                  value: _badges.contains(badge),
-                  onChanged: _saving
-                      ? null
-                      : (checked) => setState(() {
-                          if (checked == true) {
-                            _badges.add(badge);
-                          } else {
-                            _badges.remove(badge);
-                          }
-                        }),
-                ),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Hiện chỉ số mẫu'),
-                value: _showStats,
-                onChanged: _saving
-                    ? null
-                    : (value) => setState(() => _showStats = value),
               ),
             ],
           ),

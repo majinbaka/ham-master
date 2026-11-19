@@ -114,17 +114,16 @@ Android application ID: `com.jinshu.pixel_rpg`.
   Thông tin, mở mặc định ở Tài khoản. Mục Chung chứa các tùy chọn thử và
   nút khôi phục mặc định.
   Cửa hàng, Cài đặt, Yêu thú và Trận chiến dùng dữ liệu mẫu.
-  Các menu dùng chung thanh nhân vật với Home. Thanh nhân vật, tiêu đề,
-  nút quay lại và thanh điều hướng đứng yên khi cuộn.
+  Cửa hàng, Cài đặt và Yêu thú dùng chung thanh nhân vật với Home. Thanh
+  nhân vật, tiêu đề, nút quay lại và thanh điều hướng đứng yên khi cuộn.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
-  Vật phẩm và chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
-- Hồ sơ dùng cảnh nền cố định phủ toàn màn hình. Chân dung, yêu thú đồng hành,
-  tên, danh hiệu, giới thiệu, huy hiệu và chỉ số mẫu nằm trên cảnh. Thông tin
-  gom thành một cụm nhỏ dưới vùng ảnh trên điện thoại và nằm bên phải khi
-  đủ rộng. **Chỉnh sửa thẻ** lưu tùy chọn trên thiết bị hoặc trình duyệt. Thẻ có mã bạn bè tạo cục bộ, QR quét ra cùng mã và nút
-  sao chép. **Chia sẻ ảnh** xuất PNG qua trình đơn chia sẻ Android hoặc tải
-  ảnh khi trình duyệt không có hỗ trợ chia sẻ tệp. Chức năng kết bạn trực tuyến
-  chưa được triển khai. Xem [quyết định lưu tùy chọn](docs/adr/0004-local-profile-card.md).
+  Vật phẩm dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
+- Hồ sơ dùng cảnh nền cố định phủ toàn màn hình. Tên, số yêu thú trong danh
+  sách mẫu và mã QR nằm trong một cụm nhỏ. Toàn bộ thẻ hiện ngay khi mở màn.
+  **Chỉnh sửa thẻ** lưu tên và tùy chọn hình ảnh trên thiết bị hoặc trình duyệt.
+  **Chia sẻ ảnh** xuất PNG qua trình đơn chia sẻ Android hoặc tải ảnh khi trình
+  duyệt không hỗ trợ chia sẻ tệp. Kết bạn trực tuyến chưa được triển khai.
+  Xem [quyết định lưu tùy chọn](docs/adr/0004-local-profile-card.md).
 - Hồ sơ giữ sổ sưu tầm, huy hiệu và lối vào **Danh sách yêu thú**. Có 12 yêu thú mẫu, bộ sưu tầm ghi thêm
   Sói Bóng Đêm, bộ lọc theo hệ/yêu thích, sắp xếp theo cấp và thẻ chi tiết
   có chỉ số, chiêu thức và các thao tác xem thử.

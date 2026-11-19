@@ -88,18 +88,22 @@ void main() {
           ]) {
             await show(screen, name);
             expect(find.text('—'), findsNothing);
-            expect(
-              tester.getRect(find.byType(PlayerHud)),
-              rectMoreOrLessEquals(profile, epsilon: 0.000001),
-              reason: name,
-            );
+            if (name == 'profile') {
+              expect(find.byType(PlayerHud), findsNothing);
+            } else {
+              expect(
+                tester.getRect(find.byType(PlayerHud)),
+                rectMoreOrLessEquals(profile, epsilon: 0.000001),
+                reason: name,
+              );
+            }
             expect(
               tester.getRect(find.byType(PixelNavigation)),
               rectMoreOrLessEquals(nav, epsilon: 0.000001),
               reason: name,
             );
             final menuText = name == 'profile'
-                ? find.text('Một hành trình mới bắt đầu!')
+                ? find.text('Nhà lữ hành')
                 : find
                       .descendant(
                         of: find.byType(MenuPanel).first,
@@ -112,7 +116,12 @@ void main() {
             expect(menuStyle.fontFamily, homeStyle.fontFamily, reason: name);
             expect(
               renderedFontSize(tester, menuText),
-              closeTo(homeBodySize, 0.001),
+              closeTo(
+                name == 'profile'
+                    ? GameTypography.title.fontSize! * textScale
+                    : homeBodySize,
+                0.001,
+              ),
               reason: '$name body',
             );
             final panel = tester.widget<MenuPanel>(
@@ -138,20 +147,26 @@ void main() {
                 )
                 .first;
             expect(ArtworkProjection.of(tester.element(panelFrame)), 1);
-            expect(
-              ArtworkProjection.of(tester.element(find.byType(PlayerHud))),
-              GameChromeLayout(size).scale,
-            );
+            if (name != 'profile') {
+              expect(
+                ArtworkProjection.of(tester.element(find.byType(PlayerHud))),
+                GameChromeLayout(size).scale,
+              );
+            }
             await tester.drag(
               find.byKey(const ValueKey('menu-content')),
               const Offset(0, -2000),
             );
             await tester.pumpAndSettle();
-            expect(
-              tester.getRect(find.byType(PlayerHud)),
-              rectMoreOrLessEquals(profile, epsilon: 0.000001),
-              reason: name,
-            );
+            if (name == 'profile') {
+              expect(find.byType(PlayerHud), findsNothing);
+            } else {
+              expect(
+                tester.getRect(find.byType(PlayerHud)),
+                rectMoreOrLessEquals(profile, epsilon: 0.000001),
+                reason: name,
+              );
+            }
             expect(
               tester.getRect(find.byType(PixelNavigation)),
               rectMoreOrLessEquals(nav, epsilon: 0.000001),

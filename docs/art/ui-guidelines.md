@@ -46,7 +46,7 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo thanh nhân vật, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud` | Thanh nhân vật dùng chung gồm chân dung, tên, cấp và EXP. `ScaledArtwork` giữ tỷ lệ theo ô thiết kế 440 × 120. |
 | `PixelNavigation` | Bốn mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn. |
-| `MenuShell` | Khung giấy kem nằm giữa thanh nhân vật và thanh điều hướng. Hồ sơ dùng biến thể ảnh nền toàn màn hình, đặt tiêu đề và nút quay lại trên ảnh. Chỉ nội dung dưới tiêu đề cuộn. |
+| `MenuShell` | Khung giấy kem nằm giữa thanh nhân vật và thanh điều hướng. Hồ sơ dùng ảnh nền toàn màn hình, đặt hàng tiêu đề ở mép trên vùng an toàn. Chỉ nội dung dưới tiêu đề cuộn. |
 | `MenuPanel` | Thân `cool` xanh bạc hà với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
 | `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn nút hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô. |
@@ -59,7 +59,8 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
 ## Bố cục chung
 
 - Áp dụng `SafeArea`. Thanh nhân vật neo góc trên bên trái và thanh điều
-  hướng neo giữa đáy theo cùng `GameChromeLayout` ở cả Home và menu. Home dùng tranh làng pixel tĩnh với nhà lữ hành đội mũ
+  hướng neo giữa đáy theo cùng `GameChromeLayout` ở Home và các menu có thanh
+  nhân vật. Hồ sơ dùng cùng vị trí neo thanh điều hướng. Home dùng tranh làng pixel tĩnh với nhà lữ hành đội mũ
   vàng và biểu tượng Hộp thư neo góc trên bên phải. Panel Home chừa chiều cao
   cho chữ dp và ô hội thoại thu bề rộng trên điện thoại nhỏ. Khi hệ số chữ
   vượt 1.15, Home dùng cửa sổ nội dung cuộn của shell chung, với Hộp thư
@@ -76,8 +77,8 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
   Dùng một vùng cuộn dọc và chừa khoảng cách với navigation.
 - `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
   (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
-- Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ, tab và nhóm cài đặt dùng
-  `Wrap` để xuống hàng khi hẹp hoặc chữ lớn.
+- Vật phẩm dùng cùng `MenuGrid`. Tab và nhóm cài đặt dùng `Wrap` để
+  xuống hàng khi hẹp hoặc chữ lớn.
 - Tab lọc và lựa chọn cài đặt dùng `MenuButton.tab` với padding ngang 6 dp,
   dọc 4 dp và khung cao tối thiểu 40 dp. Vùng chạm tối thiểu 48 × 48 dp.
   Khung tăng chiều cao khi nhãn xuống dòng hoặc chữ được phóng to.
@@ -146,7 +147,8 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 
 ## Điều kiện duyệt
 
-1. So sánh trực tiếp với Home: cùng thanh nhân vật, viền 2 dp/góc 8 dp và vị trí navigation.
+1. So sánh trực tiếp với Home. Kiểm tra viền 2 dp/góc 8 dp, vị trí navigation
+   và thanh nhân vật ở các menu có dùng thanh này.
    Không chấp nhận chỉ trùng palette nhưng khác tỷ lệ khung.
 2. Xem ảnh render mọi màn ở điện thoại, ngang và desktop để kiểm tra mép
    panel, hàng ô, icon–chữ, contrast và khoảng cách. Không chỉ dựa vào việc
@@ -154,7 +156,7 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 3. Test 320 × 568, 390 × 844, 844 × 390, 1440 × 900 và chữ 1×/2×;
    không overflow/chồng panel, phần cuối nội dung vẫn cuộn tới được.
 4. Kiểm tra chọn tab/nhóm, route, quay lại, dialog; cuộn không dịch chuyển
-   thanh nhân vật, tiêu đề hoặc navigation. Kiểm tra Android/web thực khi có thiết bị.
+   thanh nhân vật khi có, tiêu đề hoặc navigation. Kiểm tra Android/web thực khi có thiết bị.
 5. Test pixel kiểm tra đúng hai hàng viền và silhouette góc khi đổi skin,
    kích thước và projection; kiểm tra shape của nút/quay lại/dialog.
 6. Chạy format/analyze/test theo `AGENTS.md`. Thay đổi quy tắc dùng chung
@@ -174,12 +176,11 @@ nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ l
 
 Hồ sơ dùng cảnh đã chọn phủ hết màn hình, kể cả phía sau phần chừa cho
 hệ thống. Cảnh đứng yên khi cuộn. Chân dung và yêu thú đồng hành nằm trực
-tiếp trên cảnh. Tên, danh hiệu, giới thiệu, chỉ số mẫu tùy chọn, huy hiệu và
-mã kết bạn nằm trong một cụm xanh đậm bán trong suốt. Cụm thông tin nằm
-dưới vùng ảnh trên màn hẹp hoặc chữ lớn và thu về bên phải khi đủ rộng.
-Mã chữ và QR xếp dọc khi cần thêm chỗ. Nút chỉnh sửa mở biểu mẫu cuộn
-độc lập. Ảnh PNG ghép cảnh nền với toàn bộ thẻ, kể cả phần dưới vùng nhìn.
-Các nút thao tác và sổ sưu tầm nằm ngoài ảnh PNG.
+tiếp trên cảnh. Tên, số yêu thú trong danh sách mẫu và mã QR nằm trong một
+cụm xanh đậm bán trong suốt, ở dưới vùng ảnh trên màn hẹp và bên phải khi
+đủ rộng. Cả thẻ vừa trong vùng nhìn đầu tiên. Nút chỉnh sửa và chia sẻ
+nằm ở hàng tiêu đề. Cuộn xuống để xem sổ sưu tầm. Ảnh PNG gồm cảnh nền và
+thẻ trưng bày.
 
 Yêu thú dùng cùng `MenuColumns` cho danh sách và chi tiết. Chạm một thẻ
 đưa phần chi tiết vào vùng nhìn ở điện thoại. Chỉ số và chiêu dùng `MenuGrid`.

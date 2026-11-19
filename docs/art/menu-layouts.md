@@ -40,8 +40,9 @@ cửa hàng dùng hai cột hoặc một cột tùy chiều rộng để giữ c
 Các panel cuộn phía trên thanh điều hướng cố định. Cài đặt
 xếp danh sách trên nội dung khi hẹp hoặc chữ lớn; chỉ chia hai cột 1:2 khi đủ
 600 × hệ số chữ dp. Màn tối đa 760 dp, có safe area và hỗ trợ chữ lớn.
-Home là chuẩn runtime. Menu dùng chung thanh nhân vật, mẫu viền 2 dp/góc
-8 dp và vị trí neo điều hướng. Thanh nhân vật và tiêu đề cố định; chỉ cửa sổ ở giữa
+Home là chuẩn runtime. Menu dùng chung mẫu viền 2 dp/góc 8 dp và vị trí
+neo điều hướng. Hồ sơ dành mép trên cho hàng tiêu đề.
+Thanh nhân vật ở các menu còn lại và tiêu đề đều cố định; chỉ cửa sổ ở giữa
 cuộn. Panel tối với tab nổi, nội dung đọc dùng giấy kem. Vật phẩm và chỉ số dùng lưới ô đều.
 
 Runtime dùng `GameSurfaceStyle` (viền 2 dp, góc 8 dp); atlas khung chỉ
@@ -56,12 +57,11 @@ Thanh dưới nối Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
 - `/home/shop`: đổi danh mục, mở chi tiết vật phẩm/gói mẫu, đóng hộp thoại.
   Không có thao tác mua, thanh toán hoặc trừ tài nguyên.
 - `/home/profile` hiển thị thẻ trưng bày trên cảnh nền cố định phủ toàn màn
-  hình. Người chơi có thể chỉnh thẻ, sao chép mã kết bạn, quét QR hoặc chia
-  sẻ PNG. Sổ sưu tầm, huy hiệu và Cài đặt nằm dưới thẻ.
+  hình. Tên, số yêu thú và QR hiện đủ khi mở màn. Người chơi có thể chỉnh
+  thẻ hoặc chia sẻ PNG. Sổ sưu tầm, huy hiệu và Cài đặt nằm dưới thẻ.
 - `/home/settings` mở mặc định ở Tài khoản và có thêm tab Chung và Thông tin.
   Mục Chung chứa các tùy chọn thử cho âm lượng, đồ họa, điều khiển và nút
   khôi phục mặc định có xác nhận. Lựa chọn chỉ tồn tại khi ở màn hình này.
   Mục Thông tin có hộp thoại giới thiệu PixelRPG.
 
-Hồ sơ lưu các tùy chọn hiển thị cục bộ. Cấp độ và tiến trình
-trong Hồ sơ là dữ liệu minh họa.
+Hồ sơ lưu tùy chọn hiển thị cục bộ và lấy số yêu thú từ danh sách mẫu.

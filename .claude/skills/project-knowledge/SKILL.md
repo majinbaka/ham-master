@@ -15,10 +15,11 @@ mail icon opens a preview dialog. Scene actions update the Home dialogue panel.
 Shop, profile and settings live at `/home/shop`, `/home/profile`
 and `/home/settings`. Shop filters sample items and shows details. Profile
 layers a customizable showcase card over a fixed full-screen backdrop, with
-a compact information panel, a public code, offline QR encoding, PNG sharing and
-collection and badge tabs. Settings opens on Account, with General and
-Information as the other tabs. General controls change local widget selections and offer a
-confirmation dialog to reset them.
+a compact panel showing the name, sample roster count and offline QR code.
+The full card fits in the first viewport. It supports PNG sharing and has
+collection and badge tabs below the card. Settings opens on Account, with
+General and Information as the other tabs. General controls change local
+widget selections and offer a confirmation dialog to reset them.
 Profile opens `/home/beasts`, an illustrative roster with collection, filters,
 sorting, favorites and details. Home and Beasts open
 `/home/battle`, a full-screen encounter with fixed HP and manual attack previews.
@@ -27,11 +28,12 @@ configuration remain previews.
 The menus reuse `lib/app/presentation/` shell/controls and icon artwork, with
 scrolling content above fixed navigation. Read `docs/art/ui-guidelines.md`
 for the shared runtime concept. Home is the visual reference for menu framing
-and bottom navigation. Home and menus share a top-left character bar with a
-portrait, name, level and EXP. GameChromeLayout owns both anchors.
+and bottom navigation. Home, Shop, Settings and Beasts share a top-left
+character bar with a portrait, name, level and EXP. GameChromeLayout owns
+both anchors.
 GameSurfaceStyle owns 2 dp
 borders and 8 dp corners. Selected menu controls use color and semantics.
-Only the middle framed content scrolls. The character bar, header and
+Only the middle content scrolls. The character bar, header and
 navigation stay fixed.
 MenuPanel uses a dark body/floating gold title tab, with paper for reading;
 MenuGrid aligns card rows and PixelProgress uses the common border shape.

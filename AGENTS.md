@@ -3,12 +3,13 @@
 Single-package Flutter foundation for a mobile pixel RPG, derived from the
 structure and development skills of FlashKids. The three-second dark NDAS
 loading screen leads to a pixel-styled Home with a static daylight village
-and a code-drawn traveler portrait. Home and menus share a character bar.
+and a code-drawn traveler portrait. Home, Shop, Settings and Beasts share a character bar.
 The unframed mail icon opens a dialog,
 and the battle action opens the full-screen battle preview. Scene actions
 update the dialogue panel.
 Shop, settings, beasts and battle are presentation-only previews. Profile has
-a locally customizable showcase card with sample stats over a full-screen backdrop.
+a locally customizable showcase card with a name, beast count and QR code
+over a full-screen backdrop.
 Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
@@ -81,8 +82,8 @@ Do not implement gameplay unless requested.
 For every UI change, read and follow `docs/art/ui-guidelines.md`, the runtime
 UI concept for current and future screens. Reuse the shared menu shell,
 responsive columns, navigation, palette and atlas components. Home is the visual
-reference: menus reuse the character bar, artwork density and navigation anchors;
-only their middle content scrolls. Reference layout
+reference: menus reuse artwork density and navigation anchors. Shop, Settings
+and Beasts also reuse the character bar. Only middle content scrolls. Reference layout
 PNGs describe visual intent, not fixed runtime dimensions. Update this guideline
 in the same change when intentionally changing the shared visual rules.
 

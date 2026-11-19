@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixel_rpg/app/theme/app_theme.dart';
+import 'package:pixel_rpg/features/beasts/presentation/beast_preview_data.dart';
 import 'package:pixel_rpg/features/profile/domain/profile_card.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_screen.dart';
 import 'package:pixel_rpg/features/profile/presentation/profile_showcase_card.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../support/profile_card_test_scope.dart';
 
@@ -67,7 +69,13 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
       final store = TestProfileCardStore(
-        ProfileCard(friendCode: testFriendCode),
+        ProfileCard(
+          friendCode: testFriendCode,
+          title: 'Danh hiệu đã lưu',
+          bio: 'Giới thiệu đã lưu',
+          badges: const {ProfileBadge.explorer},
+          showStats: false,
+        ),
       );
       Future<void> openProfile() async {
         await tester.pumpWidget(
@@ -90,7 +98,7 @@ void main() {
       }
 
       await openProfile();
-      await tap(find.text('Chỉnh sửa thẻ'));
+      await tap(find.byTooltip('Chỉnh sửa thẻ'));
       await tester.enterText(find.byType(TextFormField).first, '   ');
       await tap(find.text('Lưu thẻ'));
       expect(find.text('Nhập tên hiển thị.'), findsOneWidget);
@@ -102,8 +110,6 @@ void main() {
       await tap(find.text('Trinh sát').last);
       await tap(find.text('Hỏa Hổ'));
       await tap(find.text('Hồ Băng').last);
-      await tap(find.widgetWithText(CheckboxListTile, 'Người khám phá'));
-      await tap(find.text('Hiện chỉ số mẫu'));
       store.failSave = true;
       await tap(find.text('Lưu thẻ'));
       expect(find.text('Chưa lưu được thẻ. Thử lại.'), findsOneWidget);
@@ -113,16 +119,16 @@ void main() {
       expect(find.byType(AlertDialog), findsNothing);
       expect(find.text('An'), findsOneWidget);
       expect(find.text('Chỉ số hành trình mẫu'), findsNothing);
-      expect(find.text('Người khám phá'), findsOneWidget);
+      expect(find.text('Người khám phá'), findsNothing);
       expect(find.bySemanticsLabel('Hồ Băng'), findsOneWidget);
       expect(store.card!.background, ProfileBackground.forest);
       expect(store.card!.avatar, ProfileAvatar.scout);
-      expect(store.card!.badges, {
-        ProfileBadge.firstStep,
-        ProfileBadge.explorer,
-      });
+      expect(store.card!.title, 'Danh hiệu đã lưu');
+      expect(store.card!.bio, 'Giới thiệu đã lưu');
+      expect(store.card!.badges, {ProfileBadge.explorer});
+      expect(store.card!.showStats, isFalse);
 
-      await tap(find.text('Chỉnh sửa thẻ'));
+      await tap(find.byTooltip('Chỉnh sửa thẻ'));
       await tester.enterText(find.byType(TextFormField).first, 'Bản nháp');
       await tap(find.text('Hủy'));
       expect(find.text('An'), findsOneWidget);
@@ -136,44 +142,73 @@ void main() {
     },
   );
 
-  testWidgets('copies the exact code printed on the card and in the QR', (
-    tester,
-  ) async {
-    String? copied;
-    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-      SystemChannels.platform,
-      (call) async {
-        if (call.method == 'Clipboard.setData') {
-          copied = call.arguments['text'] as String;
-        }
-        return null;
-      },
-    );
-    addTearDown(() {
-      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-        SystemChannels.platform,
-        null,
-      );
-    });
-    await tester.pumpWidget(
-      withProfileCard(
-        MaterialApp(
-          theme: appTheme,
-          home: ProfileScreen(onNavigate: (_) {}),
+  for (final size in [
+    const Size(320, 568),
+    const Size(390, 844),
+    const Size(844, 390),
+    const Size(1440, 900),
+  ]) {
+    testWidgets('shows only name, count and QR without scrolling at $size', (
+      tester,
+    ) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      const name = 'Nhà lữ hành qua những vì sao';
+      await tester.pumpWidget(
+        withProfileCard(
+          MaterialApp(
+            theme: appTheme,
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(2)),
+              child: child!,
+            ),
+            home: ProfileScreen(onNavigate: (_) {}),
+          ),
+          store: TestProfileCardStore(
+            ProfileCard(
+              friendCode: testFriendCode,
+              name: name,
+              title: 'Danh hiệu cũ',
+              bio: 'Giới thiệu cũ',
+              badges: const {ProfileBadge.explorer},
+              showStats: false,
+            ),
+          ),
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    final copy = find.byTooltip('Sao chép mã kết bạn');
-    await tester.ensureVisible(copy);
-    await tester.pumpAndSettle();
-    await tester.tap(copy);
-    await tester.pumpAndSettle();
-    expect(find.text(testFriendCode), findsOneWidget);
-    expect(copied, testFriendCode);
-    expect(find.bySemanticsLabel('Mã QR kết bạn $copied'), findsOneWidget);
-    expect(find.text('Đã sao chép mã kết bạn.'), findsOneWidget);
-  });
+      );
+      await tester.pumpAndSettle();
+
+      final card = find.byType(ProfileShowcaseCard);
+      final copy = find.descendant(of: card, matching: find.byType(Text));
+      expect(tester.widgetList<Text>(copy).map((text) => text.data), [
+        name,
+        '${BeastPreview.owned.length} yêu thú',
+      ]);
+      final qr = find.byType(QrImageView);
+      expect(
+        find.bySemanticsLabel('Mã QR kết bạn $testFriendCode'),
+        findsOneWidget,
+      );
+
+      final viewport = tester.getRect(
+        find.byKey(const ValueKey('menu-content')),
+      );
+      for (final item in [
+        find.text(name),
+        find.text('${BeastPreview.owned.length} yêu thú'),
+        qr,
+      ]) {
+        final bounds = tester.getRect(item);
+        expect(viewport.intersect(bounds), bounds);
+      }
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   testWidgets(
     'shares the complete card as a PNG over the selected background',
     (tester) async {
@@ -211,7 +246,7 @@ void main() {
       final viewport = tester.getRect(
         find.byKey(const ValueKey('menu-content')),
       );
-      expect(card.bottom, greaterThan(viewport.bottom));
+      expect(card.bottom, lessThanOrEqualTo(viewport.bottom));
       await tester.runAsync(() async {
         final shared = Completer<File>();
         messenger.setMockMethodCallHandler(share, (call) async {
@@ -219,7 +254,7 @@ void main() {
           shared.complete(File(paths.single! as String));
           return 'test';
         });
-        await tester.tap(find.text('Chia sẻ ảnh'));
+        await tester.tap(find.byTooltip('Chia sẻ ảnh'));
         final file = await shared.future.timeout(const Duration(seconds: 5));
         expect(file.uri.pathSegments.last, 'pixel-rpg-$testFriendCode.png');
         final codec = await ui.instantiateImageCodec(await file.readAsBytes());

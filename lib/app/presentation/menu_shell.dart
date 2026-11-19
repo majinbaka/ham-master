@@ -18,8 +18,11 @@ class MenuShell extends StatelessWidget {
     required this.onNavigate,
     required this.child,
     this.backdrop,
+    this.headerActions,
+    this.scrollChild = true,
     this.onBack,
     this.showBack = true,
+    this.showPlayerHud = true,
     this.backLabel = 'Quay lại',
     this.notice = 'Dữ liệu mẫu · Không lưu thay đổi',
     super.key,
@@ -32,8 +35,13 @@ class MenuShell extends StatelessWidget {
 
   /// A full-bleed backdrop lets a showcase use the same chrome without paper.
   final Widget? backdrop;
+  final Widget? headerActions;
+
+  /// Disable the default scroll view when the child sizes itself to the viewport.
+  final bool scrollChild;
   final VoidCallback? onBack;
   final bool showBack;
+  final bool showPlayerHud;
   final String backLabel;
   final String? notice;
 
@@ -57,18 +65,21 @@ class MenuShell extends StatelessWidget {
                     const Positioned.fill(
                       child: VillageBackdrop(softened: true),
                     ),
-                  Positioned.fromRect(
-                    rect: layout.profile,
-                    child: ScaledArtwork(
-                      size: GameChromeLayout.profileSize,
-                      scale: layout.scale,
-                      child: const PlayerHud(),
+                  if (showPlayerHud)
+                    Positioned.fromRect(
+                      rect: layout.profile,
+                      child: ScaledArtwork(
+                        size: GameChromeLayout.profileSize,
+                        scale: layout.scale,
+                        child: const PlayerHud(),
+                      ),
                     ),
-                  ),
                   Positioned(
                     left: gap,
                     right: gap,
-                    top: layout.profile.bottom + gap,
+                    top: showPlayerHud
+                        ? layout.profile.bottom + gap
+                        : layout.profile.top,
                     bottom: constraints.maxHeight - layout.navigation.top + gap,
                     child: Center(
                       child: ConstrainedBox(
@@ -135,6 +146,7 @@ class MenuShell extends StatelessWidget {
                   ),
                 ),
               ),
+              ?headerActions,
             ],
           ),
         ),
@@ -142,26 +154,28 @@ class MenuShell extends StatelessWidget {
       Expanded(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: SingleChildScrollView(
-            key: const ValueKey('menu-content'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 8,
-              children: [
-                if (notice != null)
-                  Text(
-                    notice!,
-                    textAlign: TextAlign.center,
-                    style: GameTypography.caption.copyWith(
-                      color: backdrop == null
-                          ? PixelUiColors.mutedInk
-                          : PixelUiColors.paper,
-                    ),
+          child: !scrollChild
+              ? child
+              : SingleChildScrollView(
+                  key: const ValueKey('menu-content'),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: 8,
+                    children: [
+                      if (notice != null)
+                        Text(
+                          notice!,
+                          textAlign: TextAlign.center,
+                          style: GameTypography.caption.copyWith(
+                            color: backdrop == null
+                                ? PixelUiColors.mutedInk
+                                : PixelUiColors.paper,
+                          ),
+                        ),
+                      child,
+                    ],
                   ),
-                child,
-              ],
-            ),
-          ),
+                ),
         ),
       ),
     ],
