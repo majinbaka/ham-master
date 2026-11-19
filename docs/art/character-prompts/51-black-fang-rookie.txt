@@ -1,0 +1,34 @@
+Tạo một nhân vật pixel art nguyên bản cho PixelRPG, dùng ảnh đính kèm làm
+chuẩn về tỷ lệ cơ thể, góc nhìn, ánh sáng và độ chi tiết.
+
+Nhân vật thuộc tổ chức phản diện Black Fang. Đồng phục phải có màu đen than
+và đỏ thẫm làm nhận diện chủ đạo. Logo nguyên bản gồm hai nanh bạc hướng
+xuống tạo hình chữ V trên khiên lục giác đen có nền đỏ thẫm. Giữ logo nhất
+quán giữa các nhân vật. Trang phục phải đơn giản hơn các Mini Boss, ít chi
+tiết trang trí và không sử dụng áo choàng chỉ huy hay huy chương cấp cao.
+Đặt logo ở mặt trước mũ lưỡi trai, hướng về phía người xem.
+
+Nhân vật là Black Fang Rookie, lính tập sự nam 19 tuổi. Đây là lính phổ
+thông xuất hiện nhiều nhất trong game. Tóc nâu ngắn hơi rối, mắt nâu,
+biểu cảm háo hức nhưng hơi vụng về.
+Trang phục gồm mũ lưỡi trai đen, áo khoác đồng phục đen cổ đứng với hai
+sọc đỏ chạy dọc tay áo, áo thun xám bên trong, quần cargo đen và bốt thấp.
+Bảng màu chính là đen than, đỏ thẫm và xám bạc. Phụ kiện nhận diện là bộ
+đàm nhỏ đeo vai và thắt lưng có túi dụng cụ.
+Thể hiện vẻ lính mới qua dáng bước hơi lóng ngóng và bộ đồng phục gọn gàng.
+
+Thiết kế dáng và trang phục để nhận ra vai trò ngay từ hình toàn thân.
+
+Giữ tỷ lệ chibi như ảnh mẫu, mắt có điểm sáng, gương mặt biểu cảm và
+ánh sáng ấm từ góc trên trái. Dùng cụm pixel sắc nét, liền mạch và có
+chủ đích. Vẽ rõ nếp vải, đường may, mép thêu, lớp da và khóa kim loại
+ở những chỗ phù hợp với thiết kế. Giữ độ phong phú của ảnh tham chiếu,
+đồng thời cho nhân vật bảng màu, dáng và phụ kiện riêng.
+
+Xuất đúng một nhân vật toàn thân ở góc ¾, hơi hướng sang phải, trong
+tư thế bước nhẹ. Chừa khoảng trống quanh đầu và hai bàn chân. Dùng PNG
+nền trong suốt, không chữ, không khung, không cảnh nền hay bóng đổ.
+Xuất bản duyệt ở độ phân giải cao để xem rõ chi tiết.
+
+Dừng sau khi gửi ảnh mẫu và chờ tôi duyệt trước khi dựng spritesheet
+hoặc tạo nhân vật tiếp theo.

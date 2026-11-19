@@ -86,6 +86,25 @@ russet cap, embroidered ochre scarf, teal coat, leather satchel and brass
 lantern consistent across nine poses of one facing. The poses are aligned at
 the world scale and packed with nearest-neighbor sampling.
 
+### Kai
+
+[`sprites/characters/kai-walk.png`](sprites/characters/kai-walk.png) is a
+1440 × 1440 RGBA walk atlas. The 9 × 9 grid uses 160 × 160 px cells and a
+local foot anchor at (80, 144). Kai's standing scale is 128 world pixels
+from ground to crown, excluding the raised hair tuft.
+
+The rows follow the direction order in the table above, including the
+transparent ninth row. Play frames 1 through 9 from left to right at 12 FPS,
+then loop straight to frame 1. The cycle lasts 750 ms.
+
+Built-in ImageGen used the approved Kai design for the face, hair, olive
+jacket, leather backpack, and left-hip compass. The courier provided the
+direction and gait references. The resulting frames were aligned and packed
+at world scale with nearest-neighbor sampling.
+
+[Eight-direction GIF](../docs/art/character-previews/kai-walk.gif) ·
+[Village composite at 1×](../docs/art/character-previews/kai-village-1x.png)
+
 ## Beast and battle preview art
 
 Generated with built-in ImageGen from the two screen references. All text,

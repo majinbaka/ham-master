@@ -30,6 +30,7 @@ flutter:
     - assets/scenes/forest-arena.png
     - assets/sprites/
     - assets/sprites/characters/lantern-courier.png
+    - assets/sprites/characters/kai-walk.png
   fonts:
     - family: GameRoboto
       fonts:

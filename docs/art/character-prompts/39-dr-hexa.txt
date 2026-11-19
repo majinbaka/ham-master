@@ -1,0 +1,21 @@
+Tạo một nhân vật pixel art nguyên bản cho PixelRPG, dùng ảnh đính kèm làm
+chuẩn về tỷ lệ cơ thể, góc nhìn, ánh sáng và độ chi tiết.
+
+Nhân vật là Dr. Hexa, nhà khoa học phản diện, nữ, 39 tuổi, tóc hồng neon dựng thành nhiều lọn, mắt tím và biểu cảm điên rồ nhưng hài hước.
+Trang phục gồm kính bảo hộ lớn, áo blouse đen viền hồng, áo cổ lọ tím, quần xám đậm và bốt phòng thí nghiệm.
+Bảng màu chính là đen, hồng neon và tím. Phụ kiện nhận diện là súng bắn bong bóng năng lượng giả tưởng và bình chứa chất lỏng phát sáng.
+Thiết kế dáng và trang phục để nhận ra vai trò ngay từ hình toàn thân.
+
+Giữ tỷ lệ chibi như ảnh mẫu, mắt có điểm sáng, gương mặt biểu cảm và
+ánh sáng ấm từ góc trên trái. Dùng cụm pixel sắc nét, liền mạch và có
+chủ đích. Vẽ rõ nếp vải, đường may, mép thêu, lớp da và khóa kim loại
+ở những chỗ phù hợp với thiết kế. Giữ độ phong phú của ảnh tham chiếu,
+đồng thời cho nhân vật bảng màu, dáng và phụ kiện riêng.
+
+Xuất đúng một nhân vật toàn thân ở góc ¾, hơi hướng sang phải, trong
+tư thế bước nhẹ. Chừa khoảng trống quanh đầu và hai bàn chân. Dùng PNG
+nền trong suốt, không chữ, không khung, không cảnh nền hay bóng đổ.
+Xuất bản duyệt ở độ phân giải cao để xem rõ chi tiết.
+
+Dừng sau khi gửi ảnh mẫu và chờ tôi duyệt trước khi dựng spritesheet
+hoặc tạo nhân vật tiếp theo.

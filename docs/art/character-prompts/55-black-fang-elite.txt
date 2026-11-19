@@ -1,0 +1,36 @@
+Tạo một nhân vật pixel art nguyên bản cho PixelRPG, dùng ảnh đính kèm làm
+chuẩn về tỷ lệ cơ thể, góc nhìn, ánh sáng và độ chi tiết.
+
+Nhân vật thuộc tổ chức phản diện Black Fang. Đồng phục phải có màu đen than
+và đỏ thẫm làm nhận diện chủ đạo. Logo nguyên bản gồm hai nanh bạc hướng
+xuống tạo hình chữ V trên khiên lục giác đen có nền đỏ thẫm. Giữ logo nhất
+quán giữa các nhân vật. Trang phục phải đơn giản hơn các Mini Boss, ít chi
+tiết trang trí và không sử dụng áo choàng chỉ huy hay huy chương cấp cao.
+Đặt huy hiệu Black Fang cỡ lớn ở ngực trái. Giữ cổ áo và giáp vai
+không che huy hiệu ở góc nhìn ¾.
+
+Nhân vật là Black Fang Elite, nam lính tinh nhuệ 28 tuổi, thường xuất
+hiện trước các trận đấu Mini Boss. Tóc đen vuốt ngược, mắt đỏ nâu,
+biểu cảm lạnh lùng và tự tin.
+Trang phục gồm mặt nạ bạc che nửa mặt và để lộ mắt, áo quân phục đen
+cổ cao viền đỏ, giáp vai bạc bất đối xứng, quần đen ôm gọn và bốt
+quân đội cao.
+Bảng màu chính là đen tuyền, đỏ thẫm và bạc. Phụ kiện nhận diện là găng
+tay chiến đấu và huy hiệu Black Fang lớn ở ngực trái.
+Cho nhân vật bước thẳng lưng, giữ vai vững và ánh mắt tự tin.
+
+Thiết kế dáng và trang phục để nhận ra vai trò ngay từ hình toàn thân.
+
+Giữ tỷ lệ chibi như ảnh mẫu, mắt có điểm sáng, gương mặt biểu cảm và
+ánh sáng ấm từ góc trên trái. Dùng cụm pixel sắc nét, liền mạch và có
+chủ đích. Vẽ rõ nếp vải, đường may, mép thêu, lớp da và khóa kim loại
+ở những chỗ phù hợp với thiết kế. Giữ độ phong phú của ảnh tham chiếu,
+đồng thời cho nhân vật bảng màu, dáng và phụ kiện riêng.
+
+Xuất đúng một nhân vật toàn thân ở góc ¾, hơi hướng sang phải, trong
+tư thế bước nhẹ. Chừa khoảng trống quanh đầu và hai bàn chân. Dùng PNG
+nền trong suốt, không chữ, không khung, không cảnh nền hay bóng đổ.
+Xuất bản duyệt ở độ phân giải cao để xem rõ chi tiết.
+
+Dừng sau khi gửi ảnh mẫu và chờ tôi duyệt trước khi dựng spritesheet
+hoặc tạo nhân vật tiếp theo.
