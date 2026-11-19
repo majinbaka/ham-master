@@ -24,10 +24,9 @@ Không nhân viền/góc theo cỡ icon. Chữ nội dung Home/menu vẫn dùng 
 
 Cảnh làng ban ngày dùng xanh lá, xanh trời, mái ngói đất nung và hoa nhiều màu.
 Khung dùng nền kem, bạc hà và xanh trời nhạt với chữ xanh đậm. Vàng mật ong
-dành cho tiêu đề và tiến độ, cam đào cùng viền nâu san hô dành cho mục đang chọn.
-Các nút hội thoại Home dùng vàng, xanh trời, bạc hà.
-Nút Trận chiến dùng nền cam đào.
-Dành các màu đậm cho viền, chữ và điểm nhấn nhỏ để nền rộng dịu mắt.
+dành cho tiêu đề và tiến độ. Nút có khung dùng nền đục, màu rõ hơn panel và
+viền xanh đậm. Nút thường dùng nền vàng cát. Các nút hội thoại Home dùng
+vàng, xanh trời, bạc hà. Nút Trận chiến và mục đang chọn dùng cam đào đậm.
 Giấy kem dành cho nội dung đọc. Chỉ dùng `PixelUiColors`, `GameSurfaceStyle`
 và theme chung; không tự chọn radius/BorderSide hoặc tạo viền trang trí riêng
 ở feature. Icon không thêm nền hay viền riêng bên trong nút.
@@ -45,10 +44,10 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `pixel/PixelIcon` | Icon giữ ô vuông kể cả khi widget cha giãn. Chữ hiển thị bằng widget, nhãn điều khiển có semantics. |
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo thanh nhân vật, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud` | Thanh nhân vật dùng chung gồm chân dung, tên, cấp và EXP. `ScaledArtwork` giữ tỷ lệ theo ô thiết kế 440 × 120. |
-| `PixelNavigation` | Bốn mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn. |
+| `PixelNavigation` | Bốn mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào đậm và semantics báo trạng thái chọn. |
 | `MenuShell` | Khung giấy kem nằm giữa thanh nhân vật và thanh điều hướng. Hồ sơ dùng ảnh nền toàn màn hình, đặt hàng tiêu đề ở mép trên vùng an toàn. Chỉ nội dung dưới tiêu đề cuộn. |
 | `MenuPanel` | Thân `cool` xanh bạc hà với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
-| `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn nút hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn; mục khóa giữ icon khóa. |
+| `MenuButton` | Viền xanh đậm 2 dp, góc bo 8 dp, mặc định nền vàng cát; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn nút hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào đậm và semantics báo trạng thái chọn; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô. |
 | `PixelProgress` | Thanh EXP cùng mẫu viền 2 dp/góc 8 dp, nền xanh đậm và phần đã đạt mặc định màu vàng mật ong. Thanh HP dùng màu theo hai phía của trận chiến. |
 
@@ -118,7 +117,7 @@ hệ số chữ. Widget test đo cỡ chữ sau transform.
 Widget test nạp đúng font GameRoboto đóng gói để kiểm tra wrap theo runtime.
 
 Navigation theo thứ tự Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
-Mục đang chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn.
+Mục đang chọn có nền cam đào đậm và semantics báo trạng thái chọn.
 Nút quay lại menu về Home, Yêu thú về Hồ sơ và Trận chiến về màn đã
 mở bản xem thử. Vùng neo navigation cao ít nhất 60 dp; nút hoạt động có vùng chạm ít nhất 48 × 48 dp ở màn hình
 từ 320 dp, độc lập tỷ lệ sprite. Trạng thái khóa có icon khóa.

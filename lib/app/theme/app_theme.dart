@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'pixel_ui_colors.dart';
-import 'game_typography.dart';
 import 'game_surface_style.dart';
+import 'game_typography.dart';
+import 'pixel_ui_colors.dart';
 
 final appTheme = ThemeData(
   useMaterial3: true,
@@ -28,8 +28,8 @@ final appTheme = ThemeData(
       minimumSize: const Size(48, 56),
       foregroundColor: PixelUiColors.outline,
       disabledForegroundColor: PixelUiColors.mutedInk,
-      backgroundColor: PixelUiColors.surface,
-      shape: GameSurfaceStyle.shape(),
+      backgroundColor: PixelUiColors.buttonSand,
+      shape: GameSurfaceStyle.shape(color: PixelUiColors.outline),
       textStyle: GameTypography.label,
     ),
   ),
@@ -37,8 +37,8 @@ final appTheme = ThemeData(
     style: IconButton.styleFrom(
       minimumSize: const Size(48, 48),
       foregroundColor: PixelUiColors.outline,
-      backgroundColor: PixelUiColors.surface,
-      shape: GameSurfaceStyle.shape(),
+      backgroundColor: PixelUiColors.buttonSand,
+      shape: GameSurfaceStyle.shape(color: PixelUiColors.outline),
     ),
   ),
   dialogTheme: DialogThemeData(

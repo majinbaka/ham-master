@@ -22,6 +22,15 @@ enum PixelFrameSkin {
     cyan => PixelUiColors.sky,
   };
 
+  Color get buttonBackground => switch (this) {
+    cream => PixelUiColors.buttonSand,
+    cool => PixelUiColors.buttonMint,
+    gold => PixelUiColors.buttonGold,
+    cyan => PixelUiColors.buttonSky,
+    paper => PixelUiColors.buttonPaper,
+    selected => PixelUiColors.buttonPeach,
+  };
+
   Color get border => switch (this) {
     cool => PixelUiColors.teal,
     gold => PixelUiColors.amber,

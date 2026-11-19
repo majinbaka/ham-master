@@ -105,7 +105,8 @@ Android application ID: `com.jinshu.pixel_rpg`.
   `ArtworkProjection` bù scale artwork để giữ cùng độ dày/độ cong trên màn hình.
   Sáu skin chỉ đổi màu; atlas khung cũ giữ làm tư liệu, không đóng gói runtime. Chữ là widget riêng; 18 icon dùng atlas pixel art
   nền trong suốt. Khung dùng nền ngà, kem, bạc hà và xanh trời nhạt với chữ xanh đậm.
-  Mục điều hướng đang chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn.
+  Nút có khung dùng nền đục, màu rõ hơn panel và viền xanh đậm.
+  Mục điều hướng đang chọn có nền cam đào đậm và semantics báo trạng thái chọn.
   Thanh dưới có Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
   Hộp thư chỉ hiện biểu tượng phong bì, với vùng chạm 48 × 48 dp.
   Nói chuyện, Quan sát và Tìm kiếm cập nhật nội dung ô hội thoại.

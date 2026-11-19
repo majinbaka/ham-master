@@ -15,4 +15,11 @@ abstract final class PixelUiColors {
   static const amber = Color(0xFF86601E);
   static const peach = Color(0xFFF9DBC7);
   static const coral = Color(0xFF884D35);
+
+  static const buttonSand = Color(0xFFF2C88F);
+  static const buttonMint = Color(0xFF89D3A3);
+  static const buttonGold = Color(0xFFF8D24F);
+  static const buttonSky = Color(0xFF87CEF0);
+  static const buttonPaper = Color(0xFFF8DBA6);
+  static const buttonPeach = Color(0xFFF89A62);
 }

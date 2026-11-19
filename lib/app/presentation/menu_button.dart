@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../theme/pixel_ui_colors.dart';
 import '../theme/game_surface_style.dart';
+import '../theme/pixel_ui_colors.dart';
 import 'artwork_projection.dart';
 import 'pixel/pixel_frame_skin.dart';
 import 'pixel/pixel_icon.dart';
 
-/// Shared soft control. Icon buttons keep their name in tooltips and semantics.
+/// Shared framed control. Icons keep their name in tooltips and semantics.
 class MenuButton extends StatelessWidget {
   const MenuButton({
     required this.label,
@@ -64,17 +64,15 @@ class MenuButton extends StatelessWidget {
             minimumSize: _isTab ? const Size(48, 40) : const Size(48, 56),
             tapTargetSize: _isTab ? MaterialTapTargetSize.padded : null,
             visualDensity: _isTab ? VisualDensity.standard : null,
-            foregroundColor: selected
-                ? PixelUiColors.coral
-                : PixelUiColors.outline,
+            foregroundColor: PixelUiColors.outline,
             disabledForegroundColor: PixelUiColors.mutedInk,
-            backgroundColor: frame.background,
+            backgroundColor: frame.buttonBackground,
             disabledBackgroundColor: frame.background,
             padding: _isTab
                 ? const EdgeInsets.symmetric(horizontal: 6, vertical: 4)
                 : EdgeInsets.all(visual == null ? 8 : 6),
             shape: GameSurfaceStyle.shape(
-              color: frame.border,
+              color: PixelUiColors.outline,
               projection: ArtworkProjection.of(context),
             ),
             textStyle: Theme.of(context).textTheme.labelLarge,
