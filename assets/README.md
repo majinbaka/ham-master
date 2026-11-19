@@ -7,6 +7,8 @@
   Generated with built-in ImageGen; regions, order and prompt are documented
   in [`ui/README.md`](ui/README.md). Render with `FilterQuality.none`.
 - `sprites/`: transparent beast portraits, battle poses and move icons.
+- [`sprites/characters/`](#character-walk-spritesheets): eight-direction walk
+  spritesheets for human characters, using the world pixel grid.
 - `tilesets/`: terrain and environment tiles.
 - `maps/`: authored map data.
 - `audio/`: music and sound effects.
@@ -54,6 +56,35 @@ below have their own documented export sizes.
   > distinct readable forms at a phone scale. No text, lettering, characters,
   > logos, UI, or framing. Portrait 2:3.
 
+
+## Character walk spritesheets
+
+`sprites/characters/lantern-courier.png` contains the lantern courier's walk.
+The 1728 × 1728 RGBA image is a 9 × 9 grid of 192 × 192 px cells. Each
+cell is padded by 16 px on all sides relative to the default world cell, so
+the foot anchor is (96, 160). The wider cell gives the cap and stride room at
+the standard 128 px body scale, excluding hats and accessories.
+
+| Row (top to bottom) | Facing | Frames |
+| --- | --- | --- |
+| 1 | South | 9 |
+| 2 | Southwest | 9 |
+| 3 | West | 9 |
+| 4 | Northwest | 9 |
+| 5 | North | 9 |
+| 6 | Northeast | 9 |
+| 7 | East | 9 |
+| 8 | Southeast | 9 |
+| 9 | Transparent | 0 |
+
+Read the nine frames left to right at 12 FPS as a 750 ms cycle, then loop
+directly to the first frame. Each cycle stays centered on the foot anchor.
+
+Built-in ImageGen produced the direction studies using the approved
+three-quarter courier and its front reference. The direction prompt keeps the
+russet cap, embroidered ochre scarf, teal coat, leather satchel and brass
+lantern consistent across nine poses of one facing. The poses are aligned at
+the world scale and packed with nearest-neighbor sampling.
 
 ## Beast and battle preview art
 
