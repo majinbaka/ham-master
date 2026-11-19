@@ -164,6 +164,10 @@ application, domain, infrastructure khi có code thực tế cần sở hữu.
 
 ## Tài liệu concept artwork
 
+[Quy chuẩn pixel cho cảnh và spritesheet](docs/art/world-pixel-grid.md) quy định
+mốc nhân vật đứng cao 128 px, cấu trúc khung animation, tỷ lệ quái và vật thể,
+cùng cách hiển thị sprite và nền trên một lưới pixel.
+
 [Quy chuẩn UI runtime](docs/art/ui-guidelines.md) là quy tắc bắt buộc cho mọi
 màn hiện tại và về sau: palette, kiểu chữ, spacing, shell, navigation, breakpoint,
 trạng thái và điều kiện kiểm tra. Các menu dùng chung shell, nội dung

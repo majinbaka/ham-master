@@ -5,11 +5,16 @@ description: Create or integrate pixel RPG sprites, tilesets, icons and game art
 
 # Pixel RPG art
 
-Read the current asset brief and `assets/README.md`. No palette, character,
-tile size or resolution is approved yet; obtain those from the task rather than
-inheriting FlashKids art direction. Keep spritesheets on a consistent pixel
-grid, use nearest-neighbor rendering (`FilterQuality.none`), preserve requested
-transparency, and document frame dimensions/order for animation assets. Keep UI
-text outside generated artwork. Inspect actual output and check licenses for
-imported fonts and art. Register real assets in `pubspec.yaml`; do not add a
-placeholder dependency or a full asset pipeline for a one-off image.
+Read the asset brief and [asset inventory](../../../assets/README.md) from the
+repository root. For world spritesheets, terrain, props and backgrounds, follow
+the [world pixel grid standard](../../../docs/art/world-pixel-grid.md). Use the
+128 px standing character and ground anchor to establish the reference sheet
+before generation. Keep the source pixel size consistent across all world
+assets, and preserve each subject's frame size and anchor through animation.
+Validate the exported frames and a composite of sprite and scene at 1×. Redraw
+art that misses the reference proportions or grid before integrating it.
+
+For UI artwork, use the [runtime UI guidelines](../../../docs/art/ui-guidelines.md).
+Keep UI text outside generated artwork. Inspect the exported pixels, preserve
+transparency, check licenses for imported fonts and art, and register real
+assets in `pubspec.yaml`.

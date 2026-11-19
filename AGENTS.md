@@ -79,6 +79,10 @@ Do not implement gameplay unless requested.
 
 ## Working rules
 
+For world artwork, follow `docs/art/world-pixel-grid.md` when generating or
+integrating spritesheets, terrain, props and backgrounds. Use the 128 px
+standing character as the scale reference and one pixel grid for the scene.
+
 For every UI change, read and follow `docs/art/ui-guidelines.md`, the runtime
 UI concept for current and future screens. Reuse the shared menu shell,
 responsive columns, navigation, palette and atlas components. Home is the visual

@@ -22,8 +22,11 @@
   Flutter renders PRESENTS, loading text and the animated progress separately.
 
 The tilesets, maps and audio folders are empty. Register actual
-files/directories in `pubspec.yaml` when adding assets. Keep source dimensions and use `FilterQuality.none` for pixel
-textures; choose the logical resolution and tile size with the first game slice.
+files/directories in `pubspec.yaml` when adding assets. Follow the
+[world pixel grid standard](../docs/art/world-pixel-grid.md) when generating
+world spritesheets, tilesets, props or backgrounds. The world reference is a
+128 px standing character with 32 × 32 px terrain tiles. The preview images
+below have their own documented export sizes.
 
 - `scenes/twilight-village.png`: 1024 × 1536 static background generated with
   built-in ImageGen for the cozy RPG UI refresh. No baked text or interactive
