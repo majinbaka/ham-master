@@ -55,8 +55,9 @@ Thanh dưới nối Trang chủ, Cửa hàng, Hồ sơ và Cài đặt.
 
 - `/home/shop`: đổi danh mục, mở chi tiết vật phẩm/gói mẫu, đóng hộp thoại.
   Không có thao tác mua, thanh toán hoặc trừ tài nguyên.
-- `/home/profile`: chỉnh thẻ trưng bày, sao chép mã kết bạn, quét QR hoặc
-  chia sẻ PNG. Sổ sưu tầm, huy hiệu và Cài đặt nằm dưới thẻ.
+- `/home/profile` hiển thị thẻ trưng bày trên cảnh nền cố định phủ toàn màn
+  hình. Người chơi có thể chỉnh thẻ, sao chép mã kết bạn, quét QR hoặc chia
+  sẻ PNG. Sổ sưu tầm, huy hiệu và Cài đặt nằm dưới thẻ.
 - `/home/settings` mở mặc định ở Tài khoản và có thêm tab Chung và Thông tin.
   Mục Chung chứa các tùy chọn thử cho âm lượng, đồ họa, điều khiển và nút
   khôi phục mặc định có xác nhận. Lựa chọn chỉ tồn tại khi ở màn hình này.

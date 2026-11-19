@@ -10,8 +10,10 @@ import '../../../app/presentation/menu_components.dart';
 import '../../../app/presentation/menu_shell.dart';
 import '../../../app/presentation/pixel/pixel_frame_skin.dart';
 import '../../../app/presentation/pixel/pixel_icon.dart';
+import '../../../app/theme/pixel_ui_colors.dart';
 import '../application/profile_card_controller.dart';
 import '../domain/profile_card.dart';
+import 'profile_card_catalog.dart';
 import 'profile_card_editor.dart';
 import 'profile_journal.dart';
 import 'profile_showcase_card.dart';
@@ -27,6 +29,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final _cardKey = GlobalKey();
+  final _backdropKey = GlobalKey();
   var _sharing = false;
 
   @override
@@ -37,6 +40,30 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       selected: 'profile',
       notice: null,
       onNavigate: widget.onNavigate,
+      backdrop: RepaintBoundary(
+        key: _backdropKey,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            const ColoredBox(color: PixelUiColors.outline),
+            (profile.value?.background ?? ProfileBackground.village).artwork,
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    PixelUiColors.outline.withValues(alpha: .82),
+                    PixelUiColors.outline.withValues(alpha: .18),
+                    PixelUiColors.outline.withValues(alpha: .82),
+                  ],
+                  stops: [0, .37, 1],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: 8,
@@ -106,7 +133,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
       RepaintBoundary(
         key: _cardKey,
-        child: ProfileShowcaseCard(card: card),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: ProfileShowcaseCard(card: card),
+        ),
       ),
     ],
   );
@@ -134,11 +164,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future<void> _share(BuildContext buttonContext, ProfileCard card) async {
     final button = buttonContext.findRenderObject()! as RenderBox;
     final origin = button.localToGlobal(Offset.zero) & button.size;
-    final boundary =
-        _cardKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
     setState(() => _sharing = true);
     try {
-      final image = await boundary.toImage(pixelRatio: 3);
+      final image = await _captureCard();
       final bytes = await _encodePng(image);
       if (!mounted) return;
       final filename = 'pixel-rpg-${card.friendCode}.png';
@@ -153,6 +181,45 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       _showMessage('Chưa chia sẻ được ảnh thẻ. Thử lại.');
     } finally {
       if (mounted) setState(() => _sharing = false);
+    }
+  }
+
+  Future<ui.Image> _captureCard() async {
+    final backdropBoundary =
+        _backdropKey.currentContext!.findRenderObject()!
+            as RenderRepaintBoundary;
+    final cardBoundary =
+        _cardKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+
+    final [backdrop, card] = await Future.wait([
+      backdropBoundary.toImage(),
+      cardBoundary.toImage(pixelRatio: 3),
+    ], cleanUp: (image) => image.dispose());
+    try {
+      final recorder = ui.PictureRecorder();
+      final canvas = Canvas(recorder);
+      final backdropSize = Size(
+        backdrop.width.toDouble(),
+        backdrop.height.toDouble(),
+      );
+      final cardSize = Size(card.width.toDouble(), card.height.toDouble());
+      final fitted = applyBoxFit(BoxFit.cover, backdropSize, cardSize);
+      canvas.drawImageRect(
+        backdrop,
+        Alignment.center.inscribe(fitted.source, Offset.zero & backdropSize),
+        Offset.zero & cardSize,
+        Paint(),
+      );
+      canvas.drawImage(card, Offset.zero, Paint());
+      final picture = recorder.endRecording();
+      try {
+        return await picture.toImage(card.width, card.height);
+      } finally {
+        picture.dispose();
+      }
+    } finally {
+      backdrop.dispose();
+      card.dispose();
     }
   }
 

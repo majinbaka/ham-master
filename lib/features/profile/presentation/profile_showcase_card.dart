@@ -15,120 +15,112 @@ class ProfileShowcaseCard extends StatelessWidget {
   final ProfileCard card;
 
   @override
-  Widget build(BuildContext context) => Material(
-    color: PixelUiColors.paper,
-    shape: GameSurfaceStyle.shape(color: PixelUiColors.amber),
-    borderOnForeground: true,
-    clipBehavior: Clip.antiAlias,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _Cover(card: card),
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 8,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 4,
-                children: [
-                  Text(card.name, style: GameTypography.title),
-                  if (card.title.isNotEmpty)
-                    Text(
-                      card.title,
-                      style: GameTypography.label.copyWith(
-                        color: PixelUiColors.coral,
-                      ),
-                    ),
-                  if (card.bio.isNotEmpty) Text(card.bio),
-                ],
-              ),
-              if (card.badges.isNotEmpty)
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 4,
-                  children: [
-                    for (final badge in ProfileBadge.values.where(
-                      card.badges.contains,
-                    ))
-                      _CardBadge(badge),
-                  ],
-                ),
-              const _CardDivider(),
-              _FriendCode(code: card.friendCode),
-              if (card.showStats) ...[const _CardDivider(), const _Stats()],
-            ],
-          ),
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
+      final wide = constraints.maxWidth >= 600 * textScale;
+      final viewportHeight = MediaQuery.sizeOf(context).height;
+      final artHeight = wide
+          ? ((viewportHeight - 280) * .75).clamp(100.0, 440.0)
+          : (viewportHeight * .30).clamp(132.0, 280.0);
+      final portraits = SizedBox(
+        height: artHeight,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: _Portraits(card: card, height: artHeight.clamp(0.0, 120.0)),
         ),
-      ],
-    ),
+      );
+      final info = _CardInformation(card: card);
+      return wide
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 8,
+              children: [
+                Expanded(child: portraits),
+                SizedBox(width: 316 * textScale, child: info),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 8,
+              children: [portraits, info],
+            );
+    },
   );
 }
 
-class _CardDivider extends StatelessWidget {
-  const _CardDivider();
-
-  @override
-  Widget build(BuildContext context) =>
-      const Divider(height: 1, color: PixelUiColors.frameBorder);
-}
-
-class _Cover extends StatelessWidget {
-  const _Cover({required this.card});
+class _CardInformation extends StatelessWidget {
+  const _CardInformation({required this.card});
 
   final ProfileCard card;
 
   @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: ShapeDecoration(
+      color: PixelUiColors.outline.withValues(alpha: .82),
+      shape: GameSurfaceStyle.shape(color: PixelUiColors.frameBorder),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8),
+      child: DefaultTextStyle.merge(
+        style: const TextStyle(color: PixelUiColors.paper),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 8,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 4,
+              children: [
+                Semantics(
+                  header: true,
+                  child: Text(card.name, style: GameTypography.title),
+                ),
+                if (card.title.isNotEmpty)
+                  Text(
+                    card.title,
+                    style: GameTypography.label.copyWith(
+                      color: PixelUiColors.gold,
+                    ),
+                  ),
+                if (card.bio.isNotEmpty) Text(card.bio),
+              ],
+            ),
+            if (card.showStats) const _Stats(),
+            _FriendCode(card: card),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class _Portraits extends StatelessWidget {
+  const _Portraits({required this.card, required this.height});
+
+  final ProfileCard card;
+  final double height;
+
+  @override
   Widget build(BuildContext context) {
     final companion = profileCompanion(card.companion);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final height = (constraints.maxWidth * .43).clamp(116.0, 212.0);
-        final spriteSize = height * .66;
-        return SizedBox(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      spacing: 16,
+      children: [
+        SizedBox(
+          width: height * .6,
           height: height,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              card.background.artwork,
-              const DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.center,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.transparent, PixelUiColors.outline],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: spriteSize,
-                        width: spriteSize * .6,
-                        child: card.avatar.portrait,
-                      ),
-                      if (companion != null)
-                        Semantics(
-                          image: true,
-                          label: companion.name,
-                          child: companion.sprite.artwork(spriteSize),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          child: card.avatar.portrait,
+        ),
+        if (companion != null)
+          Semantics(
+            image: true,
+            label: companion.name,
+            child: companion.sprite.artwork(height * 92 / 120),
           ),
-        );
-      },
+      ],
     );
   }
 }
@@ -143,8 +135,8 @@ class _CardBadge extends StatelessWidget {
     mainAxisSize: MainAxisSize.min,
     spacing: 4,
     children: [
-      PixelIcon(badge.icon, size: 36),
-      Flexible(child: Text(badge.label)),
+      PixelIcon(badge.icon, size: 24),
+      Flexible(child: Text(badge.label, style: GameTypography.caption)),
     ],
   );
 }
@@ -160,49 +152,33 @@ class _Stats extends StatelessWidget {
       Text('Chỉ số hành trình mẫu', style: GameTypography.panelTitle),
       Text('Cấp 12 · EXP 2.340 / 3.600 (65%)', style: GameTypography.caption),
       PixelProgress(value: .65, label: 'Kinh nghiệm mẫu'),
-      MenuGrid(
-        minItemWidth: 96,
-        maxColumns: 3,
+      Wrap(
+        spacing: 8,
+        runSpacing: 2,
         children: [
-          _Stat(PixelIconKind.beasts, 'Yêu thú', '28 / 150'),
-          _Stat(PixelIconKind.compass, 'Khu vực', '3 / 8'),
-          _Stat(PixelIconKind.coin, 'Huy hiệu', '5'),
+          Text('Yêu thú 28 / 150', style: GameTypography.caption),
+          Text('Khu vực 3 / 8', style: GameTypography.caption),
+          Text('Huy hiệu 5', style: GameTypography.caption),
         ],
       ),
     ],
   );
 }
 
-class _Stat extends StatelessWidget {
-  const _Stat(this.icon, this.label, this.value);
-  final PixelIconKind icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      PixelIcon(icon, size: 36),
-      Text(label, textAlign: TextAlign.center),
-      Text(value, textAlign: TextAlign.center, style: GameTypography.heading),
-    ],
-  );
-}
-
 class _FriendCode extends StatelessWidget {
-  const _FriendCode({required this.code});
+  const _FriendCode({required this.card});
 
-  final String code;
+  final ProfileCard card;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final qr = QrImageView(
-        data: code,
-        semanticsLabel: 'Mã QR kết bạn $code',
+        data: card.friendCode,
+        semanticsLabel: 'Mã QR kết bạn ${card.friendCode}',
         version: QrVersions.auto,
-        size: 99,
-        padding: const EdgeInsets.all(16),
+        size: 92,
+        padding: const EdgeInsets.all(14),
         backgroundColor: Colors.white,
       );
       final text = Column(
@@ -210,12 +186,23 @@ class _FriendCode extends StatelessWidget {
         spacing: 4,
         children: [
           const Text('Mã kết bạn', style: GameTypography.panelTitle),
-          Text(code, style: GameTypography.label),
+          Text(card.friendCode, style: GameTypography.label),
+          if (card.badges.isNotEmpty)
+            Wrap(
+              spacing: 8,
+              runSpacing: 2,
+              children: [
+                for (final badge in ProfileBadge.values.where(
+                  card.badges.contains,
+                ))
+                  _CardBadge(badge),
+              ],
+            ),
         ],
       );
       final wide =
           constraints.maxWidth >=
-          107 + MediaQuery.textScalerOf(context).scale(190);
+          100 + MediaQuery.textScalerOf(context).scale(168);
       return wide
           ? Row(
               spacing: 8,

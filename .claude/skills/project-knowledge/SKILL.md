@@ -14,9 +14,10 @@ pixel traveler portrait, dialogue and navigation to sample menus. An unframed
 mail icon opens a preview dialog. Scene actions update the Home dialogue panel.
 Shop, profile and settings live at `/home/shop`, `/home/profile`
 and `/home/settings`. Shop filters sample items and shows details. Profile
-has a customizable local showcase card, a public code with offline QR encoding,
-PNG sharing and collection and badge tabs. Settings opens on Account, with General and Information
-as the other tabs. General controls change local widget selections and offer a
+layers a customizable showcase card over a fixed full-screen backdrop, with
+a compact information panel, a public code, offline QR encoding, PNG sharing and
+collection and badge tabs. Settings opens on Account, with General and
+Information as the other tabs. General controls change local widget selections and offer a
 confirmation dialog to reset them.
 Profile opens `/home/beasts`, an illustrative roster with collection, filters,
 sorting, favorites and details. Home and Beasts open

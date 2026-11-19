@@ -46,7 +46,7 @@ hiển thị và gửi callback; feature giữ nội dung và state trình bày,
 | `GameSpacing`, `GameChromeLayout` | Lưới artwork và vị trí neo thanh nhân vật, điều hướng dùng cho cả Home/menu. |
 | `PlayerHud` | Thanh nhân vật dùng chung gồm chân dung, tên, cấp và EXP. `ScaledArtwork` giữ tỷ lệ theo ô thiết kế 440 × 120. |
 | `PixelNavigation` | Bốn mục cùng vị trí neo đáy với Home; một khay `cool`, nút icon 36 dp bo 8 dp; mục đang chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn. |
-| `MenuShell` | Khung giấy kem nằm giữa thanh nhân vật và thanh điều hướng. Tiêu đề và nút quay lại nằm ở mép trên của khung. Chỉ nội dung dưới tiêu đề cuộn. |
+| `MenuShell` | Khung giấy kem nằm giữa thanh nhân vật và thanh điều hướng. Hồ sơ dùng biến thể ảnh nền toàn màn hình, đặt tiêu đề và nút quay lại trên ảnh. Chỉ nội dung dưới tiêu đề cuộn. |
 | `MenuPanel` | Thân `cool` xanh bạc hà với tab tiêu đề `gold` nổi như panel Home. `light: true` dùng thân giấy và chữ tối cho nội dung đọc. |
 | `MenuButton` | Viền 2 dp, góc bo 8 dp, mặc định nền ngà; icon atlas mặc định 36 dp; thẻ có thể truyền sprite trang trí và dùng `showLabel` để hiện tên, còn nút hành động compact giữ tooltip/semantics. Không có icon thì giữ nhãn chữ 17 dp. Mục chọn có nền cam đào, viền nâu san hô và semantics báo trạng thái chọn; mục khóa giữ icon khóa. |
 | `MenuGrid` | Chia ô đều và căn cùng chiều cao từng hàng; bớt cột khi chữ lớn. Hàng cuối giữ cùng bề rộng ô. |
@@ -69,15 +69,15 @@ sự cần dùng ở nhiều màn, mở rộng component hiện có và kiểm t
   thoại rộng 390 dp, một bước `GameSpacing` là khoảng 4 dp và khoảng cách
   giữa các cụm là khoảng 8 dp.
   Vùng nội dung rộng tối đa 760 dp và căn giữa trên màn lớn.
-- Tiêu đề và quay lại dùng chung hàng cố định ở đầu cửa sổ `cream`.
+- Tiêu đề và quay lại dùng chung hàng cố định ở đầu vùng nội dung.
   Ô nút quay lại rộng 36 dp với vùng chạm tối thiểu 48 × 48 dp. Tiêu đề
   tối đa hai dòng và dùng dấu ba chấm khi thiếu chỗ. Vùng cuộn bắt đầu ngay
   dưới hàng tiêu đề, từ thông báo xem trước đến hết nội dung chi tiết.
   Dùng một vùng cuộn dọc và chừa khoảng cách với navigation.
 - `MenuColumns` chia vùng chọn–chi tiết 1:2 khi đủ `600 × hệ số chữ` dp
   (đo tại 16 dp); màn hẹp/chữ lớn xếp vùng chọn trước chi tiết.
-- Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ dùng ô tối thiểu
-  `96 × hệ số chữ` dp, tối đa ba cột; tab và nhóm cài đặt dùng `Wrap`.
+- Vật phẩm dùng cùng `MenuGrid`. Chỉ số Hồ sơ, tab và nhóm cài đặt dùng
+  `Wrap` để xuống hàng khi hẹp hoặc chữ lớn.
 - Tab lọc và lựa chọn cài đặt dùng `MenuButton.tab` với padding ngang 6 dp,
   dọc 4 dp và khung cao tối thiểu 40 dp. Vùng chạm tối thiểu 48 × 48 dp.
   Khung tăng chiều cao khi nhãn xuống dòng hoặc chữ được phóng to.
@@ -163,8 +163,8 @@ tra trên Android/web thực. Khi thay concept, cập nhật ảnh tham chiếu 
 ## Đợt làm đẹp RPG dễ thương
 
 Home dùng tranh làng ban ngày tạo bằng ImageGen dựa trên bố cục làng cũ.
-Menu dùng cùng tranh với lớp kem có độ đục 56%. Những vùng chứa chữ có nền
-đặc để dễ đọc. Nhân vật là portrait pixel tĩnh vẽ bằng code. Khung dùng
+Các menu dùng khung giấy kem đặt trên cùng tranh với lớp kem có độ đục 56%.
+Hồ sơ dùng cảnh nền và lớp phủ riêng. Nhân vật là portrait pixel tĩnh vẽ bằng code. Khung dùng
 viền 2 dp, góc 8 dp và thanh điều hướng dùng chung vị trí neo. Chạy `flutter test tool/preview_ui_test.dart` để cập nhật
 ảnh; thêm `--dart-define=EXTENDED=true` để rà đủ kích thước/chữ lớn.
 
@@ -172,12 +172,14 @@ Cửa hàng dùng giấy kem cho lời chào, thẻ vật phẩm hiện icon + t
 nhãn xem chi tiết. Gói khởi hành chỉ hiện ở Đề cử để bộ lọc đi thẳng vào hàng
 đang chọn; các gói khác dùng cùng lưới thẻ có tên. Không có mua/thanh toán.
 
-Hồ sơ dành toàn bộ chiều rộng nội dung cho thẻ giấy kem. Ảnh nền, avatar và
-sprite yêu thú mở đầu thẻ. Tên, danh hiệu và giới thiệu nằm trên nền đặc; huy hiệu,
-chỉ số mẫu tùy chọn và QR đặt bên dưới trên cùng nền giấy, dùng đường phân cách
-thay cho khung con. Mã chữ và QR xếp dọc khi cỡ chữ hoặc
-chiều rộng cần thêm chỗ. Nút chỉnh sửa mở biểu mẫu cuộn độc lập. Ảnh PNG chỉ
-chứa thẻ, còn các nút thao tác và sổ sưu tầm nằm ngoài thẻ.
+Hồ sơ dùng cảnh đã chọn phủ hết màn hình, kể cả phía sau phần chừa cho
+hệ thống. Cảnh đứng yên khi cuộn. Chân dung và yêu thú đồng hành nằm trực
+tiếp trên cảnh. Tên, danh hiệu, giới thiệu, chỉ số mẫu tùy chọn, huy hiệu và
+mã kết bạn nằm trong một cụm xanh đậm bán trong suốt. Cụm thông tin nằm
+dưới vùng ảnh trên màn hẹp hoặc chữ lớn và thu về bên phải khi đủ rộng.
+Mã chữ và QR xếp dọc khi cần thêm chỗ. Nút chỉnh sửa mở biểu mẫu cuộn
+độc lập. Ảnh PNG ghép cảnh nền với toàn bộ thẻ, kể cả phần dưới vùng nhìn.
+Các nút thao tác và sổ sưu tầm nằm ngoài ảnh PNG.
 
 Yêu thú dùng cùng `MenuColumns` cho danh sách và chi tiết. Chạm một thẻ
 đưa phần chi tiết vào vùng nhìn ở điện thoại. Chỉ số và chiêu dùng `MenuGrid`.

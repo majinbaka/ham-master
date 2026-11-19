@@ -118,9 +118,10 @@ Android application ID: `com.jinshu.pixel_rpg`.
   nút quay lại và thanh điều hướng đứng yên khi cuộn.
   Panel dùng thân tối/tab tiêu đề nổi như Home; giấy kem dành cho nội dung đọc.
   Vật phẩm và chỉ số dùng lưới ô đều, thanh EXP dùng cùng mẫu viền/góc.
-- Hồ sơ dùng thẻ rộng với ảnh nền, avatar, yêu thú đồng hành, tên, danh hiệu,
-  giới thiệu, huy hiệu và chỉ số mẫu. **Chỉnh sửa thẻ** lưu tùy chọn trên thiết
-  bị hoặc trình duyệt. Thẻ có mã bạn bè tạo cục bộ, QR quét ra cùng mã và nút
+- Hồ sơ dùng cảnh nền cố định phủ toàn màn hình. Chân dung, yêu thú đồng hành,
+  tên, danh hiệu, giới thiệu, huy hiệu và chỉ số mẫu nằm trên cảnh. Thông tin
+  gom thành một cụm nhỏ dưới vùng ảnh trên điện thoại và nằm bên phải khi
+  đủ rộng. **Chỉnh sửa thẻ** lưu tùy chọn trên thiết bị hoặc trình duyệt. Thẻ có mã bạn bè tạo cục bộ, QR quét ra cùng mã và nút
   sao chép. **Chia sẻ ảnh** xuất PNG qua trình đơn chia sẻ Android hoặc tải
   ảnh khi trình duyệt không có hỗ trợ chia sẻ tệp. Chức năng kết bạn trực tuyến
   chưa được triển khai. Xem [quyết định lưu tùy chọn](docs/adr/0004-local-profile-card.md).

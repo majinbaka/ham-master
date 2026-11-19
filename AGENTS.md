@@ -8,7 +8,7 @@ The unframed mail icon opens a dialog,
 and the battle action opens the full-screen battle preview. Scene actions
 update the dialogue panel.
 Shop, settings, beasts and battle are presentation-only previews. Profile has
-a locally customizable showcase card with sample stats.
+a locally customizable showcase card with sample stats over a full-screen backdrop.
 Do not implement gameplay unless requested.
 
 ## Agreed product scope and offline package boundary
